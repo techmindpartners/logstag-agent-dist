@@ -4,7 +4,7 @@ Architecture: amd64
 Maintainer: Techmind Partners <platform@techmind.partners>
 Installed-Size: 9243
 Depends: libc6 (>= 2.34)
-Filename: pool/dev/pool/dev/d/dbpigeon-agent/dbpigeon-agent_0.1.0-1_amd64.deb
+Filename: pool/dev/d/dbpigeon-agent/dbpigeon-agent_0.1.0-1_amd64.deb
 Size: 2678184
 MD5sum: 95d2a6ed3af687103f5625a10c328a0b
 SHA1: e3902f07e128e4741645edbe9d10ac2fc9e7cec8
@@ -20,7 +20,7 @@ Version: 0.1.0-1
 Architecture: arm64
 Maintainer: Techmind Partners <platform@techmind.partners>
 Installed-Size: 8339
-Filename: pool/dev/pool/dev/d/dbpigeon-agent/dbpigeon-agent_0.1.0-1_arm64.deb
+Filename: pool/dev/d/dbpigeon-agent/dbpigeon-agent_0.1.0-1_arm64.deb
 Size: 2411960
 MD5sum: 017c19271de877fc9d1dd73f0536b396
 SHA1: 13a1188e237ac19ec38b08c4fee8c16027d2398d
