@@ -5,111 +5,13 @@ Maintainer: Techmind Partners <platform@techmind.partners>
 Installed-Size: 10326
 Depends: libc6 (>= 2.34), libssl3t64 (>= 3.0.0)
 Filename: pool/dev/pool/dev/d/dbpigeon-agent/dbpigeon-agent_0.1.0-1_amd64.deb
-Size: 3016420
-MD5sum: 1fc3c6f709d57f9a631ff2a79101520b
-SHA1: 0848e505675539a1bc9b04f346a8099c3bfadc70
-SHA256: 5e30e59b70d29e892b26129ca41ec625e52ad09441ce32643a414a028f65ecd1
+Size: 3015096
+MD5sum: ac07282e1a4e8aa20de2c3eeab98b807
+SHA1: 8f2403dd2a085e396df78da77331f6916036287a
+SHA256: a3a08ddd776853ebea19e2a013ae07af9bc0efc7a91374a90bd7ef611a790791
 Priority: optional
 Homepage: https://github.com/techmindpartners/dbpigeon-agent
 Description: dbPigeon Agent
- # dbpigeon
- .
- [![ci](https://github.com/techmindpartners/dbpigeon-agent/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/techmindpartners/dbpigeon-agent/actions/workflows/ci.yml)
- .
- ---
- .
- <div align="center">
- .
- ![iggy](assets/dbpigeon.png)
- .
- </div>
- .
- ---
- .
- ## Project Overview
- **dbpigeon** is a Rust-based database monitoring agent designed to collect and
- analyze database metrics. The project aims to follow Rust best practices with a
- focus on safety, performance, and reliability while providing a scalable
- solution for database monitoring operations.
- .
- Here are the key architectural features of the project:
- .
- ### Modular Design
- - Separate modules for collection, monitoring, export, and configuration
- - Uses a plugin-based architecture for database engine support
- - Currently focused on PostgreSQL with plans for MSSQL and MongoDB support
- .
- ### Configuration Management
- - Uses TOML-based configuration
- - Supports multiple monitoring targets
- - Configurable logging levels and monitoring intervals
- - API configuration for data export
- .
- Sample configuration:
- ```toml
- [agent]
- api_base_url = "https://api.dbpigeon.com"
- api_key = "[your_api_key]"
- log_level = "[debug, info, warn, error]"
- high_frequency_interval = [10, 30, 60] # default 10 secs
- medium_frequency_interval = [60, 120, 300] # default 1 min
- low_frequency_interval = [600, 900, 1800] # default 10 mins
- .
- [targets.server1]
- platform = "[self-hosted, aws, gcp, azure, huawei, heroku]"
- db_engine = "[postgresql, mssql, mongodb]"
- db_host = "[hostname]"
- db_port = "[port]"
- db_username = "[username]"
- db_password = "[password]"
- db_name = "[database_name]"
- ```
- .
- ### Monitoring System
- Implements three monitoring frequency tiers:
- - High Frequency (10s): Critical metrics, active sessions
- - Medium Frequency (1m): Table stats, index usage
- - Low Frequency (10m): Schema configuration, system metrics
- .
- ### Async Architecture
- - Built on `tokio` async runtime
- - Implements concurrent monitoring operations
- - Uses async/await for I/O operations
- - Employs thread pools for parallel execution
- .
- ### Data Export
- - RESTful API-based data transmission
- - Implements compression and batching
- - Includes retry mechanisms with backoff
- - Secure authentication system
- .
- ### Error Handling & Logging
- - Comprehensive error handling using Rust's Result types
- - Configurable logging system with dynamic log levels
- - Structured logging for better observability
- .
- ### Graceful Shutdown
- - Signal handling (SIGTERM, SIGINT)
- - Controlled shutdown sequence
- - Ensures data preservation during shutdown
- .
- ### DataFlow Diagram
- - The following diagram illustrates the data flow within the agent:
- .
- <div align="center">
- .
- ![data-flow](docs/data-flow-mermaid.png)
- .
- </div>
- .
- ### Docker Build
- ```bash
- docker build -t dbpigeon-agent:latest -f Dockerfile .
- ```
- ```bash
- docker run -d \
-   --name dbpigeon-agent \
-   -e CONFIG_FILE="/app/examples/self-hosted-target.toml" \
-   dbpigeon-agent:latest
- ```
+ dbPigeon Agent collects and sends database metrics and statistics to dbPigeon
+ for analysis
 
