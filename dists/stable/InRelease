@@ -1,0 +1,43 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
+
+Architectures: amd64
+Codename: stable
+Components: dev
+Date: Fri, 23 May 2025 11:31:39 +0000
+Description: Official Debian packages for dbPigeon Agent
+Label: dbPigeon Agent Packages
+Origin: TechMindPartners
+Suite: stable
+MD5Sum:
+ 4f39aefdeb1e44212ca0cb8045df5031              219 Release
+ 1e1076ad2375d9df293576389f037873             3585 dev/binary-amd64/Packages
+ e8591ca9fa3a455b2e86bc18d59f1b96             1766 dev/binary-amd64/Packages.gz
+SHA1:
+ aa95b1979faf773605434aca7fac535c16b5d642              219 Release
+ 45bff34db4b31b09d015ec1cfa02e9e3194fc0d5             3585 dev/binary-amd64/Packages
+ b52cd67a749e920aa5deaf9f17c1f2d0a61de8e7             1766 dev/binary-amd64/Packages.gz
+SHA256:
+ 241ea0c3520b1bf1867deb841ef15e144f83b71f7e071d8aaa9f1250c0ff6885              219 Release
+ a7e75bd57369e51c0a33d3152fd353d9e8965e04708985820ba389bf1536e8d1             3585 dev/binary-amd64/Packages
+ f86ac4e23f1aac88307a9185914be85194275cbb0214b51771af006d9b69f3eb             1766 dev/binary-amd64/Packages.gz
+SHA512:
+ bf7a70d2ac53fb9981b957c9db6c7e097674df364049463e8388b4b8b7e8e4d930f490b8fb96c9ac0a1bd86ff95e83929f11a6246e564bd79bfb3433c0ca789e              219 Release
+ 2d8323b65d08b3daa6b285d5511afd24c06d1c65f9e0597304c80e7aac1142d953904c1ca9f02be2bace1baeead7f057472b0b5f052ca6ac02705c3a4d5c38c1             3585 dev/binary-amd64/Packages
+ 896f261fd1360d00bd7e9e433cb6ff91f6197e38efe6fd46b3a48c986a3b70c6a83a918cf05a72abc9c688e431e7e0dde2e104e8ce12196ac12c604d68cbc182             1766 dev/binary-amd64/Packages.gz
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCgAdFiEEy8Ueh7J9nt6XOspxvk0V/wXZHX8FAmgwXJsACgkQvk0V/wXZ
+HX+Zug//dI6ybo2ssSZdNhY/ewd1cxbISR77hlOHALHBg2d4E2XLpAFTnC6acmxS
+9JrFm5673zErrt+kV7mN7h5WchCgdNBnhTbmBZdwNJ1VUAvUdDu9Kfgm+5LhpYW2
+CgFwzy33U5EwQqM9fQd1INjgV7Xq1F8sKHGVzzNCzYDXODPGAOVj4REREoVCrTUt
+45f7Oyq+bPD+1U8i81PoemVom3UpsvWgSGzm3/bsu2NpYoHVQXoJh2KL2v+fu/ur
+yZ7QXdeOMuPLmG86/ElLci5ElxPVnwvR4khVz4Ip+SeIrdTG57WPls9srkH9rx1u
+iXVE/dqUbl01JC7n4o1aKfqC5KK5mp4uvI+7Uwoa9A+IS+swR5Bs9mMmxP52AeKX
+O+ZkcXDilpStHEOlXe+qHonEapAtosUw/SQRuRatg5mPn59VOiCALTPgWTUfD4PH
+T1EwhlkSljOZhPliCdhFdhMnB/qS422CJ9Ptbr5Lj4KRtX9SlNAMt7GXcYJ/tXRg
+nx3t+/DvbQ2l81X9o5J+pJP06ZQM3fzCJA7x2mVj0WlxtVICA7Qmm1KzEYtpuktz
+3d/Q2dfurZEytqME8J/Ic9wKAm4MYfril9MnJf0bjegW4einwnq+iaZbWeSxqP+Y
+wLbEa494+4xQKc17X/6zS2tZKLmdSGA254oM0Tzzpi+qSzd5pps=
+=GKB+
+-----END PGP SIGNATURE-----
