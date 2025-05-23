@@ -1,34 +1,337 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>dbPigeon Agent Package Repository</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+            color: #e0e0e0;
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+            background: rgba(20, 20, 20, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .logo {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 1rem;
+            background: linear-gradient(45deg, #4f46e5, #06b6d4);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #4f46e5, #06b6d4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            color: #a0a0a0;
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+
+        .section {
+            margin-bottom: 2.5rem;
+            padding: 1.5rem;
+            background: rgba(30, 30, 30, 0.5);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .section-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .section-title::before {
+            content: "▶";
+            color: #4f46e5;
+            font-size: 0.8rem;
+        }
+
+        .description {
+            color: #c0c0c0;
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+        }
+
+        .install-section {
+            display: grid;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .channel {
+            background: rgba(40, 40, 40, 0.6);
+            border-radius: 10px;
+            padding: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .channel:hover {
+            border-color: #4f46e5;
+            box-shadow: 0 8px 24px rgba(79, 70, 229, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .channel-label {
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 0.8rem;
+            font-size: 1.1rem;
+        }
+
+        .stable {
+            border-left: 4px solid #10b981;
+        }
+
+        .dev {
+            border-left: 4px solid #f59e0b;
+        }
+
+        .command-box {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 1rem;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            font-size: 0.9rem;
+            color: #00ff88;
+            position: relative;
+            overflow-x: auto;
+            margin-top: 0.5rem;
+        }
+
+        .command-box::before {
+            content: "$";
+            color: #666;
+            margin-right: 0.5rem;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            background: #333;
+            border: none;
+            color: #888;
+            padding: 0.3rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .copy-btn:hover {
+            background: #4f46e5;
+            color: white;
+        }
+
+        .signing-key {
+            background: rgba(30, 30, 30, 0.5);
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .key-info {
+            display: grid;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .key-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.8rem;
+            background: rgba(40, 40, 40, 0.6);
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .key-label {
+            font-weight: 600;
+            color: #a0a0a0;
+            min-width: 100px;
+        }
+
+        .key-value {
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            color: #e0e0e0;
+            word-break: break-all;
+        }
+
+        a {
+            color: #4f46e5;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        a:hover {
+            color: #06b6d4;
+            text-decoration: underline;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.2rem 0.6rem;
+            background: rgba(79, 70, 229, 0.2);
+            color: #4f46e5;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            margin-left: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+            
+            .container {
+                padding: 1.5rem;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .command-box {
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
 <body>
-    <h2>dbPigeon Agent Package Repository</h2>
-    <div>
-        <p>
-            Ready-to-install agent packages are provided for popular Debian-based and Red Hat-based Linux distributions, supporting both x86 and ARM architectures.
-        </p>
-        <p>
-            Execute the installation script to automatically identify your platform and install the appropriate package.
-        </p>
-        <p>Stable Channel:</p>
-        <p>
-            <code>
-                curl https://techmindpartners.github.io/dbpigeon-agent-dist/agent-install.sh | bash
-            </code>
-        </p>
-        <p>Dev Channel:</p>
-        <p>
-            <code>
-                curl https://techmindpartners.github.io/dbpigeon-agent-dist/agent-install.sh | bash -s -- dev
-            </code>
-        </p>
+    <div class="container">
+        <div class="header">
+            <div class="logo">🐦</div>
+            <h1>dbPigeon Agent</h1>
+            <p class="subtitle">Package Repository</p>
+        </div>
+
+        <div class="section">
+            <div class="description">
+                Ready-to-install agent packages are provided for popular Debian-based and Red Hat-based Linux distributions, supporting both x86 and ARM architectures.
+            </div>
+            <div class="description">
+                Execute the installation script to automatically identify your platform and install the appropriate package.
+            </div>
+
+            <div class="install-section">
+                <div class="channel stable">
+                    <div class="channel-label">
+                        Stable Channel
+                        <span class="badge">Recommended</span>
+                    </div>
+                    <div class="command-box">
+                        curl https://techmindpartners.github.io/dbpigeon-agent-dist/agent-install.sh | bash
+                        <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+                    </div>
+                </div>
+
+                <div class="channel dev">
+                    <div class="channel-label">
+                        Dev Channel
+                        <span class="badge">Latest Features</span>
+                    </div>
+                    <div class="command-box">
+                        curl https://techmindpartners.github.io/dbpigeon-agent-dist/agent-install.sh | bash -s -- dev
+                        <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="signing-key">
+            <div class="section-title">Repository Signing Key</div>
+            <div class="key-info">
+                <div class="key-item">
+                    <div class="key-label">Download:</div>
+                    <div class="key-value">
+                        <a href="https://techmindpartners.github.io/dbpigeon-agent-dist/dbpigeon_signing_key.asc">dbpigeon_signing_key.asc</a>
+                    </div>
+                </div>
+                <div class="key-item">
+                    <div class="key-label">Fingerprint:</div>
+                    <div class="key-value">CBC5 1E87 B27D 9EDE 973A CA71 BE4D 15FF 05D9 1D7F</div>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <h3 id="repository-signing-key">Repository Signing Key</h3>
-    <div>
-        <p>Download: <a href="https://techmindpartners.github.io/dbpigeon-agent-dist/dbpigeon_signing_key.asc">dbpigeon_signing_key.asc</a></p>
-        <p>Fingerprint: CBC5 1E87 B27D 9EDE 973A CA71 BE4D 15FF 05D9 1D7F</p>
-    </div>
-
+    <script>
+        function copyToClipboard(button) {
+            const commandBox = button.parentElement;
+            const command = commandBox.textContent.replace('Copy', '').replace('$', '').trim();
+            
+            navigator.clipboard.writeText(command).then(() => {
+                const originalText = button.textContent;
+                button.textContent = 'Copied!';
+                button.style.background = '#10b981';
+                
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.style.background = '#333';
+                }, 2000);
+            }).catch(() => {
+                // Fallback for older browsers
+                const textArea = document.createElement('textarea');
+                textArea.value = command;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                
+                button.textContent = 'Copied!';
+                setTimeout(() => {
+                    button.textContent = 'Copy';
+                }, 2000);
+            });
+        }
+    </script>
 </body>
-
 </html>
