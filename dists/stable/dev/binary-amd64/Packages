@@ -71,10 +71,10 @@ Maintainer: Techmind Partners <platform@techmind.partners>
 Installed-Size: 9263
 Depends: libc6 (>= 2.34)
 Filename: pool/dev/d/dbpigeon-agent/dbpigeon-agent_0.1.2-1_amd64.deb
-Size: 2679176
-MD5sum: 56279d68a5a61b91e89f1b50c74fdcdb
-SHA1: 5b6669beabd11045334613bc7deed0708959787d
-SHA256: 2481f2e93616512f691e81a32b3a08c4cca38a6cdb9c07b80af60b002b599ea5
+Size: 2679288
+MD5sum: 167b88721f43ec8c1e5f5f38f4fbbd1e
+SHA1: a8feb5156744f5c9166ed9b0a10ad0c1e90eba55
+SHA256: 3e00b57822ed5346c65f7f272fcd0ed2c74098e61d2a6c7b9d7efd5818e89f57
 Priority: optional
 Homepage: https://github.com/techmindpartners/dbpigeon-agent
 Description: dbPigeon Agent
@@ -85,12 +85,12 @@ Package: dbpigeon-agent
 Version: 0.1.2-1
 Architecture: arm64
 Maintainer: Techmind Partners <platform@techmind.partners>
-Installed-Size: 8339
+Installed-Size: 8403
 Filename: pool/dev/d/dbpigeon-agent/dbpigeon-agent_0.1.2-1_arm64.deb
-Size: 2416892
-MD5sum: 569f67c3be0ea7538955ac7d41367ce3
-SHA1: 74226f9e9ff4a3a200d69a501755f750ea961605
-SHA256: c8d8f802ca1da6dd48d49871ca840d4dd1b7138a2265d2ed6a27f5da83a74354
+Size: 2415512
+MD5sum: 1a166baa7fc44bcc6418eb26669d4528
+SHA1: 05cfab9502bbbdd8a3ff76cc895ad2516099e44b
+SHA256: c42d24fb74f1d65885ba31a66b8ea7dc3c580dc18d447fdecdbd6f66eafe0491
 Priority: optional
 Homepage: https://github.com/techmindpartners/dbpigeon-agent
 Description: dbPigeon Agent
