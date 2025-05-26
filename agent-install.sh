@@ -347,7 +347,7 @@ then
   # Validate URL format before using it
   validate_url "$DBPIGEON_API_BASE_URL"
   # Set custom API base URL if provided (create backup first)
-  $maybe_sudo sed -i.bak "/^\[dbpigeon\]$/a api_base_url = ${DBPIGEON_API_BASE_URL}" /etc/dbpigeon-agent.toml
+  $maybe_sudo sed -i.bak "s|^api_base_url = \"api_base_url\"$|api_base_url = \"${DBPIGEON_API_BASE_URL}\"|" /etc/dbpigeon-agent.toml
 fi
 
 if [ -n "$DBPIGEON_API_KEY" ];
@@ -355,7 +355,7 @@ then
   # Validate API key format before using it
   validate_api_key "$DBPIGEON_API_KEY"
   # Set API key if provided (create backup first)
-  $maybe_sudo sed -i.bak "s/^#api_key = your_api_key$/api_key = ${DBPIGEON_API_KEY}/" /etc/dbpigeon-agent.toml
+  $maybe_sudo sed -i.bak "s|^api_key = \"your_api_key\"$|api_key = \"${DBPIGEON_API_KEY}\"|" /etc/dbpigeon-agent.toml
 fi
 
 # Validate configuration after modifications
@@ -371,12 +371,21 @@ echo
 echo "The dbPigeon Agent was installed successfully"
 echo
 
-# Run guided setup if requested
-if [ -n "$DBPIGEON_GUIDED_SETUP" ];
+# Offer to configure the agent if in interactive mode and not already configured
+if [ -z "$DBPIGEON_INSTALL_NONINTERACTIVE" ];
 then
-  # We want all opts passed separately here: not sure why this is not an issue above for apt-get and yum
-  # shellcheck disable=SC2086
-  $maybe_sudo dbpigeon-agent-setup $dbpigeon_opts <$user_input
+  if confirm "Would you like to configure the agent now?";
+  then
+    echo "Starting interactive configuration..."
+    dbpigeon-agent configure
+  else
+    echo "You can configure the agent later by running: dbpigeon-agent configure"
+  fi
 else
-  echo "Please continue with setup instructions in application"
+  echo "Non-interactive installation complete"
+  if [ -z "$DBPIGEON_API_KEY" ];
+  then
+    echo "Configure the agent by running: dbpigeon-agent configure"
+  fi
 fi
+echo
