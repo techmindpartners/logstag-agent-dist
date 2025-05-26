@@ -1,20 +1,20 @@
 {
   "channel": "dev",
-  "latest_version": "0.1.10-1",
-  "generated_at": "2025-05-26T18:04:31Z",
+  "latest_version": "0.1.11-1",
+  "generated_at": "2025-05-26T18:08:58Z",
   "base_download_url": "https://techmindpartners.github.io/dbpigeon-agent-dist",
   "releases": {
     "linux-x86_64": {
-      "version": "0.1.10-1",
-      "download_url": "https://techmindpartners.github.io/dbpigeon-agent-dist/pool/dev/d/dbpigeon-agent/dbpigeon-agent_0.1.10-1_amd64.deb",
-      "checksum": "6fca239bf78521fb40ce31cfee49c35c3eb12abbcdad8eb61d0b10a891ab61a8",
-      "size": 3404204
+      "version": "0.1.11-1",
+      "download_url": "https://techmindpartners.github.io/dbpigeon-agent-dist/pool/dev/d/dbpigeon-agent/dbpigeon-agent_0.1.11-1_amd64.deb",
+      "checksum": "f7fb9a41e1cd4c7d80c710423b956b6f5d81fa50e6af186e879885c9f94549b8",
+      "size": 3404940
     },
     "linux-aarch64": {
-      "version": "0.1.10-1",
-      "download_url": "https://techmindpartners.github.io/dbpigeon-agent-dist/pool/dev/d/dbpigeon-agent/dbpigeon-agent_0.1.10-1_arm64.deb",
-      "checksum": "498c8b45102ffb216bd69dc092dd357a4ed873fcf915ac7e1a5c0f90eed41115",
-      "size": 3051340
+      "version": "0.1.11-1",
+      "download_url": "https://techmindpartners.github.io/dbpigeon-agent-dist/pool/dev/d/dbpigeon-agent/dbpigeon-agent_0.1.11-1_arm64.deb",
+      "checksum": "30818a5cda0f49a6e7e309433ceddda58f3b79561bb4bbea580998813491d44b",
+      "size": 3052980
     }
   }
 }
