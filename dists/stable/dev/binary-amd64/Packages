@@ -295,3 +295,36 @@ Description: dbPigeon Agent
  dbPigeon Agent collects and sends database metrics and statistics to dbPigeon
  for analysis
 
+Package: dbpigeon-agent
+Version: 0.1.9-1
+Architecture: amd64
+Maintainer: Techmind Partners <platform@techmind.partners>
+Installed-Size: 12678
+Depends: libc6 (>= 2.39)
+Filename: pool/dev/d/dbpigeon-agent/dbpigeon-agent_0.1.9-1_amd64.deb
+Size: 3404952
+MD5sum: 2e927d0576de3f6c89d68739f7dc9db0
+SHA1: 71f28708fa38891d45dea4bdedbaca1cf7346f25
+SHA256: b816593de0f436f0ea057357bdc0451ae20c1407cc637a36df85b344a2178568
+Priority: optional
+Homepage: https://github.com/techmindpartners/dbpigeon-agent
+Description: dbPigeon Agent
+ dbPigeon Agent collects and sends database metrics and statistics to dbPigeon
+ for analysis
+
+Package: dbpigeon-agent
+Version: 0.1.9-1
+Architecture: arm64
+Maintainer: Techmind Partners <platform@techmind.partners>
+Installed-Size: 11414
+Filename: pool/dev/d/dbpigeon-agent/dbpigeon-agent_0.1.9-1_arm64.deb
+Size: 3050936
+MD5sum: cdcf5950b7689ecd5dea642d969032df
+SHA1: 9ec6cf7b25f47d62cfc6b782bcc914ffe4be53a1
+SHA256: 28819b9bf90273e9ec5e1fa7ebe48db6db3bc2cb9cdfa3cad54194cc43072878
+Priority: optional
+Homepage: https://github.com/techmindpartners/dbpigeon-agent
+Description: dbPigeon Agent
+ dbPigeon Agent collects and sends database metrics and statistics to dbPigeon
+ for analysis
+
