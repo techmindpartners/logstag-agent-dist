@@ -302,6 +302,18 @@ fi
 if [ "$pkg" = yum ];
 then
   # For RPM-based distributions (RHEL, CentOS, Fedora, etc.)
+  # Map architecture to RPM architecture naming
+  if [ "$arch" = 'x86_64' ];
+  then
+    rpm_arch=x86_64
+  elif [ "$arch" = 'arm64' ] || [ "$arch" = 'aarch64' ];
+  then
+    rpm_arch=aarch64
+  else
+    # This should never happen due to the check above, but just in case
+    fail "unsupported architecture for RPM: $arch"
+  fi
+  
   # Create repository configuration file for dbPigeon Agent
   echo "[dbpigeon_agent]
 name=dbpigeon_agent
@@ -341,7 +353,7 @@ else
   fail "unrecognized package kind: $pkg"
 fi
 
-# Configure the collector if environment variables are provided
+# Configure the agent if environment variables are provided
 if [ -n "$DBPIGEON_API_BASE_URL" ];
 then
   # Validate URL format before using it
