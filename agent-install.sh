@@ -243,9 +243,9 @@ then
   # Ubuntu
   pkg=deb
   distribution=ubuntu
-  # Extract the codename (e.g., jammy, noble) from os-release
+  # Extract the codename (e.g., focal, jammy, noble) from os-release
   version=$(grep VERSION_CODENAME /etc/os-release | cut -d= -f2)
-  if [ "$version" != noble ] && [ "$version" != jammy ];
+  if [ "$version" != noble ] && [ "$version" != jammy ] && [ "$version" != focal ];
   then
     # If version is not supported, ask user if they want to try Ubuntu Noble package
     if confirm "Unsupported Ubuntu version; try Ubuntu Noble (24.04) package?";
