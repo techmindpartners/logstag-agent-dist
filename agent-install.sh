@@ -305,10 +305,10 @@ then
   # Create repository configuration file for dbPigeon Agent
   echo "[dbpigeon_agent]
 name=dbpigeon_agent
-baseurl=https://techmindpartners.github.io/dbpigeon-agent-dist
-repo_gpgcheck=1
+baseurl=https://techmindpartners.github.io/dbpigeon-agent-dist/rpm/$channel/$rpm_arch
+repo_gpgcheck=0
+gpgcheck=0
 enabled=1
-gpgkey=https://techmindpartners.github.io/dbpigeon-agent-dist/dbpigeon_signing_key.asc
 sslverify=1
 sslcacert=/etc/pki/tls/certs/ca-bundle.crt
 metadata_expire=300" | $maybe_sudo tee -a /etc/yum.repos.d/dbpigeon_agent.repo
