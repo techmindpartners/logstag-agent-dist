@@ -79,8 +79,8 @@ validate_api_key() {
 # Function to verify configuration after changes
 validate_config() {
   echo "Validating configuration..."
-  if command -v dbpigeon-agent >/dev/null 2>&1; then
-    if ! dbpigeon-agent --check-config 2>/dev/null; then
+  if test -x /opt/dbpigeon-agent/bin/dbpigeon-agent; then
+    if ! /opt/dbpigeon-agent/bin/dbpigeon-agent --check-config 2>/dev/null; then
       echo "Warning: Configuration validation failed, but continuing with installation"
     else
       echo "Configuration validation successful"
@@ -243,9 +243,9 @@ then
   # Ubuntu
   pkg=deb
   distribution=ubuntu
-  # Extract the codename (e.g., focal, jammy, noble) from os-release
+  # Extract the codename (e.g., jammy, noble) from os-release
   version=$(grep VERSION_CODENAME /etc/os-release | cut -d= -f2)
-  if [ "$version" != noble ] && [ "$version" != jammy ] && [ "$version" != focal ];
+  if [ "$version" != noble ] && [ "$version" != jammy ];
   then
     # If version is not supported, ask user if they want to try Ubuntu Noble package
     if confirm "Unsupported Ubuntu version; try Ubuntu Noble (24.04) package?";
@@ -260,9 +260,9 @@ then
   # Debian
   pkg=deb
   distribution=debian
-  # Extract the codename (e.g., bullseye, bookworm) from os-release
+  # Extract the codename (e.g., bookworm) from os-release
   version=$(grep VERSION_CODENAME /etc/os-release | cut -d= -f2)
-  if [ "$version" != bookworm ] && [ "$version" != bullseye ];
+  if [ "$version" != bookworm ];
   then
     # If version is not supported, ask user if they want to try Debian Bookworm package
     if confirm "Unsupported Debian version; try Debian Bookworm (12) package?";
@@ -365,7 +365,7 @@ fi
 
 # Verify the installation was successful
 echo "Checking install by running 'dbpigeon-agent --version'"
-dbpigeon-agent --version
+/opt/dbpigeon-agent/bin/dbpigeon-agent --version
 echo
 
 echo "The dbPigeon Agent was installed successfully"
@@ -377,15 +377,15 @@ then
   if confirm "Would you like to configure the agent now?";
   then
     echo "Starting interactive configuration..."
-    dbpigeon-agent configure
+    /opt/dbpigeon-agent/bin/dbpigeon-agent configure
   else
-    echo "You can configure the agent later by running: dbpigeon-agent configure"
+    echo "You can configure the agent later by running: /opt/dbpigeon-agent/bin/dbpigeon-agent configure"
   fi
 else
   echo "Non-interactive installation complete"
   if [ -z "$DBPIGEON_API_KEY" ];
   then
-    echo "Configure the agent by running: dbpigeon-agent configure"
+    echo "Configure the agent by running: /opt/dbpigeon-agent/bin/dbpigeon-agent configure"
   fi
 fi
 echo
