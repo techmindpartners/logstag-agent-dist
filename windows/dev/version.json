@@ -1,0 +1,14 @@
+{
+  "version": "0.1.33",
+  "channel": "dev",
+  "platform": "windows",
+  "generated_at": "",
+  "architectures": {
+    "x64": {
+      "download_url": "https://techmindpartners.github.io/dbpigeon-agent-dist/windows/dev/x64/dbpigeon-agent-x64.msi",
+      "size": 5021696,
+      "checksum": "ddb114aaefec940f6702da9af6cc79dfe772dc73c70133508df7e96f902d430d",
+      "package_type": "msi"
+    }
+  }
+}
