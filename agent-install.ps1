@@ -621,18 +621,15 @@ function Install-DbPigeonAgent {
             Write-Host ""
         }
         
-        # Offer configuration if in interactive mode
-        if (-not $NonInteractive -and -not $ApiKey) {
-            if (Get-UserConfirmation "Would you like to configure the agent now?") {
-                Write-Log "Starting interactive configuration..."
-                & $exePath configure
-            }
-            else {
-                Write-Host "You can configure the agent later by running: $exePath configure" -ForegroundColor Yellow
-            }
+        # Always run configuration
+        Write-Log "Starting agent configuration..."
+        try {
+            & $exePath configure
+            Write-Log "Agent configuration completed successfully"
         }
-        elseif (-not $ApiKey) {
-            Write-Host "Configure the agent by running: $exePath configure" -ForegroundColor Yellow
+        catch {
+            Write-Log "Warning: Agent configuration encountered an issue: $($_.Exception.Message)" "WARN"
+            Write-Host "You can configure the agent later by running: $exePath configure" -ForegroundColor Yellow
         }
         
     }
