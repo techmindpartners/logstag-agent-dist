@@ -624,12 +624,12 @@ function Install-DbPigeonAgent {
         # Always run configuration
         Write-Log "Starting agent configuration..."
         try {
-            & $exePath configure
+            & $exePath configure --channel $Channel
             Write-Log "Agent configuration completed successfully"
         }
         catch {
             Write-Log "Warning: Agent configuration encountered an issue: $($_.Exception.Message)" "WARN"
-            Write-Host "You can configure the agent later by running: $exePath configure" -ForegroundColor Yellow
+            Write-Host "You can configure the agent later by running: $exePath configure --channel $Channel" -ForegroundColor Yellow
         }
         
     }
