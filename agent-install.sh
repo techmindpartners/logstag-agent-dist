@@ -389,15 +389,15 @@ then
   if confirm "Would you like to configure the agent now?";
   then
     echo "Starting interactive configuration..."
-    /opt/dbpigeon-agent/bin/dbpigeon-agent configure
+    /opt/dbpigeon-agent/bin/dbpigeon-agent configure --channel "$channel"
   else
-    echo "You can configure the agent later by running: /opt/dbpigeon-agent/bin/dbpigeon-agent configure"
+    echo "You can configure the agent later by running: /opt/dbpigeon-agent/bin/dbpigeon-agent configure --channel \"$channel\""
   fi
 else
   echo "Non-interactive installation complete"
   if [ -z "$DBPIGEON_API_KEY" ];
   then
-    echo "Configure the agent by running: /opt/dbpigeon-agent/bin/dbpigeon-agent configure"
+    echo "Configure the agent by running: /opt/dbpigeon-agent/bin/dbpigeon-agent configure --channel \"$channel\""
   fi
 fi
 echo
