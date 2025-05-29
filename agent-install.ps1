@@ -9,7 +9,7 @@
 # Parameters:
 #   -Channel: Release channel (main, dev). Default: main
 #   -NonInteractive: Skip interactive prompts. Default: false
-#   -SkipServiceStart: Install service but don't start it. Default: false
+#   -StartService: Start service after installation. Default: false
 #   -ApiKey: API key for configuration
 #   -ApiBaseUrl: Base URL for API configuration
 #   -InstallPath: Installation directory path
@@ -18,7 +18,7 @@
 param(
     [string]$Channel = "main",
     [switch]$NonInteractive,
-    [switch]$SkipServiceStart,
+    [switch]$StartService,
     [string]$ApiKey,
     [string]$ApiBaseUrl,
     [string]$InstallPath = "$env:ProgramFiles\dbPigeon Agent"
@@ -583,11 +583,11 @@ function Install-DbPigeonAgent {
         # Configure the WiX-installed Windows service
         Configure-DbPigeonService
         
-        if (-not $SkipServiceStart) {
+        if ($StartService) {
             Start-DbPigeonService
         }
         else {
-            Write-Log "Skipping service startup as requested"
+            Write-Log "Skipping service startup (use -StartService to start automatically)"
         }
         
         # Verify installation
@@ -600,7 +600,7 @@ function Install-DbPigeonAgent {
         
         Write-Log "Installation completed successfully!" "INFO"
         Write-Host ""
-        if (-not $SkipServiceStart) {
+        if ($StartService) {
             Write-Host "dbPigeon Agent has been installed and started as a Windows service." -ForegroundColor Green
         }
         else {
@@ -611,12 +611,12 @@ function Install-DbPigeonAgent {
         Write-Host "Configuration file: $ConfigPath" -ForegroundColor Green
         Write-Host ""
         
-        if ($SkipServiceStart) {
+        if (-not $StartService) {
             Write-Host "To start the service: Start-Service '$ServiceName'" -ForegroundColor Yellow
             Write-Host "To enable auto-start: sc.exe config '$ServiceName' start= auto" -ForegroundColor Yellow
             Write-Host ""
         }
-        elseif (-not $SkipServiceStart) {
+        else {
             Write-Host "To enable auto-start on boot: sc.exe config '$ServiceName' start= auto" -ForegroundColor Yellow
             Write-Host ""
         }
@@ -734,8 +734,8 @@ if ($env:DBPIGEON_INSTALL_NONINTERACTIVE) {
     $NonInteractive = $true
 }
 
-if ($env:DBPIGEON_SKIP_SERVICE_START) {
-    $SkipServiceStart = $true
+if ($env:DBPIGEON_START_SERVICE) {
+    $StartService = $true
 }
 
 if ($env:DBPIGEON_CHANNEL) {
