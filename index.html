@@ -36,20 +36,6 @@
             margin-bottom: 3rem;
         }
 
-        .logo {
-            width: 64px;
-            height: 64px;
-            margin: 0 auto 1rem;
-            background: linear-gradient(45deg, #4f46e5, #06b6d4);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: white;
-        }
-
         h1 {
             font-size: 2.5rem;
             font-weight: 700;
@@ -131,6 +117,10 @@
             border-left: 4px solid #f59e0b;
         }
 
+        .windows {
+            border-left: 4px solid #00d4aa;
+        }
+
         .command-box {
             background: #1a1a1a;
             border: 1px solid #333;
@@ -148,6 +138,11 @@
             content: "$";
             color: #666;
             margin-right: 0.5rem;
+        }
+
+        .command-box.powershell::before {
+            content: "PS>";
+            color: #00d4aa;
         }
 
         .copy-btn {
@@ -226,6 +221,84 @@
             margin-left: 0.5rem;
         }
 
+        .tabs {
+            display: flex;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 2rem;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .tab {
+            background: none;
+            border: none;
+            color: #a0a0a0;
+            font-size: 1.1rem;
+            font-weight: 600;
+            padding: 1rem 2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+            white-space: nowrap;
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .tab:hover {
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .tab.active {
+            color: #ffffff;
+            border-bottom-color: #4f46e5;
+            background: rgba(79, 70, 229, 0.1);
+        }
+
+        .tab::before {
+            font-size: 1.2rem;
+        }
+
+        .tab.linux::before {
+            content: "🐧";
+        }
+
+        .tab.windows::before {
+            content: "⊞";
+            font-weight: bold;
+            color: #00a1f1;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .installation-section {
+            background: rgba(30, 30, 30, 0.5);
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            margin-bottom: 2.5rem;
+        }
+
         @media (max-width: 768px) {
             body {
                 padding: 0.5rem;
@@ -241,12 +314,6 @@
                 margin-bottom: 2rem;
             }
             
-            .logo {
-                width: 48px;
-                height: 48px;
-                font-size: 1.2rem;
-            }
-            
             h1 {
                 font-size: 1.8rem;
                 margin-bottom: 0.3rem;
@@ -256,10 +323,28 @@
                 font-size: 1rem;
                 margin-bottom: 1.5rem;
             }
+
+            .tabs {
+                margin-bottom: 1.5rem;
+            }
+
+            .tab {
+                font-size: 0.95rem;
+                padding: 0.8rem 1rem;
+                flex-shrink: 0;
+            }
+
+            .tab::before {
+                font-size: 1rem;
+            }
             
             .section {
                 padding: 1rem;
                 margin-bottom: 2rem;
+            }
+
+            .installation-section {
+                padding: 1rem;
             }
             
             .section-title {
@@ -298,6 +383,10 @@
             }
             
             .command-box::before {
+                margin-right: 0.3rem;
+            }
+
+            .command-box.powershell::before {
                 margin-right: 0.3rem;
             }
             
@@ -360,6 +449,15 @@
             .subtitle {
                 font-size: 0.9rem;
             }
+
+            .tab {
+                font-size: 0.85rem;
+                padding: 0.6rem 0.8rem;
+            }
+
+            .tab::before {
+                font-size: 0.9rem;
+            }
             
             .channel {
                 padding: 0.6rem;
@@ -389,6 +487,10 @@
                 padding: 0.6rem;
                 margin-bottom: 1.5rem;
             }
+
+            .installation-section {
+                padding: 0.6rem;
+            }
             
             .signing-key {
                 padding: 0.6rem;
@@ -413,6 +515,15 @@
             
             h1 {
                 font-size: 1.3rem;
+            }
+
+            .tab {
+                font-size: 0.8rem;
+                padding: 0.5rem 0.6rem;
+            }
+
+            .tab::before {
+                font-size: 0.8rem;
             }
             
             .channel-label {
@@ -440,57 +551,122 @@
 <body>
     <div class="container">
         <div class="header">
-            <div class="logo">🐦</div>
             <h1>dbPigeon Agent</h1>
             <p class="subtitle">Package Repository</p>
         </div>
 
-        <div class="section">
-            <div class="description">
-                Ready-to-install agent packages are provided for popular Debian-based and Red Hat-based Linux distributions, supporting both x86 and ARM architectures.
-            </div>
-            <div class="description">
-                <strong>Supported Distributions:</strong>
-            </div>
-            <div class="description">
-                • <strong>Ubuntu:</strong> 20.04 (focal), 22.04 (jammy), 24.04 (noble) and newer<br>
-                • <strong>Debian:</strong> 12 (bookworm) and newer<br>
-                • <strong>RHEL/CentOS/AlmaLinux/Rocky:</strong> 7, 8, 9<br>
-                • <strong>Fedora:</strong> 37, 38, 39, 40<br>
-                • <strong>Amazon Linux:</strong> 2, 2023
-            </div>
-            <div class="description">
-                Execute the installation script to automatically identify your platform and install the appropriate package.
-            </div>
+        <div class="tabs">
+            <button class="tab linux active" onclick="showTab('linux')">
+                Linux
+            </button>
+            <button class="tab windows" onclick="showTab('windows')">
+                Windows
+            </button>
+        </div>
 
-            <div class="install-section">
-                <!-- Stable channel hidden until ready
-                <div class="channel stable">
-                    <div class="channel-label">
-                        Stable Channel
-                        <span class="badge">Recommended</span>
+        <div id="linux-content" class="tab-content active">
+            <div class="installation-section">
+                <div class="section-title">Linux Installation</div>
+                <div class="description">
+                    Ready-to-install agent packages are provided for popular Debian-based and Red Hat-based Linux distributions, supporting both x86 and ARM architectures. The Linux installation includes systemd service integration, automatic updates, and proper uninstall support.
+                </div>
+                <div class="description">
+                    <strong>Supported Distributions:</strong>
+                </div>
+                <div class="description">
+                    • <strong>Ubuntu:</strong> 20.04 (focal), 22.04 (jammy), 24.04 (noble) and newer<br>
+                    • <strong>Debian:</strong> 12 (bookworm) and newer<br>
+                    • <strong>RHEL/CentOS/AlmaLinux/Rocky:</strong> 7, 8, 9<br>
+                    • <strong>Fedora:</strong> 37, 38, 39, 40<br>
+                    • <strong>Amazon Linux:</strong> 2, 2023
+                </div>
+                <div class="description">
+                    Execute the installation script to automatically identify your platform and install the appropriate package.
+                </div>
+
+                <div class="install-section">
+                    <!-- Stable channel hidden until ready
+                    <div class="channel stable">
+                        <div class="channel-label">
+                            Stable Channel
+                            <span class="badge">Recommended</span>
+                        </div>
+                        <div class="command-box">
+                            curl https://techmindpartners.github.io/dbpigeon-agent-dist/agent-install.sh | bash
+                            <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+                        </div>
                     </div>
-                    <div class="command-box">
-                        curl https://techmindpartners.github.io/dbpigeon-agent-dist/agent-install.sh | bash
-                        <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+                    -->
+
+                    <div class="channel dev">
+                        <div class="channel-label">
+                            Dev Channel
+                            <span class="badge">Latest Features</span>
+                        </div>
+                        <div class="command-box">
+                            curl https://techmindpartners.github.io/dbpigeon-agent-dist/agent-install.sh | bash -s -- dev
+                            <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+                        </div>
                     </div>
                 </div>
-                -->
 
-                <div class="channel dev">
-                    <div class="channel-label">
-                        Dev Channel
-                        <span class="badge">Latest Features</span>
-                    </div>
-                    <div class="command-box">
-                        curl https://techmindpartners.github.io/dbpigeon-agent-dist/agent-install.sh | bash -s -- dev
-                        <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
-                    </div>
+                <div class="description" style="margin-top: 1.5rem; color: #a0a0a0; font-size: 0.9rem;">
+                    <strong>Note:</strong> The systemd service is created with manual start type by default. Use the commands shown in the installation output to start the service and enable auto-start if desired.
                 </div>
             </div>
         </div>
 
-        <div class="signing-key">
+        <div id="windows-content" class="tab-content">
+            <div class="installation-section">
+                <div class="section-title">Windows Installation</div>
+                <div class="description">
+                    MSI packages are provided for Windows systems, supporting both x64 and ARM64 architectures. The Windows installation includes Windows Service integration, automatic updates, and proper uninstall support.
+                </div>
+                <div class="description">
+                    <strong>Supported Windows Versions:</strong>
+                </div>
+                <div class="description">
+                    • <strong>Windows 10/11</strong> (x64, ARM64)<br>
+                    • <strong>Windows Server 2019+</strong> (x64, ARM64)<br>
+                    • <strong>Requirements:</strong> Administrator privileges, Internet connectivity
+                </div>
+                <div class="description">
+                    Execute the PowerShell installation script to automatically download and install the appropriate MSI package.
+                </div>
+
+                <div class="install-section">
+                    <!-- Stable channel hidden until ready
+                    <div class="channel stable windows">
+                        <div class="channel-label">
+                            Stable Channel
+                            <span class="badge">Recommended</span>
+                        </div>
+                        <div class="command-box powershell">
+                            iex (iwr -UseBasicParsing https://techmindpartners.github.io/dbpigeon-agent-dist/agent-install.ps1).Content
+                            <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+                        </div>
+                    </div>
+                    -->
+
+                    <div class="channel dev windows">
+                        <div class="channel-label">
+                            Dev Channel
+                            <span class="badge">Latest Features</span>
+                        </div>
+                        <div class="command-box powershell">
+                            iex (iwr -UseBasicParsing https://techmindpartners.github.io/dbpigeon-agent-dist/agent-install.ps1).Content; .\agent-install.ps1 -Channel "dev"
+                            <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="description" style="margin-top: 1.5rem; color: #a0a0a0; font-size: 0.9rem;">
+                    <strong>Note:</strong> The Windows service is created with manual start type by default. Use the commands shown in the installation output to start the service and enable auto-start if desired.
+                </div>
+            </div>
+        </div>
+
+        <div class="signing-key" style="margin-top: 2rem;">
             <div class="section-title">Repository Signing Key</div>
             <div class="key-info">
                 <div class="key-item">
@@ -508,10 +684,37 @@
     </div>
 
     <script>
+        function showTab(tabName) {
+            // Hide all tab contents
+            const tabContents = document.querySelectorAll('.tab-content');
+            tabContents.forEach(content => {
+                content.classList.remove('active');
+            });
+
+            // Remove active class from all tabs
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach(tab => {
+                tab.classList.remove('active');
+            });
+
+            // Show the selected tab content
+            document.getElementById(tabName + '-content').classList.add('active');
+
+            // Add active class to the selected tab
+            document.querySelector('.tab.' + tabName).classList.add('active');
+        }
+
         function copyToClipboard(button) {
             const commandBox = button.parentElement;
             // For mobile, get the command from the text content excluding the copy button
-            const command = commandBox.textContent.replace('Copy', '').replace('$', '').trim();
+            let command = commandBox.textContent.replace('Copy', '').trim();
+            
+            // Remove command prompt indicators
+            if (command.startsWith('$')) {
+                command = command.substring(1).trim();
+            } else if (command.startsWith('PS>')) {
+                command = command.substring(3).trim();
+            }
             
             navigator.clipboard.writeText(command).then(() => {
                 const originalText = button.textContent;
