@@ -568,7 +568,7 @@
             <div class="installation-section">
                 <div class="section-title">Linux Installation</div>
                 <div class="description">
-                    Ready-to-install agent packages are provided for popular Debian-based and Red Hat-based Linux distributions, supporting both x86 and ARM architectures. The Linux installation includes systemd service integration, automatic updates, and proper uninstall support.
+                    Ready-to-install agent packages are provided for popular Debian-based and Red Hat-based Linux distributions, supporting both x64 and ARM64 architectures. The Linux installation includes systemd service integration, automatic updates, and proper uninstall support.
                 </div>
                 <div class="description">
                     <strong>Supported Distributions:</strong>
@@ -626,8 +626,8 @@
                     <strong>Supported Windows Versions:</strong>
                 </div>
                 <div class="description">
-                    • <strong>Windows 10/11</strong> (x64, ARM64)<br>
-                    • <strong>Windows Server 2019+</strong> (x64, ARM64)<br>
+                    • <strong>Windows 10/11</strong><br>
+                    • <strong>Windows Server 2019+</strong><br>
                     • <strong>Requirements:</strong> Administrator privileges, Internet connectivity
                 </div>
                 <div class="description">
@@ -642,7 +642,7 @@
                             <span class="badge">Recommended</span>
                         </div>
                         <div class="command-box powershell">
-                            iex (iwr -UseBasicParsing https://techmindpartners.github.io/dbpigeon-agent-dist/agent-install.ps1).Content
+                            iwr -UseBasicParsing https://techmindpartners.github.io/dbpigeon-agent-dist/agent-install.ps1 -OutFile agent-install.ps1; .\agent-install.ps1
                             <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
                         </div>
                     </div>
@@ -654,7 +654,7 @@
                             <span class="badge">Latest Features</span>
                         </div>
                         <div class="command-box powershell">
-                            iex (iwr -UseBasicParsing https://techmindpartners.github.io/dbpigeon-agent-dist/agent-install.ps1).Content; .\agent-install.ps1 -Channel "dev"
+                            iwr -UseBasicParsing https://techmindpartners.github.io/dbpigeon-agent-dist/agent-install.ps1 -OutFile agent-install.ps1; .\agent-install.ps1 -Channel "dev"
                             <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
                         </div>
                     </div>
