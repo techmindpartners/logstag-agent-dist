@@ -1,0 +1,51 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
+
+Architectures: amd64 arm64
+Codename: stable
+Components: dev main
+Date: Thu, 29 May 2025 10:12:40 +0000
+Description: Official Debian packages for dbPigeon Agent
+Label: dbPigeon Agent Packages
+Origin: TechMindPartners
+Suite: stable
+MD5Sum:
+ c75b9941e522f81c0843c7c630416dd2              230 Release
+ 1989453d1ce03368965b89791f963d55             1180 dev/binary-amd64/Packages
+ c59be35d9833156a8a4e4c5134f66bd8              524 dev/binary-amd64/Packages.gz
+ 1989453d1ce03368965b89791f963d55             1180 dev/binary-arm64/Packages
+ c59be35d9833156a8a4e4c5134f66bd8              524 dev/binary-arm64/Packages.gz
+SHA1:
+ 8b130398cabe98cf46b8a16013948ae60d5c56fc              230 Release
+ f9130612dbb8bce43842010b634523127ed3827d             1180 dev/binary-amd64/Packages
+ 79e9fa0cada21d08d175da3bb3fdb51862f11751              524 dev/binary-amd64/Packages.gz
+ f9130612dbb8bce43842010b634523127ed3827d             1180 dev/binary-arm64/Packages
+ 79e9fa0cada21d08d175da3bb3fdb51862f11751              524 dev/binary-arm64/Packages.gz
+SHA256:
+ b942539d58e166fb8eb3c8833487b75fd3a1f4b54823dfb7d9f553bcc8ec8a4f              230 Release
+ fa41b19467ae9ba824224f5df42af42dec311e3a59cb30e69e246825e49deda2             1180 dev/binary-amd64/Packages
+ 966d8d082717ab27264e7094f13bd7d51d4641b4822b7b47d00a2bb7a4c31b36              524 dev/binary-amd64/Packages.gz
+ fa41b19467ae9ba824224f5df42af42dec311e3a59cb30e69e246825e49deda2             1180 dev/binary-arm64/Packages
+ 966d8d082717ab27264e7094f13bd7d51d4641b4822b7b47d00a2bb7a4c31b36              524 dev/binary-arm64/Packages.gz
+SHA512:
+ 3924363389e35dd31b84b241ba73a0e235b679b231c8fbc3408deb1ec9f61cf960f67c45188dc1c7f99bbf02168e19967ea790c9394ae85879cabddf9ff2373b              230 Release
+ 85a388547b52cb5590c0e55aaafd132517f2ad7f080e4c6dbef0bf9b69d57670b722cca2a0a163f3ed076a8fda8588f82dd4f09a988135fe67d7bc86af0b83cc             1180 dev/binary-amd64/Packages
+ 9af132b97421bd7460f6ae73fa2e1661952f32667560bd8efebc521d4ccb4330c2816439d9de6fbf31a7a412a3d51881c478a76dc4d8a0379e0f937e0a6d8da5              524 dev/binary-amd64/Packages.gz
+ 85a388547b52cb5590c0e55aaafd132517f2ad7f080e4c6dbef0bf9b69d57670b722cca2a0a163f3ed076a8fda8588f82dd4f09a988135fe67d7bc86af0b83cc             1180 dev/binary-arm64/Packages
+ 9af132b97421bd7460f6ae73fa2e1661952f32667560bd8efebc521d4ccb4330c2816439d9de6fbf31a7a412a3d51881c478a76dc4d8a0379e0f937e0a6d8da5              524 dev/binary-arm64/Packages.gz
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCgAdFiEEy8Ueh7J9nt6XOspxvk0V/wXZHX8FAmg4MxgACgkQvk0V/wXZ
+HX8kQw/+PmsVzAQ5e8tt5qE8oq8Fg0Kdl1s7cITBH34XVKXL7I1mWtJ9QE+P9wvq
+cS/ISdNL+afQZnbf8dYafsfvUmkUm0FEYK2FInHk0EHLnzaxWlzpRBJHNjMIKrn2
+2FcF4gBgsfuPWu2p/I0XQplEykkTdOxxFV+X5ZL7yTKiczKdenxGaNrCnor6bzw+
+Qt1Wul92YEZhQ4j1wKUyEF4nL7eKX3K7mOOxlHhrfycLQoRRlDMmlBX94iaOlHy3
+GYADRJnFQGa92322SdB8FiMyGukgiAQDT1A/p+ffuD259RH0FzFuDBbSz+4V4WVQ
+dFw69wpcatT3EEd8IbXOLSH6J+HKNZGcbUEkJPNYjU8ZHTME7scrpLVPXoRp6EPD
+B8++92SUm7vPrgEHquBxECKYaXY1XS+qeNzGfgzUIk5p6stCdgk0pdrNciWoPUu/
+xXnL6oU+0iG3GPU0IDMKgbn2YTdywiQwGwpr+rMF3YilGJsai9j+Y4gNZuUQlisS
+6LI0USWbsFBJwE8EOMng1p8noAYJV6dKscKz378Gcl6pBpwSa/7fff1L29RPnIM2
+4urV44lqSQmDuey39Efd7fXMIzW2w7exBzLndNaHtamZz6Qdvl84MdYm2fCSqKKg
+GmWPdwrozGtAJJesicg4bHB8H/DN2iJ1a67m4/LlsRfu4A2zudA=
+=B2wM
+-----END PGP SIGNATURE-----
