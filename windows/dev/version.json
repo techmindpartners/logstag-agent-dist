@@ -1,25 +1,25 @@
 {
   "channel": "dev",
-  "latest_version": "0.1.46",
-  "generated_at": "2025-05-29T08:32:47Z",
+  "latest_version": "0.1.47",
+  "generated_at": "2025-05-29T10:02:51Z",
   "releases": {
     "windows-x86_64": {
+      "checksum": "57195d208126e8c1c7e732ff6bc31e89ed3edc6c6b31d9cc7b6eb5ee9155557c",
       "msi": {
-        "checksum": "107afd78c3248ff46f4dd1928dab040d6b60680228ab0fa400fd0217295be1c6",
+        "download_url": "https://techmindpartners.github.io/dbpigeon-agent-dist/windows/dev/x64/dbpigeon-agent-0_1_47-x64.msi",
         "package_type": "msi",
-        "size": 7307264,
-        "download_url": "https://techmindpartners.github.io/dbpigeon-agent-dist/windows/dev/x64/dbpigeon-agent-0_1_46-x64.msi"
+        "checksum": "9fc2f7ffa84faecc609d4601afe91fe9cac5f758c86fc5e721439eff6e116d4d",
+        "size": 7335936
       },
-      "size": 14027264,
+      "download_url": "https://techmindpartners.github.io/dbpigeon-agent-dist/windows/dev/x64/dbpigeon-agent-0_1_47-x64.exe",
       "updater": {
-        "checksum": "e2e5e256194bf976a7ff8908c841bcdab37d59b9d0f8b44898c89bb3785780ef",
+        "download_url": "https://techmindpartners.github.io/dbpigeon-agent-dist/windows/dev/x64/dbpigeon-agent-updater-0_1_47-x64.exe",
         "package_type": "binary",
-        "size": 5040128,
-        "download_url": "https://techmindpartners.github.io/dbpigeon-agent-dist/windows/dev/x64/dbpigeon-agent-updater-0_1_46-x64.exe"
+        "checksum": "6e9a2329652e172fd2f4a15d90b58493da01bdd28241ea9c67db320fce361a8d",
+        "size": 5039616
       },
-      "download_url": "https://techmindpartners.github.io/dbpigeon-agent-dist/windows/dev/x64/dbpigeon-agent-0_1_46-x64.exe",
-      "checksum": "539157c73226381526679431af1b987f7ae7dab1b5919954212ac82ce9bfba97",
-      "package_type": "binary"
+      "package_type": "binary",
+      "size": 14112768
     }
   }
 }
