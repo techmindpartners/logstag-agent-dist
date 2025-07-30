@@ -5,11 +5,11 @@ set -e
 
 # Add cleanup trap for temporary files
 cleanup() {
-  if [ -f "/tmp/dbpigeon_key.asc" ]; then
-    rm -f /tmp/dbpigeon_key.asc
+  if [ -f "/tmp/logstag_key.asc" ]; then
+    rm -f /tmp/logstag_key.asc
   fi
-  if [ -f "/tmp/dbpigeon_key.tmp" ]; then
-    rm -f /tmp/dbpigeon_key.tmp
+  if [ -f "/tmp/logstag_key.tmp" ]; then
+    rm -f /tmp/logstag_key.tmp
   fi
 }
 
@@ -25,7 +25,7 @@ fail () {
   >&2 echo "  • Check internet connectivity"
   >&2 echo "  • Verify you have sudo permissions"
   >&2 echo "  • Check system logs: journalctl -xe"
-  >&2 echo "  • Visit: https://docs.dbpigeon.com/troubleshooting"
+  >&2 echo "  • Visit: https://docs.logstag.ai/troubleshooting"
   >&2 echo "  • For security issues, verify GPG key fingerprint"
   exit 1
 }
@@ -79,8 +79,8 @@ validate_api_key() {
 # Function to verify configuration after changes
 validate_config() {
   echo "Validating configuration..."
-  if test -x /opt/dbpigeon-agent/bin/dbpigeon-agent; then
-    if ! /opt/dbpigeon-agent/bin/dbpigeon-agent --check-config 2>/dev/null; then
+  if test -x /opt/logstag-agent/bin/logstag-agent; then
+    if ! /opt/logstag-agent/bin/logstag-agent --check-config 2>/dev/null; then
       echo "Warning: Configuration validation failed, but continuing with installation"
     else
       echo "Configuration validation successful"
@@ -116,8 +116,8 @@ while [[ $# -gt 0 ]]; do
 done
 
 # Use environment variable if no command line argument provided
-if [ -z "$channel" ] && [ -n "$DBPIGEON_CHANNEL" ]; then
-  channel="$DBPIGEON_CHANNEL"
+if [ -z "$channel" ] && [ -n "$LOGSTAG_CHANNEL" ]; then
+  channel="$LOGSTAG_CHANNEL"
 fi
 
 # Default to main channel if still not set
@@ -130,21 +130,21 @@ if [ "$channel" != "main" ] && [ "$channel" != "dev" ]; then
   fail "Invalid channel: $channel. Must be 'main' or 'dev'"
 fi
 
-echo "Installing dbPigeon Agent from '$channel' channel"
+echo "Installing Logstag Agent from '$channel' channel"
 
 # Initialize variables for installation options
 # These will be set differently based on whether we're in interactive or non-interactive mode
-dbpigeon_opts=''
+logstag_opts=''
 user_input=''
 yum_opts=''
 apt_opts=''
-if [ -n "$DBPIGEON_INSTALL_NONINTERACTIVE" ];
+if [ -n "$LOGSTAG_INSTALL_NONINTERACTIVE" ];
 then
   # Non-interactive mode: don't prompt for user input, assume yes for all prompts
   user_input=/dev/null
   apt_opts='--yes'
   yum_opts='--assumeyes'
-  dbpigeon_opts="--recommended --db-name=${DB_NAME:-postgres}"
+  logstag_opts="--recommended --db-name=${DB_NAME:-postgres}"
 else
   # Interactive mode: read user input from terminal
   user_input=/dev/tty
@@ -154,7 +154,7 @@ fi
 # Returns true (0) if user confirms or doesn't provide input (default is yes)
 # Returns false (1) if user explicitly declines
 confirm () {
-  if [ -n "$DBPIGEON_INSTALL_NONINTERACTIVE" ];
+  if [ -n "$LOGSTAG_INSTALL_NONINTERACTIVE" ];
   then
     # In non-interactive mode, always return true (proceed)
     return 0
@@ -314,90 +314,90 @@ then
     fail "unsupported architecture for RPM: $arch"
   fi
   
-  # Create repository configuration file for dbPigeon Agent
-  echo "[dbpigeon_agent]
-name=dbpigeon_agent
-baseurl=https://techmindpartners.github.io/dbpigeon-agent-dist/rpm/$channel/$rpm_arch
+  # Create repository configuration file for Logstag Agent
+  echo "[logstag_agent]
+name=logstag_agent
+baseurl=https://techmindpartners.github.io/logstag-agent-dist/rpm/$channel/$rpm_arch
 repo_gpgcheck=0
 gpgcheck=0
 enabled=1
 sslverify=1
 sslcacert=/etc/pki/tls/certs/ca-bundle.crt
-metadata_expire=300" | $maybe_sudo tee -a /etc/yum.repos.d/dbpigeon_agent.repo
+metadata_expire=300" | $maybe_sudo tee -a /etc/yum.repos.d/logstag_agent.repo
   # Update package metadata cache
   $maybe_sudo yum $yum_opts makecache <$user_input
-  # Install the dbPigeon Agent package
-  $maybe_sudo yum $yum_opts install dbpigeon-agent <$user_input
+  # Install the Logstag Agent package
+  $maybe_sudo yum $yum_opts install logstag-agent <$user_input
 elif [ "$pkg" = deb ];
 then
   # For Debian-based distributions (Ubuntu, Debian)
   # Configure the apt source based on architecture and channel
   if [ "$arch" = 'x86_64' ];
   then
-    apt_source="deb [arch=amd64 signed-by=/etc/apt/keyrings/dbpigeon_signing_key.asc] https://techmindpartners.github.io/dbpigeon-agent-dist/ stable $channel"
+    apt_source="deb [arch=amd64 signed-by=/etc/apt/keyrings/logstag_signing_key.asc] https://techmindpartners.github.io/logstag-agent-dist/ stable $channel"
   elif [ "$arch" = 'arm64' ] || [ "$arch" = 'aarch64' ];
   then
-    apt_source="deb [arch=arm64 signed-by=/etc/apt/keyrings/dbpigeon_signing_key.asc] https://techmindpartners.github.io/dbpigeon-agent-dist/ stable $channel"
+    apt_source="deb [arch=arm64 signed-by=/etc/apt/keyrings/logstag_signing_key.asc] https://techmindpartners.github.io/logstag-agent-dist/ stable $channel"
   fi
   # Create keyrings directory and download signing key with retry logic
   $maybe_sudo mkdir -p /etc/apt/keyrings
-  download_with_retry "https://techmindpartners.github.io/dbpigeon-agent-dist/dbpigeon_signing_key.asc" "/tmp/dbpigeon_key.asc"
-  $maybe_sudo mv /tmp/dbpigeon_key.asc /etc/apt/keyrings/dbpigeon_signing_key.asc
-  # Add dbpigeon repository to sources list
-  echo "$apt_source" | $maybe_sudo tee /etc/apt/sources.list.d/dbpigeon_agent.list
+  download_with_retry "https://techmindpartners.github.io/logstag-agent-dist/logstag_signing_key.asc" "/tmp/logstag_key.asc"
+  $maybe_sudo mv /tmp/logstag_key.asc /etc/apt/keyrings/logstag_signing_key.asc
+  # Add logstag repository to sources list
+  echo "$apt_source" | $maybe_sudo tee /etc/apt/sources.list.d/logstag_agent.list
   # Update package lists
   $maybe_sudo apt-get $apt_opts update <$user_input
-  # Install the dbPigeon Agent package
-  $maybe_sudo apt-get $apt_opts install dbpigeon-agent <$user_input
+  # Install the Logstag Agent package
+  $maybe_sudo apt-get $apt_opts install logstag-agent <$user_input
 else
   fail "unrecognized package kind: $pkg"
 fi
 
 # Configure the agent if environment variables are provided
-if [ -n "$DBPIGEON_API_BASE_URL" ];
+if [ -n "$LOGSTAG_API_BASE_URL" ];
 then
   # Validate URL format before using it
-  validate_url "$DBPIGEON_API_BASE_URL"
+  validate_url "$LOGSTAG_API_BASE_URL"
   # Set custom API base URL if provided (create backup first)
-  $maybe_sudo sed -i.bak "s|^api_base_url = \"api_base_url\"$|api_base_url = \"${DBPIGEON_API_BASE_URL}\"|" /etc/dbpigeon-agent.toml
+  $maybe_sudo sed -i.bak "s|^api_base_url = \"api_base_url\"$|api_base_url = \"${LOGSTAG_API_BASE_URL}\"|" /etc/logstag-agent.toml
 fi
 
-if [ -n "$DBPIGEON_API_KEY" ];
+if [ -n "$LOGSTAG_API_KEY" ];
 then
   # Validate API key format before using it
-  validate_api_key "$DBPIGEON_API_KEY"
+  validate_api_key "$LOGSTAG_API_KEY"
   # Set API key if provided (create backup first)
-  $maybe_sudo sed -i.bak "s|^api_key = \"your_api_key\"$|api_key = \"${DBPIGEON_API_KEY}\"|" /etc/dbpigeon-agent.toml
+  $maybe_sudo sed -i.bak "s|^api_key = \"your_api_key\"$|api_key = \"${LOGSTAG_API_KEY}\"|" /etc/logstag-agent.toml
 fi
 
 # Validate configuration after modifications
-if [ -n "$DBPIGEON_API_KEY" ] || [ -n "$DBPIGEON_API_BASE_URL" ]; then
+if [ -n "$LOGSTAG_API_KEY" ] || [ -n "$LOGSTAG_API_BASE_URL" ]; then
   validate_config
 fi
 
 # Verify the installation was successful
-echo "Checking install by running 'dbpigeon-agent --version'"
-/opt/dbpigeon-agent/bin/dbpigeon-agent --version
+echo "Checking install by running 'logstag-agent --version'"
+/opt/logstag-agent/bin/logstag-agent --version
 echo
 
-echo "The dbPigeon Agent was installed successfully"
+echo "The Logstag Agent was installed successfully"
 echo
 
 # Offer to configure the agent if in interactive mode and not already configured
-if [ -z "$DBPIGEON_INSTALL_NONINTERACTIVE" ];
+if [ -z "$LOGSTAG_INSTALL_NONINTERACTIVE" ];
 then
   if confirm "Would you like to configure the agent now?";
   then
     echo "Starting interactive configuration..."
-    /opt/dbpigeon-agent/bin/dbpigeon-agent configure --channel "$channel"
+    /opt/logstag-agent/bin/logstag-agent configure --channel "$channel"
   else
-    echo "You can configure the agent later by running: /opt/dbpigeon-agent/bin/dbpigeon-agent configure --channel \"$channel\""
+    echo "You can configure the agent later by running: /opt/logstag-agent/bin/logstag-agent configure --channel \"$channel\""
   fi
 else
   echo "Non-interactive installation complete"
-  if [ -z "$DBPIGEON_API_KEY" ];
+  if [ -z "$LOGSTAG_API_KEY" ];
   then
-    echo "Configure the agent by running: /opt/dbpigeon-agent/bin/dbpigeon-agent configure --channel \"$channel\""
+    echo "Configure the agent by running: /opt/logstag-agent/bin/logstag-agent configure --channel \"$channel\""
   fi
 fi
 echo
