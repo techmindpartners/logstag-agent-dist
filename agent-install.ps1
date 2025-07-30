@@ -1,4 +1,4 @@
-# dbPigeon Agent Windows Installation Script
+# Logstag Agent Windows Installation Script
 # This script downloads and installs MSI packages for proper Windows service integration
 # Supports Windows Server 2019+ and Windows 10/11
 # Architectures: x64, arm64
@@ -21,17 +21,17 @@ param(
     [switch]$StartService,
     [string]$ApiKey,
     [string]$ApiBaseUrl,
-    [string]$InstallPath = "$env:ProgramFiles\dbPigeon Agent"
+    [string]$InstallPath = "$env:ProgramFiles\Logstag Agent"
 )
 
 # Set error action preference
 $ErrorActionPreference = "Stop"
 
 # Global variables
-$DownloadBaseUrl = "https://techmindpartners.github.io/dbpigeon-agent-dist/windows"
-$TempDir = "$env:TEMP\dbpigeon-install"
-$ServiceName = "dbPigeon Agent"
-$ConfigPath = "$env:ProgramData\dbPigeon Agent\dbpigeon-agent.toml"
+$DownloadBaseUrl = "https://techmindpartners.github.io/logstag-agent-dist/windows"
+$TempDir = "$env:TEMP\logstag-install"
+$ServiceName = "Logstag Agent"
+$ConfigPath = "$env:ProgramData\Logstag Agent\logstag-agent.toml"
 
 # Logging function
 function Write-Log {
@@ -195,7 +195,7 @@ function Test-ExistingInstallation {
     Write-Log "Checking for existing installations..."
     
     # Check for existing MSI installation
-    $existingProduct = Get-WmiObject -Class Win32_Product -ErrorAction SilentlyContinue | Where-Object { $_.Name -eq "dbPigeon Agent" }
+    $existingProduct = Get-WmiObject -Class Win32_Product -ErrorAction SilentlyContinue | Where-Object { $_.Name -eq "Logstag Agent" }
     if ($existingProduct) {
         Write-Log "Found existing installation: $($existingProduct.Name) version $($existingProduct.Version)" "WARN"
         
@@ -228,7 +228,7 @@ function Test-ExistingInstallation {
 }
 
 # Function to configure the WiX-installed service
-function Configure-DbPigeonService {
+function Configure-LogstagService {
     Write-Log "Configuring $ServiceName Windows service..."
     
     # Verify the service was created by WiX
@@ -241,7 +241,7 @@ function Configure-DbPigeonService {
     
     # Configure service description (if not already set by WiX)
     try {
-        $descResult = sc.exe description $ServiceName "dbPigeon database monitoring agent" 2>&1
+        $descResult = sc.exe description $ServiceName "Logstag database monitoring agent" 2>&1
         if ($LASTEXITCODE -ne 0) {
             Write-Log "Warning: Failed to set service description: $descResult" "WARN"
         } else {
@@ -268,7 +268,7 @@ function Configure-DbPigeonService {
     # Create Windows Event Log source for better diagnostics
     try {
         Write-Log "Creating Windows Event Log source..."
-        $eventLogSource = "dbPigeon Agent"
+        $eventLogSource = "Logstag Agent"
         if (-not [System.Diagnostics.EventLog]::SourceExists($eventLogSource)) {
             New-EventLog -LogName Application -Source $eventLogSource
             Write-Log "Windows Event Log source created successfully"
@@ -285,7 +285,7 @@ function Configure-DbPigeonService {
 }
 
 # Function to start the service
-function Start-DbPigeonService {
+function Start-LogstagService {
     Write-Log "Starting $ServiceName service..."
     
     try {
@@ -338,7 +338,7 @@ function Update-Configuration {
 
 # Function to validate configuration
 function Test-Configuration {
-    $exePath = Join-Path $InstallPath "bin\dbpigeon-agent.exe"
+    $exePath = Join-Path $InstallPath "bin\logstag-agent.exe"
     if (Test-Path $exePath) {
         Write-Log "Validating configuration..."
         try {
@@ -408,8 +408,8 @@ function Test-SystemRequirements {
 }
 
 # Main installation function
-function Install-DbPigeonAgent {
-    Write-Log "Starting dbPigeon Agent installation"
+function Install-LogstagAgent {
+    Write-Log "Starting Logstag Agent installation"
     Write-Log "Channel: $Channel"
     
     # Validate inputs
@@ -528,7 +528,7 @@ function Install-DbPigeonAgent {
         Test-ExistingInstallation
         
         # Install MSI package
-        Write-Log "Installing dbPigeon Agent..."
+        Write-Log "Installing Logstag Agent..."
         
         # Create log file for MSI installation
         $msiLogPath = Join-Path $TempDir "msi-install.log"
@@ -572,7 +572,7 @@ function Install-DbPigeonAgent {
             Write-Error-And-Exit "MSI installation failed with exit code: $($process.ExitCode) - $errorMeaning"
         }
         
-        Write-Log "dbPigeon Agent installed successfully"
+        Write-Log "Logstag Agent installed successfully"
         
         # Update configuration if environment variables provided
         if ($ApiKey -or $ApiBaseUrl) {
@@ -581,17 +581,17 @@ function Install-DbPigeonAgent {
         }
         
         # Configure the WiX-installed Windows service
-        Configure-DbPigeonService
+        Configure-LogstagService
         
         if ($StartService) {
-            Start-DbPigeonService
+            Start-LogstagService
         }
         else {
             Write-Log "Skipping service startup (use -StartService to start automatically)"
         }
         
         # Verify installation
-        $exePath = Join-Path $InstallPath "bin\dbpigeon-agent.exe"
+        $exePath = Join-Path $InstallPath "bin\logstag-agent.exe"
         if (Test-Path $exePath) {
             Write-Log "Verifying installation..."
             $version = & $exePath --version 2>$null
@@ -601,10 +601,10 @@ function Install-DbPigeonAgent {
         Write-Log "Installation completed successfully!" "INFO"
         Write-Host ""
         if ($StartService) {
-            Write-Host "dbPigeon Agent has been installed and started as a Windows service." -ForegroundColor Green
+            Write-Host "Logstag Agent has been installed and started as a Windows service." -ForegroundColor Green
         }
         else {
-            Write-Host "dbPigeon Agent has been installed as a Windows service (not started)." -ForegroundColor Green
+            Write-Host "Logstag Agent has been installed as a Windows service (not started)." -ForegroundColor Green
         }
         Write-Host "Service name: $ServiceName" -ForegroundColor Green
         Write-Host "Installation path: $InstallPath" -ForegroundColor Green
@@ -714,7 +714,7 @@ function Test-ServiceDiagnostics {
     
     # Check Application Event Log for service-specific errors
     try {
-        $appEvents = Get-EventLog -LogName Application -Source "dbPigeon Agent" -Newest 5 -ErrorAction SilentlyContinue
+        $appEvents = Get-EventLog -LogName Application -Source "Logstag Agent" -Newest 5 -ErrorAction SilentlyContinue
         if ($appEvents) {
             Write-Log "Recent application events:"
             foreach ($event in $appEvents) {
@@ -730,29 +730,29 @@ function Test-ServiceDiagnostics {
 }
 
 # Handle environment variables for non-interactive installation
-if ($env:DBPIGEON_INSTALL_NONINTERACTIVE) {
+if ($env:LOGSTAG_INSTALL_NONINTERACTIVE) {
     $NonInteractive = $true
 }
 
-if ($env:DBPIGEON_START_SERVICE) {
+if ($env:LOGSTAG_START_SERVICE) {
     $StartService = $true
 }
 
-if ($env:DBPIGEON_CHANNEL) {
-    $Channel = $env:DBPIGEON_CHANNEL
+if ($env:LOGSTAG_CHANNEL) {
+    $Channel = $env:LOGSTAG_CHANNEL
 }
 
-if ($env:DBPIGEON_API_KEY) {
-    $ApiKey = $env:DBPIGEON_API_KEY
+if ($env:LOGSTAG_API_KEY) {
+    $ApiKey = $env:LOGSTAG_API_KEY
 }
 
-if ($env:DBPIGEON_API_BASE_URL) {
-    $ApiBaseUrl = $env:DBPIGEON_API_BASE_URL
+if ($env:LOGSTAG_API_BASE_URL) {
+    $ApiBaseUrl = $env:LOGSTAG_API_BASE_URL
 }
 
 # Execute installation
 try {
-    Install-DbPigeonAgent
+    Install-LogstagAgent
 }
 catch {
     Write-Error-And-Exit "Installation failed: $($_.Exception.Message)"
