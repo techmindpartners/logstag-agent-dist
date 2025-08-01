@@ -3,6 +3,11 @@
 # Exit immediately if a command exits with a non-zero status.
 set -e
 
+# Path variables
+INSTALL_PATH="/opt/logstag-agent"
+CONFIG_PATH="/etc/logstag-agent.toml"
+LOG_PATH="/var/log/logstag-agent"
+
 # Add cleanup trap for temporary files
 cleanup() {
   if [ -f "/tmp/logstag_key.asc" ]; then
@@ -79,8 +84,8 @@ validate_api_key() {
 # Function to verify configuration after changes
 validate_config() {
   echo "Validating configuration..."
-  if test -x /opt/logstag-agent/bin/logstag-agent; then
-    if ! /opt/logstag-agent/bin/logstag-agent --check-config 2>/dev/null; then
+  if test -x "$INSTALL_PATH/bin/logstag-agent"; then
+    if ! "$INSTALL_PATH/bin/logstag-agent" --check-config 2>/dev/null; then
       echo "Warning: Configuration validation failed, but continuing with installation"
     else
       echo "Configuration validation successful"
@@ -359,7 +364,7 @@ then
   # Validate URL format before using it
   validate_url "$LOGSTAG_API_BASE_URL"
   # Set custom API base URL if provided (create backup first)
-  $maybe_sudo sed -i.bak "s|^api_base_url = \"api_base_url\"$|api_base_url = \"${LOGSTAG_API_BASE_URL}\"|" /etc/logstag-agent.toml
+  $maybe_sudo sed -i.bak "s|^api_base_url = \"api_base_url\"$|api_base_url = \"${LOGSTAG_API_BASE_URL}\"|" "$CONFIG_PATH"
 fi
 
 if [ -n "$LOGSTAG_API_KEY" ];
@@ -367,7 +372,7 @@ then
   # Validate API key format before using it
   validate_api_key "$LOGSTAG_API_KEY"
   # Set API key if provided (create backup first)
-  $maybe_sudo sed -i.bak "s|^api_key = \"your_api_key\"$|api_key = \"${LOGSTAG_API_KEY}\"|" /etc/logstag-agent.toml
+  $maybe_sudo sed -i.bak "s|^api_key = \"your_api_key\"$|api_key = \"${LOGSTAG_API_KEY}\"|" "$CONFIG_PATH"
 fi
 
 # Validate configuration after modifications
@@ -377,10 +382,7 @@ fi
 
 # Verify the installation was successful
 echo "Checking install by running 'logstag-agent --version'"
-/opt/logstag-agent/bin/logstag-agent --version
-echo
-
-echo "The Logstag Agent was installed successfully"
+"$INSTALL_PATH/bin/logstag-agent" --version
 echo
 
 # Offer to configure the agent if in interactive mode and not already configured
@@ -389,15 +391,20 @@ then
   if confirm "Would you like to configure the agent now?";
   then
     echo "Starting interactive configuration..."
-    /opt/logstag-agent/bin/logstag-agent configure --channel "$channel"
+    "$INSTALL_PATH/bin/logstag-agent" configure --channel "$channel"
   else
-    echo "You can configure the agent later by running: /opt/logstag-agent/bin/logstag-agent configure --channel \"$channel\""
+    echo "You can configure the agent later by running: $INSTALL_PATH/bin/logstag-agent configure --channel \"$channel\""
   fi
 else
   echo "Non-interactive installation complete"
   if [ -z "$LOGSTAG_API_KEY" ];
   then
-    echo "Configure the agent by running: /opt/logstag-agent/bin/logstag-agent configure --channel \"$channel\""
+    echo "Configure the agent by running: $INSTALL_PATH/bin/logstag-agent configure --channel \"$channel\""
   fi
 fi
+
+echo "The Logstag Agent was installed successfully"
+echo "Installation path: $INSTALL_PATH"
+echo "Configuration file: $CONFIG_PATH"
+echo "Log file path: $LOG_PATH"
 echo
