@@ -6,6 +6,14 @@
 # IMPORTANT: This installer only supports MSI packages. For binary updates of existing
 # installations, use the agent's built-in update mechanism.
 #
+# Quick Installation (handles execution policy automatically):
+#   iwr -UseBasicParsing https://techmindpartners.github.io/logstag-agent-dist/agent-install.ps1 | iex
+#
+# Alternative if execution policy is restricted:
+#   Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser -Force
+#   iwr -UseBasicParsing https://techmindpartners.github.io/logstag-agent-dist/agent-install.ps1 -OutFile agent-install.ps1
+#   .\agent-install.ps1
+#
 # Parameters:
 #   -Channel: Release channel (main, dev). Default: main
 #   -NonInteractive: Skip interactive prompts. Default: false
@@ -32,12 +40,65 @@ $DownloadBaseUrl = "https://techmindpartners.github.io/logstag-agent-dist/window
 $TempDir = "$env:TEMP\logstag-install"
 $ServiceName = "Logstag Agent"
 $ConfigPath = "$env:ProgramData\Logstag Agent\logstag-agent.toml"
+$LogPath = "$env:ProgramData\Logstag Agent\logs"
 
 # Logging function
 function Write-Log {
     param([string]$Message, [string]$Level = "INFO")
     $timestamp = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
     Write-Host "[$timestamp] [$Level] $Message"
+}
+
+# Function to check and handle PowerShell execution policy
+function Test-ExecutionPolicyAndSuggestFix {
+    $currentPolicy = Get-ExecutionPolicy -Scope CurrentUser
+    $systemPolicy = Get-ExecutionPolicy -Scope LocalMachine
+    
+    Write-Log "Current execution policy (CurrentUser): $currentPolicy"
+    Write-Log "Current execution policy (LocalMachine): $systemPolicy"
+    
+    # Check if the current policy allows script execution
+    $restrictivePolicies = @("Restricted", "AllSigned")
+    
+    if ($currentPolicy -in $restrictivePolicies -and $systemPolicy -in $restrictivePolicies) {
+        Write-Log "PowerShell execution policy is restrictive" "WARN"
+        Write-Host ""
+        Write-Host "PowerShell Execution Policy Notice:" -ForegroundColor Yellow
+        Write-Host "Your system has restrictive PowerShell execution policies that prevent running scripts." -ForegroundColor Yellow
+        Write-Host ""
+        Write-Host "To resolve this, you can:" -ForegroundColor Yellow
+        Write-Host "1. Set execution policy for current user (recommended):" -ForegroundColor Yellow
+        Write-Host "   Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser -Force" -ForegroundColor Cyan
+        Write-Host ""
+        Write-Host "2. Use the direct download method instead:" -ForegroundColor Yellow
+        Write-Host "   iwr -UseBasicParsing https://techmindpartners.github.io/logstag-agent-dist/agent-install.ps1 | iex" -ForegroundColor Cyan
+        Write-Host ""
+        
+        if (-not $NonInteractive) {
+            if (Get-UserConfirmation "Would you like to set the execution policy for the current user now?") {
+                try {
+                    Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser -Force
+                    Write-Log "Execution policy updated successfully"
+                    return $true
+                }
+                catch {
+                    Write-Log "Failed to update execution policy: $($_.Exception.Message)" "ERROR"
+                    Write-Host "Please run the command manually with Administrator privileges if needed." -ForegroundColor Yellow
+                    return $false
+                }
+            }
+            else {
+                Write-Host "Continuing with current execution policy. Script may fail if downloaded to file." -ForegroundColor Yellow
+                return $false
+            }
+        }
+        else {
+            Write-Log "Non-interactive mode: Execution policy check failed but continuing" "WARN"
+            return $false
+        }
+    }
+    
+    return $true
 }
 
 # Error handling function
@@ -50,6 +111,12 @@ function Write-Error-And-Exit {
     Write-Host "  • Check Windows Event Logs (Event Viewer > Windows Logs > Application)" -ForegroundColor Yellow
     Write-Host "  • Check MSI installation log for detailed error information" -ForegroundColor Yellow
     Write-Host "  • This installer requires MSI packages - use agent's update mechanism for binary updates" -ForegroundColor Yellow
+    Write-Host ""
+    Write-Host "If you encountered PowerShell execution policy issues:" -ForegroundColor Yellow
+    Write-Host "  • Try the direct installation method:" -ForegroundColor Yellow
+    Write-Host "    iwr -UseBasicParsing https://techmindpartners.github.io/logstag-agent-dist/agent-install.ps1 | iex" -ForegroundColor Cyan
+    Write-Host "  • Or set execution policy:" -ForegroundColor Yellow
+    Write-Host "    Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser -Force" -ForegroundColor Cyan
 
     exit 1
 }
@@ -412,6 +479,9 @@ function Install-LogstagAgent {
     Write-Log "Starting Logstag Agent installation"
     Write-Log "Channel: $Channel"
     
+    # Check PowerShell execution policy early
+    Test-ExecutionPolicyAndSuggestFix
+    
     # Validate inputs
     Test-Channel $Channel
     Test-ApiKey $ApiKey
@@ -609,6 +679,7 @@ function Install-LogstagAgent {
         Write-Host "Service name: $ServiceName" -ForegroundColor Green
         Write-Host "Installation path: $InstallPath" -ForegroundColor Green
         Write-Host "Configuration file: $ConfigPath" -ForegroundColor Green
+        Write-Host "Log file path: $LogPath" -ForegroundColor Green
         Write-Host ""
         
         if (-not $StartService) {
