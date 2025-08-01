@@ -685,20 +685,6 @@ function Install-LogstagAgent {
             Write-Log "Installed version: $version"
         }
         
-        Write-Log "Installation completed successfully!" "INFO"
-        Write-Host ""
-        if ($StartService) {
-            Write-Host "Logstag Agent has been installed and started as a Windows service." -ForegroundColor Green
-        }
-        else {
-            Write-Host "Logstag Agent has been installed as a Windows service (not started)." -ForegroundColor Green
-        }
-        Write-Host "Service name: $ServiceName" -ForegroundColor Green
-        Write-Host "Installation path: $InstallPath" -ForegroundColor Green
-        Write-Host "Configuration file: $ConfigPath" -ForegroundColor Green
-        Write-Host "Log file path: $LogPath" -ForegroundColor Green
-        Write-Host ""
-        
         if (-not $StartService) {
             Write-Host "To start the service: Start-Service '$ServiceName'" -ForegroundColor Yellow
             Write-Host "To enable auto-start: sc.exe config '$ServiceName' start= auto" -ForegroundColor Yellow
@@ -713,7 +699,19 @@ function Install-LogstagAgent {
         Write-Log "Starting agent configuration..."
         try {
             & $exePath configure --channel $Channel
-            Write-Log "Agent configuration completed successfully"
+            Write-Log "Installation completed successfully!" "INFO"
+            Write-Host ""
+            if ($StartService) {
+                Write-Host "Logstag Agent has been installed and started as a Windows service." -ForegroundColor Green
+            }
+            else {
+                Write-Host "Logstag Agent has been installed as a Windows service (not started)." -ForegroundColor Green
+            }
+            Write-Host "Service name: $ServiceName" -ForegroundColor Green
+            Write-Host "Installation path: $InstallPath" -ForegroundColor Green
+            Write-Host "Configuration file: $ConfigPath" -ForegroundColor Green
+            Write-Host "Log file path: $LogPath" -ForegroundColor Green
+            Write-Host ""
         }
         catch {
             Write-Log "Warning: Agent configuration encountered an issue: $($_.Exception.Message)" "WARN"
