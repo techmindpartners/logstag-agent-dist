@@ -101,16 +101,12 @@ function Test-ExecutionPolicyAndSuggestFix {
     return $true
 }
 
-# Error handling function
-function Write-Error-And-Exit {
-    param([string]$Message)
-    Write-Log $Message "ERROR"
+# Function to display troubleshooting information
+function Show-TroubleshootingInfo {
     Write-Host ""
     Write-Host "Troubleshooting:" -ForegroundColor Yellow
     Write-Host "  - Verify you have Administrator permissions" -ForegroundColor Yellow
     Write-Host "  - Check Windows Event Logs (Event Viewer > Windows Logs > Application)" -ForegroundColor Yellow
-    Write-Host "  - Check MSI installation log for detailed error information" -ForegroundColor Yellow
-    Write-Host "  - This installer requires MSI packages - use agent's update mechanism for binary updates" -ForegroundColor Yellow
     Write-Host ""
     Write-Host "If you encountered PowerShell execution policy issues:" -ForegroundColor Yellow
     Write-Host "  - Try the direct installation method:" -ForegroundColor Yellow
@@ -118,7 +114,10 @@ function Write-Error-And-Exit {
     Write-Host "  - Or set execution policy:" -ForegroundColor Yellow
     Write-Host "    Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser -Force" -ForegroundColor Cyan
     Write-Host ""
-    
+}
+
+# Function to handle interactive pause
+function Wait-ForUserInput {
     # Check if running interactively (not from ISE or direct execution)
     $IsInteractive = [Environment]::UserInteractive -and 
                      (-not [Environment]::GetCommandLineArgs().Contains('-NonInteractive')) -and
@@ -128,7 +127,14 @@ function Write-Error-And-Exit {
         Write-Host "Press any key to continue..." -ForegroundColor Yellow
         $null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
     }
+}
 
+# Error handling function
+function Write-Error-And-Exit {
+    param([string]$Message)
+    Write-Log $Message "ERROR"
+    Show-TroubleshootingInfo
+    Wait-ForUserInput
     exit 1
 }
 
@@ -832,33 +838,13 @@ if ($env:LOGSTAG_API_BASE_URL) {
     $ApiBaseUrl = $env:LOGSTAG_API_BASE_URL
 }
 
-# Check if running interactively (not from ISE or direct execution)
-$IsInteractive = [Environment]::UserInteractive -and 
-                 (-not [Environment]::GetCommandLineArgs().Contains('-NonInteractive')) -and
-                 (-not $env:LOGSTAG_INSTALL_NONINTERACTIVE)
-
 # Execute installation
 try {
     Install-LogstagAgent
 }
 catch {
     Write-Log "Installation failed: $($_.Exception.Message)" "ERROR"
-    Write-Host ""
-    Write-Host "Troubleshooting:" -ForegroundColor Yellow
-    Write-Host "  - Verify you have Administrator permissions" -ForegroundColor Yellow
-    Write-Host "  - Check Windows Event Logs (Event Viewer > Windows Logs > Application)" -ForegroundColor Yellow
-    Write-Host ""
-    Write-Host "If you encountered PowerShell execution policy issues:" -ForegroundColor Yellow
-    Write-Host "  - Try the direct installation method:" -ForegroundColor Yellow
-    Write-Host "    iwr -UseBasicParsing https://techmindpartners.github.io/logstag-agent-dist/agent-install.ps1 | iex" -ForegroundColor Cyan
-    Write-Host "  - Or set execution policy:" -ForegroundColor Yellow
-    Write-Host "    Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser -Force" -ForegroundColor Cyan
-    Write-Host ""
-    
-    if ($IsInteractive) {
-        Write-Host "Press any key to continue..." -ForegroundColor Yellow
-        $null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
-    }
-    
+    Show-TroubleshootingInfo
+    Wait-ForUserInput
     exit 1
 }
