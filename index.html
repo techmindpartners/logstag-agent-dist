@@ -654,7 +654,7 @@
                             <span class="badge">Latest Features</span>
                         </div>
                         <div class="command-box powershell">
-                            iwr -UseBasicParsing https://techmindpartners.github.io/logstag-agent-dist/agent-install.ps1 -OutFile agent-install.ps1; .\agent-install.ps1 -Channel "dev"
+                            $env:LOGSTAG_CHANNEL="dev"; iwr -UseBasicParsing https://techmindpartners.github.io/logstag-agent-dist/agent-install.ps1 | iex
                             <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
                         </div>
                     </div>
