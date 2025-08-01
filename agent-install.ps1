@@ -17,7 +17,7 @@
 # Parameters:
 #   -Channel: Release channel (main, dev). Default: main
 #   -NonInteractive: Skip interactive prompts. Default: false
-#   -StartService: Start service after installation. Default: false
+#   -StartService: Start service after installation. Default: true
 #   -ApiKey: API key for configuration
 #   -ApiBaseUrl: Base URL for API configuration
 #   -InstallPath: Installation directory path
@@ -26,7 +26,7 @@
 param(
     [string]$Channel = "main",
     [switch]$NonInteractive,
-    [switch]$StartService,
+    [switch]$StartService = $true,
     [string]$ApiKey,
     [string]$ApiBaseUrl,
     [string]$InstallPath = "$env:ProgramFiles\Logstag Agent"
@@ -674,7 +674,7 @@ function Install-LogstagAgent {
             Start-LogstagService
         }
         else {
-            Write-Log "Skipping service startup (use -StartService to start automatically)"
+            Write-Log "Skipping service startup (use -StartService:`$false to disable automatic startup)"
         }
         
         # Verify installation
