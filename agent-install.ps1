@@ -670,29 +670,12 @@ function Install-LogstagAgent {
         # Configure the WiX-installed Windows service
         Configure-LogstagService
         
-        if ($StartService) {
-            Start-LogstagService
-        }
-        else {
-            Write-Log "Skipping service startup (use -StartService:`$false to disable automatic startup)"
-        }
-        
         # Verify installation
         $exePath = Join-Path $InstallPath "bin\logstag-agent.exe"
         if (Test-Path $exePath) {
             Write-Log "Verifying installation..."
             $version = & $exePath --version 2>$null
             Write-Log "Installed version: $version"
-        }
-        
-        if (-not $StartService) {
-            Write-Host "To start the service: Start-Service '$ServiceName'" -ForegroundColor Yellow
-            Write-Host "To enable auto-start: sc.exe config '$ServiceName' start= auto" -ForegroundColor Yellow
-            Write-Host ""
-        }
-        else {
-            Write-Host "To enable auto-start on boot: sc.exe config '$ServiceName' start= auto" -ForegroundColor Yellow
-            Write-Host ""
         }
         
         # Always run configuration
@@ -707,6 +690,24 @@ function Install-LogstagAgent {
             else {
                 Write-Host "Logstag Agent has been installed as a Windows service (not started)." -ForegroundColor Green
             }
+
+            if ($StartService) {
+                Start-LogstagService
+            }
+            else {
+                Write-Log "Skipping service startup (use -StartService:`$false to disable automatic startup)"
+            }
+
+            if (-not $StartService) {
+                Write-Host "To start the service: Start-Service '$ServiceName'" -ForegroundColor Yellow
+                Write-Host "To enable auto-start: sc.exe config '$ServiceName' start= auto" -ForegroundColor Yellow
+                Write-Host ""
+            }
+            else {
+                Write-Host "To enable auto-start on boot: sc.exe config '$ServiceName' start= auto" -ForegroundColor Yellow
+                Write-Host ""
+            }
+
             Write-Host "Service name: $ServiceName" -ForegroundColor Green
             Write-Host "Installation path: $InstallPath" -ForegroundColor Green
             Write-Host "Configuration file: $ConfigPath" -ForegroundColor Green
