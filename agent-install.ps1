@@ -107,15 +107,15 @@ function Write-Error-And-Exit {
     Write-Log $Message "ERROR"
     Write-Host ""
     Write-Host "Troubleshooting:" -ForegroundColor Yellow
-    Write-Host "  • Verify you have Administrator permissions" -ForegroundColor Yellow
-    Write-Host "  • Check Windows Event Logs (Event Viewer > Windows Logs > Application)" -ForegroundColor Yellow
-    Write-Host "  • Check MSI installation log for detailed error information" -ForegroundColor Yellow
-    Write-Host "  • This installer requires MSI packages - use agent's update mechanism for binary updates" -ForegroundColor Yellow
+    Write-Host "  - Verify you have Administrator permissions" -ForegroundColor Yellow
+    Write-Host "  - Check Windows Event Logs (Event Viewer > Windows Logs > Application)" -ForegroundColor Yellow
+    Write-Host "  - Check MSI installation log for detailed error information" -ForegroundColor Yellow
+    Write-Host "  - This installer requires MSI packages - use agent's update mechanism for binary updates" -ForegroundColor Yellow
     Write-Host ""
     Write-Host "If you encountered PowerShell execution policy issues:" -ForegroundColor Yellow
-    Write-Host "  • Try the direct installation method:" -ForegroundColor Yellow
+    Write-Host "  - Try the direct installation method:" -ForegroundColor Yellow
     Write-Host "    iwr -UseBasicParsing https://techmindpartners.github.io/logstag-agent-dist/agent-install.ps1 | iex" -ForegroundColor Cyan
-    Write-Host "  • Or set execution policy:" -ForegroundColor Yellow
+    Write-Host "  - Or set execution policy:" -ForegroundColor Yellow
     Write-Host "    Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser -Force" -ForegroundColor Cyan
     Write-Host ""
     
@@ -845,15 +845,13 @@ catch {
     Write-Log "Installation failed: $($_.Exception.Message)" "ERROR"
     Write-Host ""
     Write-Host "Troubleshooting:" -ForegroundColor Yellow
-    Write-Host "  • Verify you have Administrator permissions" -ForegroundColor Yellow
-    Write-Host "  • Check Windows Event Logs (Event Viewer > Windows Logs > Application)" -ForegroundColor Yellow
-    Write-Host "  • Check MSI installation log for detailed error information" -ForegroundColor Yellow
-    Write-Host "  • This installer requires MSI packages - use agent's update mechanism for binary updates" -ForegroundColor Yellow
+    Write-Host "  - Verify you have Administrator permissions" -ForegroundColor Yellow
+    Write-Host "  - Check Windows Event Logs (Event Viewer > Windows Logs > Application)" -ForegroundColor Yellow
     Write-Host ""
     Write-Host "If you encountered PowerShell execution policy issues:" -ForegroundColor Yellow
-    Write-Host "  • Try the direct installation method:" -ForegroundColor Yellow
+    Write-Host "  - Try the direct installation method:" -ForegroundColor Yellow
     Write-Host "    iwr -UseBasicParsing https://techmindpartners.github.io/logstag-agent-dist/agent-install.ps1 | iex" -ForegroundColor Cyan
-    Write-Host "  • Or set execution policy:" -ForegroundColor Yellow
+    Write-Host "  - Or set execution policy:" -ForegroundColor Yellow
     Write-Host "    Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser -Force" -ForegroundColor Cyan
     Write-Host ""
     
