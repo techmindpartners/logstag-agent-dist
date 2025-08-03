@@ -412,8 +412,37 @@ function Update-Configuration {
         
         if ($ApiKey) {
             Test-ApiKey $ApiKey
-            $configContent = $configContent -replace 'api_key = "your_api_key"', "api_key = `"$ApiKey`""
-            Write-Log "Updated API key in configuration"
+            
+            # Check if API key encryption is disabled (default is enabled)
+            if ($env:LOGSTAG_ENCRYPT_API_KEY -eq "false") {
+                Write-Log "API key encryption disabled by configuration"
+                $configContent = $configContent -replace 'api_key = "your_api_key"', "api_key = `"$ApiKey`""
+                Write-Log "Updated API key in configuration"
+            } else {
+                Write-Log "Encrypting API key for secure storage..."
+                $exePath = Join-Path $InstallPath "bin\logstag-agent.exe"
+                
+                if (Test-Path $exePath) {
+                    try {
+                        # Use the agent's encrypt command to encrypt the API key (default behavior)
+                        $encryptedApiKey = & $exePath encrypt $ApiKey 2>$null
+                        if ($LASTEXITCODE -eq 0 -and $encryptedApiKey) {
+                            Write-Log "API key encrypted successfully"
+                            $configContent = $configContent -replace 'api_key = "your_api_key"', "api_key = `"$encryptedApiKey`""
+                        } else {
+                            Write-Log "Warning: Failed to encrypt API key, storing as plain text" "WARN"
+                            $configContent = $configContent -replace 'api_key = "your_api_key"', "api_key = `"$ApiKey`""
+                        }
+                    }
+                    catch {
+                        Write-Log "Warning: Failed to encrypt API key: $($_.Exception.Message), storing as plain text" "WARN"
+                        $configContent = $configContent -replace 'api_key = "your_api_key"', "api_key = `"$ApiKey`""
+                    }
+                } else {
+                    Write-Log "Warning: logstag-agent.exe not found, storing API key as plain text" "WARN"
+                    $configContent = $configContent -replace 'api_key = "your_api_key"', "api_key = `"$ApiKey`""
+                }
+            }
         }
         
         Set-Content $ConfigPath $configContent -Encoding UTF8
