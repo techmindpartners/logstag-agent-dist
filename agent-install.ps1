@@ -21,6 +21,10 @@
 #   -ApiKey: API key for configuration
 #   -ApiBaseUrl: Base URL for API configuration
 #   -InstallPath: Installation directory path
+#
+# Environment Variables:
+#   LOGSTAG_INSTALL_DEBUG: Set to "true" to enable debug logging
+#   LOGSTAG_INSTALL_NONINTERACTIVE: Set to "true" for non-interactive mode
 
 [CmdletBinding()]
 param(
@@ -46,6 +50,12 @@ $LogPath = "$env:ProgramData\Logstag Agent\logs"
 function Write-Log {
     param([string]$Message, [string]$Level = "INFO")
     $timestamp = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
+    
+    # Only show DEBUG messages if debug mode is enabled
+    if ($Level -eq "DEBUG" -and $env:LOGSTAG_INSTALL_DEBUG -ne "true") {
+        return
+    }
+    
     Write-Host "[$timestamp] [$Level] $Message"
 }
 
@@ -397,6 +407,11 @@ function Start-LogstagService {
 
 # Function to update configuration
 function Update-Configuration {
+    if (-not (Test-Path $ConfigPath)) {
+        Write-Log "Configuration file not found at $ConfigPath. Cannot update configuration." "ERROR"
+        return
+    }
+    
     if (Test-Path $ConfigPath) {
         $configBackup = "$ConfigPath.bak"
         Copy-Item $ConfigPath $configBackup -Force
@@ -413,36 +428,11 @@ function Update-Configuration {
         if ($ApiKey) {
             Test-ApiKey $ApiKey
             
-            # Check if API key encryption is disabled (default is enabled)
-            if ($env:LOGSTAG_ENCRYPT_API_KEY -eq "false") {
-                Write-Log "API key encryption disabled by configuration"
-                $configContent = $configContent -replace 'api_key = "your_api_key"', "api_key = `"$ApiKey`""
-                Write-Log "Updated API key in configuration"
-            } else {
-                Write-Log "Encrypting API key for secure storage..."
-                $exePath = Join-Path $InstallPath "bin\logstag-agent.exe"
-                
-                if (Test-Path $exePath) {
-                    try {
-                        # Use the agent's encrypt command to encrypt the API key (default behavior)
-                        $encryptedApiKey = & $exePath encrypt $ApiKey 2>$null
-                        if ($LASTEXITCODE -eq 0 -and $encryptedApiKey) {
-                            Write-Log "API key encrypted successfully"
-                            $configContent = $configContent -replace 'api_key = "your_api_key"', "api_key = `"$encryptedApiKey`""
-                        } else {
-                            Write-Log "Warning: Failed to encrypt API key, storing as plain text" "WARN"
-                            $configContent = $configContent -replace 'api_key = "your_api_key"', "api_key = `"$ApiKey`""
-                        }
-                    }
-                    catch {
-                        Write-Log "Warning: Failed to encrypt API key: $($_.Exception.Message), storing as plain text" "WARN"
-                        $configContent = $configContent -replace 'api_key = "your_api_key"', "api_key = `"$ApiKey`""
-                    }
-                } else {
-                    Write-Log "Warning: logstag-agent.exe not found, storing API key as plain text" "WARN"
-                    $configContent = $configContent -replace 'api_key = "your_api_key"', "api_key = `"$ApiKey`""
-                }
-            }
+            # Store API key as plain text during installation
+            # The configure command will handle encryption properly after full setup
+            Write-Log "Adding API key to configuration (encryption will be handled by configure command)"
+            $configContent = $configContent -replace 'api_key = "your_api_key"', "api_key = `"$ApiKey`""
+            Write-Log "Updated API key in configuration"
         }
         
         Set-Content $ConfigPath $configContent -Encoding UTF8
@@ -690,12 +680,6 @@ function Install-LogstagAgent {
         
         Write-Log "Logstag Agent installed successfully"
         
-        # Update configuration if environment variables provided
-        if ($ApiKey -or $ApiBaseUrl) {
-            Update-Configuration
-            Test-Configuration
-        }
-        
         # Configure the WiX-installed Windows service
         Configure-LogstagService
         
@@ -707,46 +691,64 @@ function Install-LogstagAgent {
             Write-Log "Installed version: $version"
         }
         
-        # Always run configuration
+        # Always run configuration first (this creates the proper config structure)
         Write-Log "Starting agent configuration..."
         try {
             & $exePath configure --channel $Channel
-            Write-Log "Installation completed successfully!" "INFO"
-            Write-Host ""
-            if ($StartService) {
-                Write-Host "Logstag Agent has been installed and started as a Windows service." -ForegroundColor Green
-            }
-            else {
-                Write-Host "Logstag Agent has been installed as a Windows service (not started)." -ForegroundColor Green
-            }
-
-            if ($StartService) {
-                Start-LogstagService
-            }
-            else {
-                Write-Log "Skipping service startup (use -StartService:`$false to disable automatic startup)"
-            }
-
-            if (-not $StartService) {
-                Write-Host "To start the service: Start-Service '$ServiceName'" -ForegroundColor Yellow
-                Write-Host "To enable auto-start: sc.exe config '$ServiceName' start= auto" -ForegroundColor Yellow
-                Write-Host ""
-            }
-            else {
-                Write-Host "To enable auto-start on boot: sc.exe config '$ServiceName' start= auto" -ForegroundColor Yellow
-                Write-Host ""
-            }
-
-            Write-Host "Service name: $ServiceName" -ForegroundColor Green
-            Write-Host "Installation path: $InstallPath" -ForegroundColor Green
-            Write-Host "Configuration file: $ConfigPath" -ForegroundColor Green
-            Write-Host "Log file path: $LogPath" -ForegroundColor Green
-            Write-Host ""
         }
         catch {
             Write-Log "Warning: Agent configuration encountered an issue: $($_.Exception.Message)" "WARN"
             Write-Host "You can configure the agent later by running: $exePath configure --channel $Channel" -ForegroundColor Yellow
         }
+        
+        # Update configuration if environment variables provided (after configure command)
+        if ($ApiKey -or $ApiBaseUrl) {
+            Update-Configuration
+            Test-Configuration
+        }
+        
+        # Now that configuration is properly set up, try again with configure to pick up the new API settings
+        if ($ApiKey -or $ApiBaseUrl) {
+            Write-Log "Re-running agent configuration to apply API settings..."
+            try {
+                & $exePath configure --channel $Channel
+            }
+            catch {
+                Write-Log "Warning: Final agent configuration encountered an issue: $($_.Exception.Message)" "WARN"
+            }
+        }
+        
+        Write-Log "Installation completed successfully!" "INFO"
+        Write-Host ""
+        if ($StartService) {
+            Write-Host "Logstag Agent has been installed and started as a Windows service." -ForegroundColor Green
+        }
+        else {
+            Write-Host "Logstag Agent has been installed as a Windows service (not started)." -ForegroundColor Green
+        }
+
+        if ($StartService) {
+            Start-LogstagService
+        }
+        else {
+            Write-Log "Skipping service startup (use -StartService:`$false to disable automatic startup)"
+        }
+
+        if (-not $StartService) {
+            Write-Host "To start the service: Start-Service '$ServiceName'" -ForegroundColor Yellow
+            Write-Host "To enable auto-start: sc.exe config '$ServiceName' start= auto" -ForegroundColor Yellow
+            Write-Host ""
+        }
+        else {
+            Write-Host "To enable auto-start on boot: sc.exe config '$ServiceName' start= auto" -ForegroundColor Yellow
+            Write-Host ""
+        }
+
+        Write-Host "Service name: $ServiceName" -ForegroundColor Green
+        Write-Host "Installation path: $InstallPath" -ForegroundColor Green
+        Write-Host "Configuration file: $ConfigPath" -ForegroundColor Green
+        Write-Host "Log file path: $LogPath" -ForegroundColor Green
+        Write-Host ""
         
     }
     finally {
