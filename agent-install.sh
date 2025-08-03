@@ -108,6 +108,9 @@ get_version_download_url() {
   local version="$4"
   local package_type="$5"
 
+  # For specific versions, use GitHub raw URL for actual downloads
+  local github_base_url="https://github.com/techmindpartners/logstag-agent-dist/raw/main"
+
   # Convert version format from x.y.z to x.y.z (keep dots for new structure)
   local url_version="$version"
 
@@ -130,7 +133,7 @@ get_version_download_url() {
       ;;
   esac
 
-  echo "${base_url}/${path}/${filename}"
+  echo "${github_base_url}/${path}/${filename}"
 }
 
 # Function to validate URL format
@@ -232,8 +235,6 @@ else
   echo "Target version: latest"
 fi
 
-echo "Installing Logstag Agent from '$channel' channel"
-
 # Initialize variables for installation options
 # These will be set differently based on whether we're in interactive or non-interactive mode
 logstag_opts=''
@@ -269,11 +270,11 @@ confirm () {
   [ -z "$confirmation" ] || [[ "$confirmation" =~ [Yy] ]]
 }
 
-# Initialize variables for package manager, distribution, and version
+# Initialize variables for package manager, distribution, and OS version
 # These will be set based on OS detection
 pkg=''
 distribution=''
-version=''
+os_version=''
 
 # Check if we can read OS information
 if ! test -r /etc/os-release;
@@ -300,27 +301,27 @@ then
   # Amazon Linux 2, based on RHEL7
   pkg=yum
   distribution=el
-  version=7
+  os_version=7
 elif grep -q '^ID="amzn"$' /etc/os-release && grep -q '^VERSION_ID="2023"$' /etc/os-release;
 then
   # Amazon Linux 2023, utilizing same glibc version (2.34) as CentOS Streams 9
   pkg=yum
   distribution=el
-  version=9
+  os_version=9
 elif grep -q '^ID="\(rhel\|almalinux\|rocky\|centos\)"$' /etc/os-release;
 then
   # RHEL, AlmaLinux, Rocky Linux and CentOS
   pkg=yum
   distribution=el
-  version=$(grep VERSION_ID /etc/os-release | cut -d= -f2 | tr -d '"' | cut -d. -f1)
-  if [ "$version" != 7 ] && [ "$version" != 8 ] && [ "$version" != 9 ];
+  os_version=$(grep VERSION_ID /etc/os-release | cut -d= -f2 | tr -d '"' | cut -d. -f1)
+  if [ "$os_version" != 7 ] && [ "$os_version" != 8 ] && [ "$os_version" != 9 ];
   then
     # If version is not supported, ask user if they want to try RHEL9 package
     if confirm "Unsupported RHEL, AlmaLinux, Rocky Linux or CentOS version; try RHEL9 package?";
     then
-      version=9
+      os_version=9
     else
-      fail "unrecognized RHEL, AlmaLinux, Rocky Linux or CentOS version: ${version}"
+      fail "unrecognized RHEL, AlmaLinux, Rocky Linux or CentOS version: ${os_version}"
     fi
   fi
 elif grep -q '^ID=fedora$' /etc/os-release;
@@ -328,16 +329,16 @@ then
   # Fedora
   pkg=yum
   distribution=fedora
-  version=$(grep VERSION_ID /etc/os-release | cut -d= -f2)
+  os_version=$(grep VERSION_ID /etc/os-release | cut -d= -f2)
 
-  if [ "$version" != 40 ] && [ "$version" != 39 ] && [ "$version" != 38 ] && [ "$version" != 37 ];
+  if [ "$os_version" != 40 ] && [ "$os_version" != 39 ] && [ "$os_version" != 38 ] && [ "$os_version" != 37 ];
   then
     # If version is not supported, ask user if they want to try Fedora 40 package
     if confirm "Unsupported Fedora version; try Fedora 40 package?";
     then
-      version=40
+      os_version=40
     else
-      fail "unrecognized Fedora version: ${version}"
+      fail "unrecognized Fedora version: ${os_version}"
     fi
   fi
 elif grep -q '^ID=ubuntu$' /etc/os-release;
@@ -346,15 +347,15 @@ then
   pkg=deb
   distribution=ubuntu
   # Extract the codename (e.g., focal, jammy, noble) from os-release
-  version=$(grep VERSION_CODENAME /etc/os-release | cut -d= -f2)
-  if [ "$version" != noble ] && [ "$version" != jammy ] && [ "$version" != focal ];
+  os_version=$(grep VERSION_CODENAME /etc/os-release | cut -d= -f2)
+  if [ "$os_version" != noble ] && [ "$os_version" != jammy ] && [ "$os_version" != focal ];
   then
     # If version is not supported, ask user if they want to try Ubuntu Noble package
     if confirm "Unsupported Ubuntu version; try Ubuntu Noble (24.04) package?";
     then
-      version=noble
+      os_version=noble
     else
-      fail "unrecognized Ubuntu version: ${version}"
+      fail "unrecognized Ubuntu version: ${os_version}"
     fi
   fi
 elif grep -q '^ID=debian$' /etc/os-release;
@@ -363,15 +364,15 @@ then
   pkg=deb
   distribution=debian
   # Extract the codename (e.g., bookworm) from os-release
-  version=$(grep VERSION_CODENAME /etc/os-release | cut -d= -f2)
-  if [ "$version" != bookworm ];
+  os_version=$(grep VERSION_CODENAME /etc/os-release | cut -d= -f2)
+  if [ "$os_version" != bookworm ];
   then
     # If version is not supported, ask user if they want to try Debian Bookworm package
     if confirm "Unsupported Debian version; try Debian Bookworm (12) package?";
     then
-      version=bookworm
+      os_version=bookworm
     else
-      fail "unrecognized Debian version: ${version}"
+      fail "unrecognized Debian version: ${os_version}"
     fi
   fi
 else
