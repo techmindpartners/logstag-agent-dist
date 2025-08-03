@@ -1,9 +1,9 @@
 #!/bin/bash
 
 # Logstag Agent Installation Script for Linux
-# 
+#
 # This script installs the Logstag Agent on supported Linux distributions
-# 
+#
 # Usage:
 #   curl -sSL https://techmindpartners.github.io/logstag-agent-dist/agent-install.sh | bash
 #   curl -sSL https://techmindpartners.github.io/logstag-agent-dist/agent-install.sh | bash -s -- --channel dev
@@ -70,14 +70,14 @@ download_with_retry() {
       echo "Download successful"
       return 0
     fi
-    
+
     # Get HTTP status code for better error reporting
     http_code=$(curl -L --connect-timeout 30 --max-time 120 --retry 2 --retry-delay 1 -w "%{http_code}" -o /dev/null -s "$url" || echo "000")
     if [ "$http_code" = "404" ]; then
       echo "Error: File not found (404). This may indicate the specified version does not exist."
       return 1
     fi
-    
+
     echo "Download attempt $attempt failed (HTTP $http_code)"
     attempt=$((attempt + 1))
     if [ $attempt -le $max_attempts ]; then
@@ -107,25 +107,30 @@ get_version_download_url() {
   local arch="$3"
   local version="$4"
   local package_type="$5"
-  
-  # Convert version format from x.y.z to x_y_z for URL
-  local url_version=$(echo "$version" | sed 's/\./_/g')
-  
+
+  # Convert version format from x.y.z to x.y.z (keep dots for new structure)
+  local url_version="$version"
+
   # Construct filename based on package type and architecture
   local filename=""
+  local path=""
   case "$package_type" in
     "rpm")
+      # RPM path: /rpm/{channel}/{arch}/
       filename="logstag-agent-${url_version}-1.${arch}.rpm"
+      path="rpm/${channel}/${arch}"
       ;;
     "deb")
-      filename="logstag-agent_${url_version}_${arch}.deb"
+      # DEB path: /pool/{channel}/l/logstag-agent/
+      filename="logstag-agent_${url_version}-1_${arch}.deb"
+      path="pool/${channel}/l/logstag-agent"
       ;;
     *)
       fail "Unsupported package type: $package_type"
       ;;
   esac
-  
-  echo "${base_url}/${package_type}/${channel}/${arch}/${filename}"
+
+  echo "${base_url}/${path}/${filename}"
 }
 
 # Function to validate URL format
@@ -227,6 +232,8 @@ else
   echo "Target version: latest"
 fi
 
+echo "Installing Logstag Agent from '$channel' channel"
+
 # Initialize variables for installation options
 # These will be set differently based on whether we're in interactive or non-interactive mode
 logstag_opts=''
@@ -262,11 +269,11 @@ confirm () {
   [ -z "$confirmation" ] || [[ "$confirmation" =~ [Yy] ]]
 }
 
-# Initialize variables for package manager, distribution, and OS version
+# Initialize variables for package manager, distribution, and version
 # These will be set based on OS detection
 pkg=''
 distribution=''
-os_version=''
+version=''
 
 # Check if we can read OS information
 if ! test -r /etc/os-release;
@@ -293,27 +300,27 @@ then
   # Amazon Linux 2, based on RHEL7
   pkg=yum
   distribution=el
-  os_version=7
+  version=7
 elif grep -q '^ID="amzn"$' /etc/os-release && grep -q '^VERSION_ID="2023"$' /etc/os-release;
 then
   # Amazon Linux 2023, utilizing same glibc version (2.34) as CentOS Streams 9
   pkg=yum
   distribution=el
-  os_version=9
+  version=9
 elif grep -q '^ID="\(rhel\|almalinux\|rocky\|centos\)"$' /etc/os-release;
 then
   # RHEL, AlmaLinux, Rocky Linux and CentOS
   pkg=yum
   distribution=el
-  os_version=$(grep VERSION_ID /etc/os-release | cut -d= -f2 | tr -d '"' | cut -d. -f1)
-  if [ "$os_version" != 7 ] && [ "$os_version" != 8 ] && [ "$os_version" != 9 ];
+  version=$(grep VERSION_ID /etc/os-release | cut -d= -f2 | tr -d '"' | cut -d. -f1)
+  if [ "$version" != 7 ] && [ "$version" != 8 ] && [ "$version" != 9 ];
   then
     # If version is not supported, ask user if they want to try RHEL9 package
     if confirm "Unsupported RHEL, AlmaLinux, Rocky Linux or CentOS version; try RHEL9 package?";
     then
-      os_version=9
+      version=9
     else
-      fail "unrecognized RHEL, AlmaLinux, Rocky Linux or CentOS version: ${os_version}"
+      fail "unrecognized RHEL, AlmaLinux, Rocky Linux or CentOS version: ${version}"
     fi
   fi
 elif grep -q '^ID=fedora$' /etc/os-release;
@@ -321,16 +328,16 @@ then
   # Fedora
   pkg=yum
   distribution=fedora
-  os_version=$(grep VERSION_ID /etc/os-release | cut -d= -f2)
+  version=$(grep VERSION_ID /etc/os-release | cut -d= -f2)
 
-  if [ "$os_version" != 40 ] && [ "$os_version" != 39 ] && [ "$os_version" != 38 ] && [ "$os_version" != 37 ];
+  if [ "$version" != 40 ] && [ "$version" != 39 ] && [ "$version" != 38 ] && [ "$version" != 37 ];
   then
     # If version is not supported, ask user if they want to try Fedora 40 package
     if confirm "Unsupported Fedora version; try Fedora 40 package?";
     then
-      os_version=40
+      version=40
     else
-      fail "unrecognized Fedora version: ${os_version}"
+      fail "unrecognized Fedora version: ${version}"
     fi
   fi
 elif grep -q '^ID=ubuntu$' /etc/os-release;
@@ -339,15 +346,15 @@ then
   pkg=deb
   distribution=ubuntu
   # Extract the codename (e.g., focal, jammy, noble) from os-release
-  os_version=$(grep VERSION_CODENAME /etc/os-release | cut -d= -f2)
-  if [ "$os_version" != noble ] && [ "$os_version" != jammy ] && [ "$os_version" != focal ];
+  version=$(grep VERSION_CODENAME /etc/os-release | cut -d= -f2)
+  if [ "$version" != noble ] && [ "$version" != jammy ] && [ "$version" != focal ];
   then
     # If version is not supported, ask user if they want to try Ubuntu Noble package
     if confirm "Unsupported Ubuntu version; try Ubuntu Noble (24.04) package?";
     then
-      os_version=noble
+      version=noble
     else
-      fail "unrecognized Ubuntu version: ${os_version}"
+      fail "unrecognized Ubuntu version: ${version}"
     fi
   fi
 elif grep -q '^ID=debian$' /etc/os-release;
@@ -356,15 +363,15 @@ then
   pkg=deb
   distribution=debian
   # Extract the codename (e.g., bookworm) from os-release
-  os_version=$(grep VERSION_CODENAME /etc/os-release | cut -d= -f2)
-  if [ "$os_version" != bookworm ];
+  version=$(grep VERSION_CODENAME /etc/os-release | cut -d= -f2)
+  if [ "$version" != bookworm ];
   then
     # If version is not supported, ask user if they want to try Debian Bookworm package
     if confirm "Unsupported Debian version; try Debian Bookworm (12) package?";
     then
-      os_version=bookworm
+      version=bookworm
     else
-      fail "unrecognized Debian version: ${os_version}"
+      fail "unrecognized Debian version: ${version}"
     fi
   fi
 else
@@ -408,28 +415,28 @@ then
     # This should never happen due to the check above, but just in case
     fail "unsupported architecture for RPM: $arch"
   fi
-  
+
   if [ -n "$version" ]; then
     # Install specific version by downloading RPM directly
     echo "Installing specific version: $version"
     rpm_url=$(get_version_download_url "https://techmindpartners.github.io/logstag-agent-dist" "$channel" "$rpm_arch" "$version" "rpm")
     echo "Downloading: $rpm_url"
-    
+
     # Download the RPM package
     rpm_file="/tmp/logstag-agent-${version}.rpm"
     if ! download_with_retry "$rpm_url" "$rpm_file"; then
       fail "Failed to download version $version for architecture $rpm_arch. The specified version may not exist or may not be available for your platform."
     fi
-    
+
     # Install the downloaded RPM
     $maybe_sudo yum $yum_opts localinstall "$rpm_file" <$user_input
-    
+
     # Clean up
     rm -f "$rpm_file"
   else
     # Install latest version from repository
     echo "Installing latest version from repository"
-    
+
     # Create repository configuration file for Logstag Agent
     echo "[logstag_agent]
 name=logstag_agent
@@ -458,35 +465,35 @@ then
   else
     fail "unsupported architecture for DEB: $arch"
   fi
-  
+
   if [ -n "$version" ]; then
     # Install specific version by downloading DEB directly
     echo "Installing specific version: $version"
     deb_url=$(get_version_download_url "https://techmindpartners.github.io/logstag-agent-dist" "$channel" "$deb_arch" "$version" "deb")
     echo "Downloading: $deb_url"
-    
+
     # Download the DEB package
     deb_file="/tmp/logstag-agent-${version}.deb"
     if ! download_with_retry "$deb_url" "$deb_file"; then
       fail "Failed to download version $version for architecture $deb_arch. The specified version may not exist or may not be available for your platform."
     fi
-    
+
     # Install the downloaded DEB
     $maybe_sudo dpkg -i "$deb_file" || {
       # If dpkg fails due to missing dependencies, try to fix them
       echo "Attempting to fix dependencies..."
       $maybe_sudo apt-get $apt_opts install -f <$user_input
     }
-    
+
     # Clean up
     rm -f "$deb_file"
   else
     # Install latest version from repository
     echo "Installing latest version from repository"
-    
+
     # Configure the apt source based on architecture and channel
     apt_source="deb [arch=$deb_arch signed-by=/etc/apt/keyrings/logstag_signing_key.asc] https://techmindpartners.github.io/logstag-agent-dist/ stable $channel"
-    
+
     # Create keyrings directory and download signing key with retry logic
     $maybe_sudo mkdir -p /etc/apt/keyrings
     download_with_retry "https://techmindpartners.github.io/logstag-agent-dist/logstag_signing_key.asc" "/tmp/logstag_key.asc"
