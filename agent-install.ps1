@@ -9,13 +9,17 @@
 # Quick Installation (handles execution policy automatically):
 #   iwr -UseBasicParsing https://techmindpartners.github.io/logstag-agent-dist/agent-install.ps1 | iex
 #
+# Install specific version:
+#   iex "& { $(iwr -UseBasicParsing https://techmindpartners.github.io/logstag-agent-dist/agent-install.ps1) } -Version '0.1.79'"
+#
 # Alternative if execution policy is restricted:
 #   Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser -Force
 #   iwr -UseBasicParsing https://techmindpartners.github.io/logstag-agent-dist/agent-install.ps1 -OutFile agent-install.ps1
-#   .\agent-install.ps1
+#   .\agent-install.ps1 -Version "0.1.79"
 #
 # Parameters:
 #   -Channel: Release channel (main, dev). Default: main
+#   -Version: Specific version to install (e.g., "0.1.79"). Default: latest
 #   -NonInteractive: Skip interactive prompts. Default: false
 #   -StartService: Start service after installation. Default: true
 #   -ApiKey: API key for configuration
@@ -25,10 +29,12 @@
 # Environment Variables:
 #   LOGSTAG_INSTALL_DEBUG: Set to "true" to enable debug logging
 #   LOGSTAG_INSTALL_NONINTERACTIVE: Set to "true" for non-interactive mode
+#   LOGSTAG_VERSION: Specific version to install (e.g., "0.1.79")
 
 [CmdletBinding()]
 param(
     [string]$Channel = "main",
+    [string]$Version,
     [switch]$NonInteractive,
     [switch]$StartService = $true,
     [string]$ApiKey,
@@ -173,6 +179,47 @@ function Get-SystemArchitecture {
     }
 }
 
+# Function to validate version format
+function Test-Version {
+    param([string]$VersionString)
+    if ($VersionString) {
+        if ($VersionString -notmatch '^\d+\.\d+\.\d+$') {
+            Write-Error-And-Exit "Invalid version format: $VersionString. Expected format: x.y.z (e.g., 0.1.79)"
+        }
+    }
+}
+
+# Function to construct download URL for specific version
+function Get-VersionDownloadUrl {
+    param(
+        [string]$BaseUrl,
+        [string]$Channel,
+        [string]$Architecture,
+        [string]$Version,
+        [string]$PackageType = "msi"
+    )
+    
+    # Convert version format from x.y.z to x_y_z for URL
+    $urlVersion = $Version -replace '\.', '_'
+    
+    # Map architecture to URL path
+    $archPath = switch ($Architecture) {
+        "x64" { "x64" }
+        "arm64" { "arm64" }
+        default { $Architecture }
+    }
+    
+    # Construct filename based on package type
+    $filename = switch ($PackageType) {
+        "msi" { "logstag-agent-$urlVersion-$archPath.msi" }
+        "binary" { "logstag-agent-$urlVersion-$archPath.exe" }
+        "updater" { "logstag-agent-updater-$urlVersion-$archPath.exe" }
+        default { "logstag-agent-$urlVersion-$archPath.$PackageType" }
+    }
+    
+    return "$BaseUrl/$Channel/$archPath/$filename"
+}
+
 # Function to validate channel
 function Test-Channel {
     param([string]$ChannelName)
@@ -226,6 +273,18 @@ function Get-FileWithRetry {
             Write-Log "Download successful"
             $webClient.Dispose()
             return
+        }
+        catch [System.Net.WebException] {
+            $webClient.Dispose()
+            $statusCode = $_.Exception.Response.StatusCode
+            if ($statusCode -eq 404) {
+                Write-Error-And-Exit "File not found (404): $Url. This may indicate the specified version does not exist."
+            }
+            Write-Log "Download attempt $attempt failed: HTTP $statusCode - $($_.Exception.Message)" "WARN"
+            if ($attempt -lt $MaxAttempts) {
+                Write-Log "Retrying in 2 seconds..."
+                Start-Sleep -Seconds 2
+            }
         }
         catch {
             Write-Log "Download attempt $attempt failed: $($_.Exception.Message)" "WARN"
@@ -514,12 +573,18 @@ function Test-SystemRequirements {
 function Install-LogstagAgent {
     Write-Log "Starting Logstag Agent installation"
     Write-Log "Channel: $Channel"
+    if ($Version) {
+        Write-Log "Target Version: $Version"
+    } else {
+        Write-Log "Target Version: latest"
+    }
     
     # Check PowerShell execution policy early
     Test-ExecutionPolicyAndSuggestFix
     
     # Validate inputs
     Test-Channel $Channel
+    Test-Version $Version
     Test-ApiKey $ApiKey
     Test-Url $ApiBaseUrl
     
@@ -548,39 +613,66 @@ function Install-LogstagAgent {
     New-Item -ItemType Directory -Path $TempDir -Force | Out-Null
     
     try {
-        # First, get version information from manifest
-        Write-Log "Getting version information..."
-        $manifestUrl = "$DownloadBaseUrl/$Channel/version.json"
-        $manifestPath = Join-Path $TempDir "version.json"
-        
-        Get-FileWithRetry -Url $manifestUrl -OutputPath $manifestPath
-        
-        # Parse manifest to get download information
-        $manifest = Get-Content $manifestPath | ConvertFrom-Json
-        
-        # Map architecture to platform key
-        $platformKey = switch ($arch) {
-            "x64" { "windows-x86_64" }
-            "arm64" { "windows-aarch64" }
-            default { "windows-$arch" }
-        }
-        
-        # Get release information for our platform
-        if (-not $manifest.releases.$platformKey) {
-            Write-Error-And-Exit "No release available for platform: $platformKey"
-        }
-        
-        $releaseInfo = $manifest.releases.$platformKey
-        
-        # For installations, MSI package is required
-        if ($releaseInfo.msi -and $releaseInfo.msi.download_url) {
-            # Use nested MSI info for installation
-            $downloadUrl = $releaseInfo.msi.download_url
-            $expectedChecksum = $releaseInfo.msi.checksum
-            $expectedSize = $releaseInfo.msi.size
-            Write-Log "Using MSI package for installation"
+        # Determine if we're installing a specific version or the latest
+        if ($Version) {
+            # For specific version, construct download URL directly
+            Write-Log "Installing specific version: $Version"
+            
+            # Map architecture to platform key for URL construction
+            $archPath = switch ($arch) {
+                "x64" { "x64" }
+                "arm64" { "arm64" }
+                default { $arch }
+            }
+            
+            # Construct download URL for the specific version
+            $downloadUrl = Get-VersionDownloadUrl -BaseUrl $DownloadBaseUrl -Channel $Channel -Architecture $archPath -Version $Version -PackageType "msi"
+            
+            Write-Log "Constructed download URL: $downloadUrl"
+            
+            # For specific versions, we don't have checksum/size info from manifest
+            # so we'll skip verification (or implement a separate verification method)
+            $expectedChecksum = $null
+            $expectedSize = $null
+            
         } else {
-            Write-Error-And-Exit "No MSI package available for platform: $platformKey. This installer requires MSI packages for proper Windows service installation."
+            # For latest version, get version information from manifest
+            Write-Log "Getting latest version information..."
+            $manifestUrl = "$DownloadBaseUrl/$Channel/version.json"
+            $manifestPath = Join-Path $TempDir "version.json"
+            
+            Get-FileWithRetry -Url $manifestUrl -OutputPath $manifestPath
+            
+            # Parse manifest to get download information
+            $manifest = Get-Content $manifestPath | ConvertFrom-Json
+            
+            # Map architecture to platform key
+            $platformKey = switch ($arch) {
+                "x64" { "windows-x86_64" }
+                "arm64" { "windows-aarch64" }
+                default { "windows-$arch" }
+            }
+            
+            # Get release information for our platform
+            if (-not $manifest.releases.$platformKey) {
+                Write-Error-And-Exit "No release available for platform: $platformKey"
+            }
+            
+            $releaseInfo = $manifest.releases.$platformKey
+            
+            # For installations, MSI package is required
+            if ($releaseInfo.msi -and $releaseInfo.msi.download_url) {
+                # Use nested MSI info for installation
+                $downloadUrl = $releaseInfo.msi.download_url
+                $expectedChecksum = $releaseInfo.msi.checksum
+                $expectedSize = $releaseInfo.msi.size
+                Write-Log "Using MSI package for installation"
+            } else {
+                Write-Error-And-Exit "No MSI package available for platform: $platformKey. This installer requires MSI packages for proper Windows service installation."
+            }
+            
+            # Log the version we're installing
+            Write-Log "Installing latest version: $($manifest.latest_version)"
         }
         
         # Extract filename from download URL
@@ -593,11 +685,28 @@ function Install-LogstagAgent {
         }
         
         Write-Log "Downloading $msiFileName..."
-        Get-FileWithRetry -Url $downloadUrl -OutputPath $msiPath
+        try {
+            Get-FileWithRetry -Url $downloadUrl -OutputPath $msiPath
+        }
+        catch {
+            if ($Version) {
+                $platformInfo = if ($arch -eq "x64") { "windows-x86_64" } elseif ($arch -eq "arm64") { "windows-aarch64" } else { "windows-$arch" }
+                Write-Error-And-Exit "Failed to download version $Version. The specified version may not exist or may not be available for your platform ($platformInfo). Please check available versions or try without specifying a version to get the latest."
+            } else {
+                throw
+            }
+        }
         
         # Verify downloaded file
         if ($expectedSize -and (Get-Item $msiPath).Length -ne $expectedSize) {
             Write-Error-And-Exit "Downloaded file size mismatch. Expected: $expectedSize, Actual: $((Get-Item $msiPath).Length)"
+        } elseif (-not $expectedSize) {
+            # For specific versions without manifest info, just check that file is reasonable size
+            $fileSize = (Get-Item $msiPath).Length
+            if ($fileSize -lt 1048576) { # Less than 1MB is suspicious for MSI
+                Write-Error-And-Exit "Downloaded file is too small ($fileSize bytes). Expected MSI package should be several MB."
+            }
+            Write-Log "Downloaded file size: $fileSize bytes (checksum verification skipped for specific version)"
         }
         
         if ($expectedChecksum) {
@@ -607,6 +716,8 @@ function Install-LogstagAgent {
                 Write-Error-And-Exit "Downloaded file checksum mismatch. Expected: $expectedChecksum, Actual: $actualChecksum"
             }
             Write-Log "File integrity verified"
+        } else {
+            Write-Log "Checksum verification skipped (not available for specific version downloads)"
         }
         
         # Verify the downloaded file is actually an MSI package
@@ -858,6 +969,10 @@ if ($env:LOGSTAG_START_SERVICE) {
 
 if ($env:LOGSTAG_CHANNEL) {
     $Channel = $env:LOGSTAG_CHANNEL
+}
+
+if ($env:LOGSTAG_VERSION) {
+    $Version = $env:LOGSTAG_VERSION
 }
 
 if ($env:LOGSTAG_API_KEY) {
