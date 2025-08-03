@@ -371,8 +371,28 @@ if [ -n "$LOGSTAG_API_KEY" ];
 then
   # Validate API key format before using it
   validate_api_key "$LOGSTAG_API_KEY"
-  # Set API key if provided (create backup first)
-  $maybe_sudo sed -i.bak "s|^api_key = \"your_api_key\"$|api_key = \"${LOGSTAG_API_KEY}\"|" "$CONFIG_PATH"
+  
+  # Check if API key encryption is disabled (default is enabled)
+  if [ -n "$LOGSTAG_ENCRYPT_API_KEY" ] && [ "$LOGSTAG_ENCRYPT_API_KEY" = "false" ];
+  then
+    echo "API key encryption disabled by configuration"
+    # Set API key as plain text when explicitly disabled
+    $maybe_sudo sed -i.bak "s|^api_key = \"your_api_key\"$|api_key = \"${LOGSTAG_API_KEY}\"|" "$CONFIG_PATH"
+  else
+    echo "Encrypting API key for secure storage..."
+    # Use the agent's encrypt command to encrypt the API key (default behavior)
+    encrypted_api_key=$("$INSTALL_PATH/bin/logstag-agent" encrypt "$LOGSTAG_API_KEY" 2>/dev/null)
+    if [ $? -eq 0 ] && [ -n "$encrypted_api_key" ];
+    then
+      echo "API key encrypted successfully"
+      # Set encrypted API key in configuration (reuse existing backup)
+      $maybe_sudo sed -i "s|^api_key = \"your_api_key\"$|api_key = \"${encrypted_api_key}\"|" "$CONFIG_PATH"
+    else
+      echo "Warning: Failed to encrypt API key, storing as plain text"
+      # Fallback to plain text if encryption fails (reuse existing backup)
+      $maybe_sudo sed -i "s|^api_key = \"your_api_key\"$|api_key = \"${LOGSTAG_API_KEY}\"|" "$CONFIG_PATH"
+    fi
+  fi
 fi
 
 # Validate configuration after modifications
