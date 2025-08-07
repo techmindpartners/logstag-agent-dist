@@ -709,12 +709,8 @@
             // For mobile, get the command from the text content excluding the copy button
             let command = commandBox.textContent.replace('Copy', '').trim();
             
-            // Remove command prompt indicators
-            if (command.startsWith('$')) {
-                command = command.substring(1).trim();
-            } else if (command.startsWith('PS>')) {
-                command = command.substring(3).trim();
-            }
+            // The prompt indicators ($, PS>) are added via CSS ::before pseudo-elements
+            // so they're not part of the text content. No need to strip anything.
             
             navigator.clipboard.writeText(command).then(() => {
                 const originalText = button.textContent;
