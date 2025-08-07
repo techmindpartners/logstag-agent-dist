@@ -9,15 +9,19 @@
 #   curl -sSL https://techmindpartners.github.io/logstag-agent-dist/agent-install.sh | bash -s -- --channel dev
 #   curl -sSL https://techmindpartners.github.io/logstag-agent-dist/agent-install.sh | bash -s -- --version 0.1.79
 #   curl -sSL https://techmindpartners.github.io/logstag-agent-dist/agent-install.sh | bash -s -- --channel dev --version 0.1.79
+#   curl -sSL https://techmindpartners.github.io/logstag-agent-dist/agent-install.sh | bash -s -- --no-start-service
 #
 # Parameters:
 #   --channel <main|dev>    Release channel (default: main)
 #   --version <x.y.z>       Specific version to install (default: latest)
+#   --start-service         Start the service after successful configuration (default: true)
+#   --no-start-service      Do not start the service after installation
 #
 # Environment Variables:
 #   LOGSTAG_CHANNEL                 Release channel
 #   LOGSTAG_VERSION                 Specific version to install
 #   LOGSTAG_INSTALL_NONINTERACTIVE  Non-interactive installation
+#   LOGSTAG_START_SERVICE           Start service after configuration (default: true)
 #   LOGSTAG_API_KEY                 API key for configuration
 #   LOGSTAG_API_BASE_URL            API base URL for configuration
 #   LOGSTAG_ENCRYPT_API_KEY         Set to "false" to disable API key encryption
@@ -170,9 +174,65 @@ validate_config() {
   fi
 }
 
-# Parse command line arguments for channel selection and version
+# Function to enable and start the systemd service
+enable_and_start_service() {
+  echo "Enabling and starting logstag-agent service..."
+  
+  # Enable the service to start on boot
+  if $maybe_sudo systemctl enable logstag-agent 2>/dev/null; then
+    echo "Service enabled successfully"
+  else
+    echo "Warning: Failed to enable service for automatic startup"
+    return 1
+  fi
+  
+  # Start the service
+  if $maybe_sudo systemctl start logstag-agent 2>/dev/null; then
+    echo "Service started successfully"
+    return 0
+  else
+    echo "Warning: Failed to start service"
+    return 1
+  fi
+}
+
+# Function to verify service status and provide diagnostics
+verify_service_status() {
+  echo "Checking service status..."
+  
+  # Check if service is active
+  if $maybe_sudo systemctl is-active --quiet logstag-agent; then
+    echo "✅ Logstag Agent service is running"
+    # Show brief status
+    $maybe_sudo systemctl status logstag-agent --no-pager --lines=3
+    return 0
+  else
+    echo "❌ Logstag Agent service is not running"
+    show_service_diagnostics
+    return 1
+  fi
+}
+
+# Function to show service diagnostics for troubleshooting
+show_service_diagnostics() {
+  echo "Service diagnostics:"
+  echo "  Service status:"
+  $maybe_sudo systemctl status logstag-agent --no-pager --lines=5 || echo "    Could not get service status"
+  
+  echo "  Recent logs:"
+  $maybe_sudo journalctl -u logstag-agent --no-pager --lines=5 || echo "    Could not get recent logs"
+  
+  echo "  Troubleshooting steps:"
+  echo "    • Check configuration: $INSTALL_PATH/bin/logstag-agent --check-config"
+  echo "    • View logs: journalctl -u logstag-agent -f"
+  echo "    • Restart service: sudo systemctl restart logstag-agent"
+  echo "    • Check service status: sudo systemctl status logstag-agent"
+}
+
+# Parse command line arguments for channel selection, version, and service options
 channel=""  # Initialize empty, will be set based on args or defaults
 version=""  # Initialize empty, will be set based on args or environment
+start_service="true"  # Default to starting service, can be overridden
 while [[ $# -gt 0 ]]; do
   case $1 in
     --channel=*)
@@ -190,6 +250,14 @@ while [[ $# -gt 0 ]]; do
     --version)
       version="$2"
       shift 2
+      ;;
+    --start-service)
+      start_service="true"
+      shift
+      ;;
+    --no-start-service)
+      start_service="false"
+      shift
       ;;
     main)
       channel="main"
@@ -213,6 +281,11 @@ fi
 
 if [ -z "$version" ] && [ -n "$LOGSTAG_VERSION" ]; then
   version="$LOGSTAG_VERSION"
+fi
+
+# Use environment variable for start_service if not set via command line
+if [ -n "$LOGSTAG_START_SERVICE" ]; then
+  start_service="$LOGSTAG_START_SERVICE"
 fi
 
 # Default to main channel if still not set
@@ -558,12 +631,15 @@ echo "Checking install by running 'logstag-agent --version'"
 echo
 
 # Offer to configure the agent if in interactive mode and not already configured
+configuration_completed=false
 if [ -z "$LOGSTAG_INSTALL_NONINTERACTIVE" ];
 then
   if confirm "Would you like to configure the agent now?";
   then
     echo "Starting interactive configuration..."
-    "$INSTALL_PATH/bin/logstag-agent" configure --channel "$channel"
+    if "$INSTALL_PATH/bin/logstag-agent" configure --channel "$channel"; then
+      configuration_completed=true
+    fi
   else
     echo "You can configure the agent later by running: $INSTALL_PATH/bin/logstag-agent configure --channel \"$channel\""
   fi
@@ -572,11 +648,61 @@ else
   if [ -z "$LOGSTAG_API_KEY" ];
   then
     echo "Configure the agent by running: $INSTALL_PATH/bin/logstag-agent configure --channel \"$channel\""
+  else
+    # If API key was provided via environment, consider configuration completed
+    configuration_completed=true
   fi
 fi
 
+# Start the service if requested and configuration was completed successfully
+if [ "$start_service" = "true" ]; then
+  # Determine if we should start the service
+  should_start_service=false
+  
+  if [ "$configuration_completed" = "true" ]; then
+    # Configuration was completed successfully
+    should_start_service=true
+  elif [ -n "$LOGSTAG_API_KEY" ] || [ -n "$LOGSTAG_API_BASE_URL" ]; then
+    # Environment-based configuration was applied
+    should_start_service=true
+  elif [ -n "$LOGSTAG_INSTALL_NONINTERACTIVE" ]; then
+    # In non-interactive mode, try to start even without full configuration
+    # The service will fail gracefully if not properly configured
+    should_start_service=true
+  fi
+  
+  if [ "$should_start_service" = "true" ]; then
+    echo
+    echo "Starting Logstag Agent service..."
+    if enable_and_start_service; then
+      # Give the service a moment to start up
+      sleep 2
+      verify_service_status
+    else
+      echo "⚠️  Service startup failed, but installation was successful"
+      echo "You can start the service manually with: sudo systemctl start logstag-agent"
+    fi
+  else
+    echo
+    echo "⚠️  Service not started automatically (configuration not completed)"
+    echo "After configuring the agent, start the service with: sudo systemctl start logstag-agent"
+  fi
+else
+  echo
+  echo "ℹ️  Service startup was disabled (--no-start-service)"
+  echo "To start the service manually: sudo systemctl start logstag-agent"
+fi
+
+echo
 echo "The Logstag Agent was installed successfully"
 echo "Installation path: $INSTALL_PATH"
 echo "Configuration file: $CONFIG_PATH"
 echo "Log file path: $LOG_PATH"
+echo "Service name: logstag-agent"
+echo
+echo "Useful commands:"
+echo "  • Check service status: sudo systemctl status logstag-agent"
+echo "  • View service logs: sudo journalctl -u logstag-agent -f"
+echo "  • Restart service: sudo systemctl restart logstag-agent"
+echo "  • Configure agent: $INSTALL_PATH/bin/logstag-agent configure --channel \"$channel\""
 echo
