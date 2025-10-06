@@ -222,3 +222,35 @@ Description: Logstag Agent
  Logstag Agent collects and sends database metrics and statistics to Logstag for
  analysis
 
+Package: logstag-agent
+Version: 1.0.22-1
+Architecture: amd64
+Maintainer: Logstag <platform@logstag.ai>
+Installed-Size: 34172
+Filename: pool/dev/l/logstag-agent/logstag-agent_1.0.22-1_amd64.deb
+Size: 8212748
+MD5sum: 513a7c80d83ecf2bad91b8546c5f4e7e
+SHA1: 568e65ad8e640957125dce75f9a782c2b08b224d
+SHA256: be92b3bd043d62af73fcc29508d19ab79cac61b691ac03848779a5906bfeadf6
+Priority: optional
+Homepage: https://github.com/techmindpartners/logstag-agent
+Description: Logstag Agent
+ Logstag Agent collects and sends database metrics and statistics to Logstag for
+ analysis
+
+Package: logstag-agent
+Version: 1.0.22-1
+Architecture: arm64
+Maintainer: Logstag <platform@logstag.ai>
+Installed-Size: 26894
+Filename: pool/dev/l/logstag-agent/logstag-agent_1.0.22-1_arm64.deb
+Size: 7167344
+MD5sum: c4a80385c5171c3db05d514347d014aa
+SHA1: c209f63038da4512ef79a1e4221a024c46d145d1
+SHA256: 933dfe6afa0db0dcc9ce72ca409105521e6b39a4d93c845227da627c93f1264c
+Priority: optional
+Homepage: https://github.com/techmindpartners/logstag-agent
+Description: Logstag Agent
+ Logstag Agent collects and sends database metrics and statistics to Logstag for
+ analysis
+
