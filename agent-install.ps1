@@ -323,44 +323,6 @@ function Get-UserConfirmation {
     } while ($true)
 }
 
-# Function to check if agent has valid configuration
-function Test-AgentConfigured {
-    param([string]$ConfigPath)
-    
-    if (-not (Test-Path $ConfigPath)) {
-        return $false
-    }
-    
-    try {
-        $configContent = Get-Content $ConfigPath -Raw -ErrorAction SilentlyContinue
-        # Configuration is valid if it has at least one uncommented target section
-        # Match [targets. at the beginning of a line (not commented with #)
-        return $configContent -match '(?m)^\s*\[targets\.'
-    }
-    catch {
-        return $false
-    }
-}
-
-# Function to set service to automatic startup
-function Set-ServiceAutoStart {
-    param([string]$ServiceName, [string]$Reason)
-    
-    Write-Log "Enabling automatic service startup - Reason: $Reason"
-    $scResult = sc.exe config $ServiceName start= auto 2>&1
-    if ($LASTEXITCODE -eq 0) {
-        Write-Log "Service configured for automatic startup"
-        Write-Host "Service will start automatically on system boot" -ForegroundColor Green
-        return $true
-    }
-    else {
-        Write-Log "Warning: Failed to enable auto-start: $scResult" "WARN"
-        Write-Host "Note: Could not enable auto-start. You can enable it manually with:" -ForegroundColor Yellow
-        Write-Host "  sc.exe config '$ServiceName' start= auto" -ForegroundColor Yellow
-        return $false
-    }
-}
-
 # Function to stop and remove existing service
 function Remove-ExistingService {
     $service = Get-Service -Name $ServiceName -ErrorAction SilentlyContinue
@@ -430,16 +392,6 @@ function Configure-LogstagService {
     
     Write-Log "Service found: $($service.Name) - Status: $($service.Status)"
     
-    # Check if this is an upgrade with existing valid configuration
-    # If agent was previously configured, restore automatic startup
-    if (Test-AgentConfigured -ConfigPath $ConfigPath) {
-        Write-Log "Detected existing valid configuration - enabling automatic startup"
-        Set-ServiceAutoStart -ServiceName $ServiceName -Reason "Upgrade - agent has valid configuration"
-    }
-    else {
-        Write-Log "No existing configuration found - service will remain in Manual mode until configured"
-    }
-    
     # Configure service description (if not already set by WiX)
     try {
         $descResult = sc.exe description $ServiceName "Logstag database monitoring agent" 2>&1
@@ -488,6 +440,25 @@ function Configure-LogstagService {
 # Function to start the service
 function Start-LogstagService {
     Write-Log "Starting $ServiceName service..."
+    
+    # Check current start mode and set to Auto if needed
+    $service = Get-Service -Name $ServiceName -ErrorAction SilentlyContinue
+    if ($service) {
+        if ($service.StartType -ne "Automatic") {
+            Write-Log "Setting service start mode to Automatic..."
+            try {
+                $scResult = sc.exe config $ServiceName start= auto 2>&1
+                if ($LASTEXITCODE -eq 0) {
+                    Write-Log "Service start mode set to Automatic"
+                } else {
+                    Write-Log "Warning: Failed to set service start mode to Automatic: $scResult" "WARN"
+                }
+            }
+            catch {
+                Write-Log "Warning: Could not set service start mode: $($_.Exception.Message)" "WARN"
+            }
+        }
+    }
     
     try {
         Start-Service -Name $ServiceName -ErrorAction Stop
@@ -852,38 +823,12 @@ function Install-LogstagAgent {
         
         # Always run configuration first (this creates the proper config structure)
         Write-Log "Starting agent configuration..."
-        $exePath = Join-Path $InstallPath "bin\logstag-agent.exe"
-        
-        # Track if auto-start was enabled
-        $autoStartEnabled = $false
-        
-        # Run configure and capture exit code properly
-        $configureOutput = & $exePath configure --channel $Channel 2>&1
-        $configureExitCode = $LASTEXITCODE
-        
-        # Log configure output for debugging
-        if ($configureOutput) {
-            Write-Log "Configure output: $configureOutput"
+        try {
+            & $exePath configure --channel $Channel
         }
-        
-        if ($configureExitCode -eq 0) {
-            Write-Log "Configuration command completed successfully (exit code: 0)"
-            
-            # Check if configuration has valid targets
-            if (Test-AgentConfigured -ConfigPath $ConfigPath) {
-                Write-Log "Configuration validated: targets found in config file"
-                $autoStartEnabled = Set-ServiceAutoStart -ServiceName $ServiceName -Reason "Initial configuration with valid targets"
-            }
-            else {
-                Write-Log "Configuration completed without targets - auto-start will not be enabled" "WARN"
-                Write-Host "Note: Auto-start not enabled (no targets configured). Configure targets and enable with:" -ForegroundColor Yellow
-                Write-Host "  sc.exe config '$ServiceName' start= auto" -ForegroundColor Yellow
-            }
-        }
-        else {
-            Write-Log "Configuration returned non-zero exit code: $configureExitCode" "WARN"
-            Write-Host "Configuration completed with warnings. Auto-start not enabled." -ForegroundColor Yellow
-            Write-Host "You can reconfigure the agent and enable auto-start manually." -ForegroundColor Yellow
+        catch {
+            Write-Log "Warning: Agent configuration encountered an issue: $($_.Exception.Message)" "WARN"
+            Write-Host "You can configure the agent later by running: $exePath configure --channel $Channel" -ForegroundColor Yellow
         }
         
         # Update configuration if environment variables provided (after configure command)
@@ -895,25 +840,11 @@ function Install-LogstagAgent {
         # Now that configuration is properly set up, try again with configure to pick up the new API settings
         if ($ApiKey -or $ApiBaseUrl) {
             Write-Log "Re-running agent configuration to apply API settings..."
-            $reconfigureOutput = & $exePath configure --channel $Channel 2>&1
-            $reconfigureExitCode = $LASTEXITCODE
-            
-            if ($reconfigureOutput) {
-                Write-Log "Reconfigure output: $reconfigureOutput"
+            try {
+                & $exePath configure --channel $Channel
             }
-            
-            # If first configure failed but reconfigure succeeded, enable auto-start
-            if ($reconfigureExitCode -eq 0 -and -not $autoStartEnabled) {
-                Write-Log "Reconfiguration completed successfully (exit code: 0)"
-                
-                # Check if config now has targets
-                if (Test-AgentConfigured -ConfigPath $ConfigPath) {
-                    Write-Log "Reconfiguration validated: targets found in config file"
-                    $autoStartEnabled = Set-ServiceAutoStart -ServiceName $ServiceName -Reason "Reconfiguration with API credentials - valid targets found"
-                }
-            }
-            elseif ($reconfigureExitCode -ne 0) {
-                Write-Log "Reconfiguration returned non-zero exit code: $reconfigureExitCode" "WARN"
+            catch {
+                Write-Log "Warning: Final agent configuration encountered an issue: $($_.Exception.Message)" "WARN"
             }
         }
         
@@ -930,34 +861,16 @@ function Install-LogstagAgent {
             Start-LogstagService
         }
         else {
-            Write-Log "Skipping service startup (use -StartService to enable immediate startup)"
+            Write-Log "Skipping service startup (use -StartService:`$false to disable automatic startup)"
         }
-
-        # Check if service is configured for auto-start
-        $serviceConfig = Get-WmiObject Win32_Service | Where-Object { $_.Name -eq $ServiceName }
-        $isAutoStart = ($serviceConfig -and $serviceConfig.StartMode -eq "Auto")
 
         if (-not $StartService) {
             Write-Host "To start the service: Start-Service '$ServiceName'" -ForegroundColor Yellow
-            if (-not $isAutoStart) {
-                Write-Host "To enable auto-start: sc.exe config '$ServiceName' start= auto" -ForegroundColor Yellow
-            }
-            Write-Host ""
-        }
-        else {
-            if (-not $isAutoStart) {
-                Write-Host "To enable auto-start on boot: sc.exe config '$ServiceName' start= auto" -ForegroundColor Yellow
-            }
+            Write-Host "To enable auto-start: sc.exe config '$ServiceName' start= auto" -ForegroundColor Yellow
             Write-Host ""
         }
 
         Write-Host "Service name: $ServiceName" -ForegroundColor Green
-        if ($isAutoStart) {
-            Write-Host "Startup mode: Automatic" -ForegroundColor Green
-        }
-        else {
-            Write-Host "Startup mode: Manual" -ForegroundColor Yellow
-        }
         Write-Host "Installation path: $InstallPath" -ForegroundColor Green
         Write-Host "Configuration file: $ConfigPath" -ForegroundColor Green
         Write-Host "Log file path: $LogPath" -ForegroundColor Green
