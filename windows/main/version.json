@@ -1,25 +1,25 @@
 {
   "channel": "main",
-  "latest_version": "1.0.33",
-  "generated_at": "2025-11-18T10:50:55Z",
+  "latest_version": "1.0.36",
+  "generated_at": "2025-11-20T12:59:50Z",
   "releases": {
     "windows-x86_64": {
-      "download_url": "https://techmindpartners.github.io/logstag-agent-dist/windows/main/x64/logstag-agent-1_0_33-x64.exe",
       "updater": {
-        "checksum": "3c0fd460ee418e7dca188ec212f29acfae129ff3d27b9adc4f55f6e629aa346e",
-        "download_url": "https://techmindpartners.github.io/logstag-agent-dist/windows/main/x64/logstag-agent-updater-1_0_33-x64.exe",
-        "package_type": "binary",
-        "size": 5016576
+        "size": 7295488,
+        "checksum": "83b20095934ad4ecd1ab254ff1e8f5fa1bd1866565a2876d188f543530c74273",
+        "download_url": "https://techmindpartners.github.io/logstag-agent-dist/windows/main/x64/logstag-agent-updater-1_0_36-x64.exe",
+        "package_type": "binary"
       },
-      "checksum": "c6d40e243d6a3677cdf9d1b85ace914529898b42e6688bb4e8a0fe0b1b89bb5f",
-      "package_type": "binary",
+      "size": 45151744,
       "msi": {
-        "checksum": "6081a10b125617154e76527b097745f15f3b5cd6b73504106a0927370e945985",
-        "download_url": "https://techmindpartners.github.io/logstag-agent-dist/windows/main/x64/logstag-agent-1_0_33-x64.msi",
-        "package_type": "msi",
-        "size": 13524992
+        "size": 18542592,
+        "checksum": "ac1d7739b5aef94211b828246f8cf0cbdfc2c6420745234cfb4796d75f1f9b9f",
+        "download_url": "https://techmindpartners.github.io/logstag-agent-dist/windows/main/x64/logstag-agent-1_0_36-x64.msi",
+        "package_type": "msi"
       },
-      "size": 32790528
+      "download_url": "https://techmindpartners.github.io/logstag-agent-dist/windows/main/x64/logstag-agent-1_0_36-x64.exe",
+      "checksum": "82874d89cfabdd3b540d9ddf3942fa6d89b57553ccf1618b69549b91292558a3",
+      "package_type": "binary"
     }
   }
 }
