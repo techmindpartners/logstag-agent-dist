@@ -56,7 +56,7 @@ fail () {
   >&2 echo "  • Check internet connectivity"
   >&2 echo "  • Verify you have sudo permissions"
   >&2 echo "  • Check system logs: journalctl -xe"
-  >&2 echo "  • Visit: https://docs.logstag.ai/troubleshooting"
+  >&2 echo "  • Visit: https://docs.logstag.com/troubleshooting"
   >&2 echo "  • For security issues, verify GPG key fingerprint"
   exit 1
 }
@@ -381,20 +381,20 @@ then
   pkg=yum
   distribution=el
   os_version=9
-elif grep -q '^ID="\(rhel\|almalinux\|rocky\|centos\)"$' /etc/os-release;
+elif grep -q '^ID="\(rhel\|almalinux\|rocky\|centos\|ol\)"$' /etc/os-release;
 then
-  # RHEL, AlmaLinux, Rocky Linux and CentOS
+  # RHEL, AlmaLinux, Rocky Linux, CentOS and Oracle Linux
   pkg=yum
   distribution=el
   os_version=$(grep VERSION_ID /etc/os-release | cut -d= -f2 | tr -d '"' | cut -d. -f1)
   if [ "$os_version" != 7 ] && [ "$os_version" != 8 ] && [ "$os_version" != 9 ];
   then
     # If version is not supported, ask user if they want to try RHEL9 package
-    if confirm "Unsupported RHEL, AlmaLinux, Rocky Linux or CentOS version; try RHEL9 package?";
+    if confirm "Unsupported RHEL, AlmaLinux, Rocky Linux, CentOS or Oracle Linux version; try RHEL9 package?";
     then
       os_version=9
     else
-      fail "unrecognized RHEL, AlmaLinux, Rocky Linux or CentOS version: ${os_version}"
+      fail "unrecognized RHEL, AlmaLinux, Rocky Linux, CentOS or Oracle Linux version: ${os_version}"
     fi
   fi
 elif grep -q '^ID=fedora$' /etc/os-release;
