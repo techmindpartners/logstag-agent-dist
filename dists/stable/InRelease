@@ -1,0 +1,51 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
+
+Architectures: amd64 arm64
+Codename: stable
+Components: dev main
+Date: Thu, 15 Jan 2026 15:04:51 +0000
+Description: Official Debian packages for Logstag Agent
+Label: Logstag Agent Packages
+Origin: TechMindPartners
+Suite: stable
+MD5Sum:
+ 30e13f14ecf96c2c1287fe5ac523adc7              228 Release
+ d2a6f1589fa37f58d650f9a03fabe95e             1138 main/binary-amd64/Packages
+ de65095fb117e73cac09efe1e98d5549              516 main/binary-amd64/Packages.gz
+ d2a6f1589fa37f58d650f9a03fabe95e             1138 main/binary-arm64/Packages
+ de65095fb117e73cac09efe1e98d5549              516 main/binary-arm64/Packages.gz
+SHA1:
+ 52b3539fe64a9b88c47afb246e4fb2669e9aefe4              228 Release
+ 468a286b58e0e11fbdcb9d91f2d00ae23b652529             1138 main/binary-amd64/Packages
+ 4f7f9c43ce42570b41286129d9d24d778b27c7cc              516 main/binary-amd64/Packages.gz
+ 468a286b58e0e11fbdcb9d91f2d00ae23b652529             1138 main/binary-arm64/Packages
+ 4f7f9c43ce42570b41286129d9d24d778b27c7cc              516 main/binary-arm64/Packages.gz
+SHA256:
+ 47e7de146d42e2d947f83ecbc84fd4c595ca78d613ed5a2bda09214d9e7ef86f              228 Release
+ 931096c0f62e84f5e94bb0371e2b56a4653ba70087231f38c16b3935bd3008b4             1138 main/binary-amd64/Packages
+ 458ed196f956fca21a052c311110e2a57f5c45ffc87e80a1380e9eccf5d488ee              516 main/binary-amd64/Packages.gz
+ 931096c0f62e84f5e94bb0371e2b56a4653ba70087231f38c16b3935bd3008b4             1138 main/binary-arm64/Packages
+ 458ed196f956fca21a052c311110e2a57f5c45ffc87e80a1380e9eccf5d488ee              516 main/binary-arm64/Packages.gz
+SHA512:
+ 71b3aa6a3e11df238ea0fcb3b052bd6fa87bd562668c66b4fbb384cefae2621ff63f8c68ddd2d219603b4e6d82f313c1011c648b1f596d1f7576b20356507194              228 Release
+ d7c5a3daeb7318c8e61a423769863050d9632a3caad8bba198364676f59776d1d198d3ccdab4625fe334c3ba76a91ca0aa93a38594970906da4dcd21bd22ce1f             1138 main/binary-amd64/Packages
+ c12e808fbcb2ed8b18d5a7a2c5fd1faa30b0ea5886e96293417a10251ddd655745c952ad69106b362004e1bc26fe39321b31b452a86b052126e6b6d136e1064b              516 main/binary-amd64/Packages.gz
+ d7c5a3daeb7318c8e61a423769863050d9632a3caad8bba198364676f59776d1d198d3ccdab4625fe334c3ba76a91ca0aa93a38594970906da4dcd21bd22ce1f             1138 main/binary-arm64/Packages
+ c12e808fbcb2ed8b18d5a7a2c5fd1faa30b0ea5886e96293417a10251ddd655745c952ad69106b362004e1bc26fe39321b31b452a86b052126e6b6d136e1064b              516 main/binary-arm64/Packages.gz
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCgAdFiEEy8Ueh7J9nt6XOspxvk0V/wXZHX8FAmlpAhMACgkQvk0V/wXZ
+HX+C2xAAoSifm9mv3XLyGav8o5GxxpAtRe1kpGGQVdi5bv6ZeDdl6koZAZaTrFIu
+fAl1KQxQJ0/sP0YrhA1CGmqHl0qJlg0radNDCUTOpeQu1sXPZB9EC2zzf2Qn4qrV
+rXBGvXpeJeYFKbgvxHACN0qyMgnzkuapAoyM6xnR4Z058FcgERc+luJr1ZHpMRpX
+tV8qfx5+zo5d4SfzKQXFklVIoote3bbAudbphdolUekb9elmRMSAe0sl0zK6Z/ja
+1Gri+Ow1hAcP5PY4++3yo2L9FIP30llWK9LWomkNBSAASnA5WKdAuD0gP5zizLjn
+BTr8pDxrzQfjVLucfFfbGoLFo/v3U8IomWwPEtEmwBPmzIwK6nn4Oo+TDGNRSHvO
+nd9la4rwQc3kYbH0O2zZy7w+N1AGsdcvMIRa430Khw4Uu2PKJoIwe+0vBgOTwOKB
+getfUxowhAjnIvTE4xEMv7gZrkFS1C0IAf4PnjtXvSiIo0czv6anA1uiG7am56H/
+MQqwHgiel426adaxZSD9JjVNdfU9Ft978vHQiRMmXzBH6ip3/sieYuB+/bYuGq0r
+j5PViSjnj5j/f3o5Sd17dsmIUSSnAxekVIgeaIpAv4+JC0JVx85d+MHamm9DpCDE
+ZYNL2gBsy6huXgAAwligaJb6jrEZoagEwKHXXPhTnM344nPqQa8=
+=VFhD
+-----END PGP SIGNATURE-----
