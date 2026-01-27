@@ -1,18 +1,18 @@
 {
   "channel": "main",
-  "latest_version": "1.0.53-1",
-  "generated_at": "2026-01-27T18:56:48Z",
+  "latest_version": "1.0.53",
+  "generated_at": "2026-01-27T18:56:46Z",
   "releases": {
-    "linux-x86_64": {
-      "download_url": "https://techmindpartners.github.io/logstag-agent-dist/artifacts/main/logstag-agent-1.0.53-1-amd64",
-      "checksum": "0418f0f37ca693f757c36d597319b2266e12e287579441d7adb2ec253fd22e45",
-      "size": 63083688,
-      "package_type": "binary"
-    },
     "linux-aarch64": {
-      "download_url": "https://techmindpartners.github.io/logstag-agent-dist/artifacts/main/logstag-agent-1.0.53-1-arm64",
+      "download_url": "https://techmindpartners.github.io/logstag-agent-dist/artifacts/main/logstag-agent-1.0.53-aarch64",
       "checksum": "d1b220ba5910d910f149920ab013e34261c57ad2d07f6c4f1156b93e81713076",
       "size": 55036712,
+      "package_type": "binary"
+    },
+    "linux-x86_64": {
+      "download_url": "https://techmindpartners.github.io/logstag-agent-dist/artifacts/main/logstag-agent-1.0.53-x86_64",
+      "checksum": "0418f0f37ca693f757c36d597319b2266e12e287579441d7adb2ec253fd22e45",
+      "size": 63083688,
       "package_type": "binary"
     }
   }
