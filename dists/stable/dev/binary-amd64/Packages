@@ -1,5 +1,21 @@
 Package: logstag-agent
 Version: 1.0.71-1
+Architecture: arm64
+Maintainer: Logstag <platform@logstag.com>
+Installed-Size: 40003
+Filename: pool/dev/l/logstag-agent/logstag-agent_1.0.71-1_arm64.deb
+Size: 10211988
+MD5sum: e615ae6eac4edb9f28eb3c4fa7d7179c
+SHA1: 60c170f2b8c106730230b297df61280bda5ad7c7
+SHA256: ad9e22e3effea093281adfc374fe60b95d688e4177e61cfb8445c8666cb8c057
+Priority: optional
+Homepage: https://github.com/techmindpartners/logstag-agent
+Description: Logstag Agent
+ Logstag Agent collects and sends database metrics and statistics to Logstag for
+ analysis
+
+Package: logstag-agent
+Version: 1.0.71-1
 Architecture: amd64
 Maintainer: Logstag <platform@logstag.com>
 Installed-Size: 52458
@@ -15,15 +31,31 @@ Description: Logstag Agent
  analysis
 
 Package: logstag-agent
-Version: 1.0.71-1
+Version: 1.0.72-1
 Architecture: arm64
 Maintainer: Logstag <platform@logstag.com>
-Installed-Size: 40003
-Filename: pool/dev/l/logstag-agent/logstag-agent_1.0.71-1_arm64.deb
-Size: 10211988
-MD5sum: e615ae6eac4edb9f28eb3c4fa7d7179c
-SHA1: 60c170f2b8c106730230b297df61280bda5ad7c7
-SHA256: ad9e22e3effea093281adfc374fe60b95d688e4177e61cfb8445c8666cb8c057
+Installed-Size: 40084
+Filename: pool/dev/l/logstag-agent/logstag-agent_1.0.72-1_arm64.deb
+Size: 10226052
+MD5sum: acdd05259ef84c0c480ab393a84f4501
+SHA1: cabec662d46f59f27089b28c00b6bb1d4ab30508
+SHA256: 26d414c7f756529a27de2ed061878cd708cc8cdfff82f79fa05ad2f0db468dcf
+Priority: optional
+Homepage: https://github.com/techmindpartners/logstag-agent
+Description: Logstag Agent
+ Logstag Agent collects and sends database metrics and statistics to Logstag for
+ analysis
+
+Package: logstag-agent
+Version: 1.0.72-1
+Architecture: amd64
+Maintainer: Logstag <platform@logstag.com>
+Installed-Size: 52465
+Filename: pool/dev/l/logstag-agent/logstag-agent_1.0.72-1_amd64.deb
+Size: 13124636
+MD5sum: bc1b18e447af0c31352599269d222f23
+SHA1: ce341cdf86c99e6f675771552495f118a0b4ff99
+SHA256: 163436d8601975365736a9e299c6a96e043471949c654e6acf155b4b2b5f732c
 Priority: optional
 Homepage: https://github.com/techmindpartners/logstag-agent
 Description: Logstag Agent
