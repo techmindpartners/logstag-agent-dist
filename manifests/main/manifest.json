@@ -1,7 +1,7 @@
 {
   "channel": "main",
   "latest_version": "1.0.88-1",
-  "generated_at": "2026-09-13T21:01:51Z",
+  "generated_at": "2026-09-13T21:14:04Z",
   "releases": {
     "linux-x86_64": {
       "download_url": "https://techmindpartners.github.io/logstag-agent-dist/artifacts/main/logstag-agent-1.0.88-1-amd64",
