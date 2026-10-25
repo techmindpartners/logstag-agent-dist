@@ -1,0 +1,63 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
+
+Architectures: amd64 arm64
+Codename: stable
+Components: dev main
+Date: Sun, 25 Oct 2026 02:24:15 +0000
+Description: Official Debian packages for Logstag Agent
+Label: Logstag Agent Packages
+Origin: TechMindPartners
+Suite: stable
+MD5Sum:
+ 7da6bd4b6bc239e7e5c979c303497cf7             1138 dev/binary-amd64/Packages
+ cfe719b3d8b5652bc3973f8bf3574254              507 dev/binary-amd64/Packages.gz
+ 8bb3268ab1c80871ddbc2d93ab2bb9c9             1138 dev/binary-arm64/Packages
+ e25d37d3d3ed3f8270d09f60a8dde65f              506 dev/binary-arm64/Packages.gz
+ a32cb7d5c8fdb273f19b18f60068bc45             1140 main/binary-amd64/Packages
+ 8a6b1030679c3f45097d941882821db8              509 main/binary-amd64/Packages.gz
+ b8af05a2c55f665fa900702fc652a283             1140 main/binary-arm64/Packages
+ 669bae05a27887855b55ad0e4a5f1d9c              506 main/binary-arm64/Packages.gz
+SHA1:
+ 24c521b6a9dd2f4adf9e888f8dbe43d862a1ec79             1138 dev/binary-amd64/Packages
+ aec2cedef66ad0d613f66f5b58c91c5da6de0978              507 dev/binary-amd64/Packages.gz
+ 49a0cc8aece847ff8b92a8bca66d21f585441703             1138 dev/binary-arm64/Packages
+ 994509a7684c3b3012dd9109bb09d2b5dea24dfa              506 dev/binary-arm64/Packages.gz
+ 44fbf3b8ba7615d26308fb7bd146b102750c6b3a             1140 main/binary-amd64/Packages
+ 5e48f8eea70e8588a21d1dbb0550e1ecb240e16d              509 main/binary-amd64/Packages.gz
+ 8c90f92e99436a55a34feb989046c86a71d71dc7             1140 main/binary-arm64/Packages
+ 8da074264ffeed42705aa15be153d5b48d9ce064              506 main/binary-arm64/Packages.gz
+SHA256:
+ 0c2c80d8cb692fa8f7f7dd92a459bc5e1104a44a970500090bb3226e00540870             1138 dev/binary-amd64/Packages
+ 64b142d966eaaf5f998ae2946397bad335f20184c708915b3c29a2dd43e63381              507 dev/binary-amd64/Packages.gz
+ d5191ff09323a0f6cfabf8a5931d17d253b39fd8ce20131d010b1d38b6f9520c             1138 dev/binary-arm64/Packages
+ 78db03437c492c3847776d827cac53921f37bef9e229cef416ad0992909ca02b              506 dev/binary-arm64/Packages.gz
+ 28c146a05e7b15c5d0b681c865b87fb0508796b6fa26d1d96f9d85c10a437bba             1140 main/binary-amd64/Packages
+ 4f136ddd17ed8efedf4af5b2f0725c8b75ce317658074918e9c6c416e30f4d0c              509 main/binary-amd64/Packages.gz
+ cba71b7451dcef588c3a5b05c0d7aac9f4df642a221b78c5318be11bd6e4af45             1140 main/binary-arm64/Packages
+ 4ba4c759096a72f0e56988e95efd235163db6fc8c92de9507d57ac5cc77482e6              506 main/binary-arm64/Packages.gz
+SHA512:
+ 66fa36f9c784a9a0e48b8fecb07e7b69c216e7db273c04b07e4efa231feaf953703309db88cf6768b068f7acb6073ce94a3634b27c1d0129f792218c0eb25ad0             1138 dev/binary-amd64/Packages
+ b20a21b02cc7ebb1a937a6b3f004a767fad178a4442a10232b3e4ebeebf14b5727a2e95954564621433132430861b8edc336bd677d71c5e000de41ded6e5d8d2              507 dev/binary-amd64/Packages.gz
+ 67a67ce2f5ad2dd6a5dc4fbe388215024d3cd4ad4d1fe994fafa6babb6d1feb241727f3257d29037cda616f558fb5fc18f22765273e6d235ef4758a567c7cac3             1138 dev/binary-arm64/Packages
+ bc3dc895c5c9c972e922bb7eadac560574dad196e6a6ec71652fd518e084894292c0935db047167fd4947f06d3decbba2e088ec4fbc3d8137933bb403b4d5aab              506 dev/binary-arm64/Packages.gz
+ f9bcf00ad7f982199a021af6765e0aaa99a3869bc21f327409714561d25483d905734776c176d9b99e39b71c2ff5bf0065df8f5274a8cf9ef3091f33aef0ff2a             1140 main/binary-amd64/Packages
+ 847c7d435f1be58aa0d0b6288b229bda284f5de0f9b54ba02c72f6e7424aa3f3832d038ee2341dafa17660c1d1ab4f14a235d76539501d247d8e68b8f5ed4f2d              509 main/binary-amd64/Packages.gz
+ 94767c5c95f01298b76ef2b35a7530616377b4728988b1e548b5bc24716b72fdf5944076dab2275ddf5e4413eb975b81f29e492b0cb244a9c3ba435e1adab9c7             1140 main/binary-arm64/Packages
+ 0e141c3c59585f743ed70f9e0d3075a74eb260c4931000a995666f590a2185a9f139621ac97f1d286155cec6c36b90fc8959e5de77aaf1ef6d21a1ab194f45c5              506 main/binary-arm64/Packages.gz
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCgAdFiEEy8Ueh7J9nt6XOspxvk0V/wXZHX8FAmrdaE8ACgkQvk0V/wXZ
+HX8xWg/9FLPGcPKqe3cMk57iL/69DkFHUo/IkTuLprxN8Plr2L/9n8gemGg478Lr
+bMME/XESgFp04gjOLQrzfXRh2dfcH+Rg57JcsUdwyLPseh1pcA4Joq7+EEH/hPRx
+fy4H+NZwRQQcokrGx+FWvc6AYTxhuMKVmx3lnNhQBgXAZDp2k9kqjAOZ8Ryw1Zek
+3U/UGrq38IQOHZhkcyzbMr2Iuq0o+bNyI05r57J+/Udv5BjOXpktiwZhGQWuBFw3
+GOcssgT6fZsqssmP7OCZtnt2dNynLMXu9saEwBONBRTa6r17gbuhzj3NeNMQRK5c
+/ntwEjOyH6uW5Z+0vrjDuLB6SbC4mDY494WEEKdqQusl81xMAcf8mblJ7xPcIBex
+Wc5/3V8HyBsWv//C4BxPpwaFzc0O6btklPmeQ9T1kAsF3TCsYhM7PL03l621sEGe
+aXz6ll+1BrasGiCy5mOlEMJWNp8ho5AormJHpfz4a0rTfARqwt3oMYIfyqDfpEKI
+detSl9AcgS3MfX20Nn78bxN62V55/4Z/+oEKXsUqQ9oRnFUcyqo7zmdyRr301Ed7
+emKJiA/5eoDCaXkaplunwwecIcgzhRMO7oU2oBuND0eC8gCG337ZG95loRengOrx
+3iXyOIw3jZMLCmrNddf7d00SKKam/mZjrTsJkPJcYq5CmdMTEfI=
+=J+ni
+-----END PGP SIGNATURE-----
