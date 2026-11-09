@@ -1,9 +1,0 @@
-7a0c6ecd9ec073f8387f3b6c40a56580ae5c3018c6be4607c346feb891196f85  artifacts/dev/logstag-agent-1.0.104-x86_64
-7c9e4cb329c252794e2ceba8239727891a53c35934da90179274b6e3ab562fda  artifacts/dev/logstag-agent-1.0.104-aarch64
-a1d735cc40ab764d9d078fadbc3ebbea4d8f9a700602f71fab2acf90f8f16f88  pool/dev/l/logstag-agent/logstag-agent_1.0.104-1_amd64.deb
-b8f50fc8ba385377bf3e05ace67d7ca62914ff5375d7fc7217cad59034ce36bc  pool/dev/l/logstag-agent/logstag-agent_1.0.104-1_arm64.deb
-d7ac84ac873b76d706d76939d351bce517f51cc48b1bf6b698e47becf704b539  rpm/dev/x86_64/logstag-agent-1.0.104-1.x86_64.rpm
-401b027dd36cdc59e0b6479e34ce9ce43fe1a764e0aa167e064fc8d7619f771b  rpm/dev/aarch64/logstag-agent-1.0.104-1.aarch64.rpm
-e37bca74db9b70d4e22e7fc28ca8b476b610624048798fab44456cced3868298  windows/dev/x64/logstag-agent-1_0_104-x64.exe
-b21e1fd6a8bb86c7ce91f9aa78435af4e08c1f3c807d765989489e27980142ab  windows/dev/x64/logstag-agent-updater-1_0_104-x64.exe
-d09af97388ed3ce154be1530856a601114e9648a2700a8120058ea6ba24eb9dd  windows/dev/x64/logstag-agent-1_0_104-x64.msi
