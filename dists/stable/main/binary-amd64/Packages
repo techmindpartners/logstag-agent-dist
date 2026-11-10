@@ -1,20 +1,4 @@
 Package: logstag-agent
-Version: 1.0.103-1
-Architecture: amd64
-Maintainer: Logstag <platform@logstag.com>
-Installed-Size: 54046
-Filename: pool/main/l/logstag-agent/logstag-agent_1.0.103-1_amd64.deb
-Size: 13511240
-MD5sum: 2f47483a180a3d2f11320bb0c7275c8a
-SHA1: f0b7da42be5006813bdfe2a19518d19cac0db77c
-SHA256: cd78a327dc59408c1764eff3691ba84a030d5bb0041a8d3879c65df24847500d
-Priority: optional
-Homepage: https://github.com/techmindpartners/logstag-agent
-Description: Logstag Agent
- Logstag Agent collects and sends database metrics and statistics to Logstag for
- analysis
-
-Package: logstag-agent
 Version: 1.0.107-1
 Architecture: amd64
 Maintainer: Logstag <platform@logstag.com>
