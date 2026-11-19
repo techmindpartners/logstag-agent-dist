@@ -4,7 +4,7 @@ Hash: SHA512
 Architectures: amd64 arm64
 Codename: stable
 Components: dev main
-Date: Thu, 19 Nov 2026 09:02:07 +0000
+Date: Thu, 19 Nov 2026 11:59:48 +0000
 Description: Official Debian packages for Logstag Agent
 Label: Logstag Agent Packages
 Origin: TechMindPartners
@@ -47,17 +47,17 @@ SHA512:
  a9058059e2b2eb76a42735199b243ffa5cbfaad9a58048cc883248cd98594aa2e62344155cfa3b6725dc93284153237982139715a94fbf1b893e46f8513c09e0              388 main/binary-arm64/Packages.gz
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCgAdFiEEy8Ueh7J9nt6XOspxvk0V/wXZHX8FAmr+uw8ACgkQvk0V/wXZ
-HX8gzRAAlivAr6kOxVh+poIxo2jOXhHopLnvoQapN+VrqR0PMUj7AureDcJZKTBn
-FyDsseOAxo8ZCn2qpbdK0Vm37Glxu3BvPTi90+chT7hrVAthIoaLtGy6xLyVvqbz
-nDEA/v27HmswPGCXo+pFDv3ruKcca49OTXd/Ng3EYDEjsRTTA38tPmvN7FI8LDmo
-jIfOEf0pjva08veP1/SYO2fMPWry/x/9OBKK+Bs5G1E+LIbiOixeIYj3gUfyEzAd
-Uz6kphJ1wk/a94mjui0eIXeR0cWT/S0HSv/cJcabmyJ77L2q5l0J1bAdGbIWiKxA
-9Hla518jM+l+OhuNY2baoIhJVD6TNMFwaI1QTwsZYe51DK6U4oI1en91+ih9T88w
-73pCz99zwcRUMNsGAW10wHkPAF7kPNQPN+iuYMiA2uVPLPJH9/2SyY3e1EPk6weO
-ycdotWkoHLwazZuvvUQImxBq7xKY00k7v6nXQMOEVlE4T6IlPYN07poDQY2r38Tw
-JDlIZRwurzsotmj5tU64GjMdpuX405paFlHb1byJ9DiaLkx3865PPQgYjclsCZc3
-MdzQQTlaoZUemNs5UZZi2SxzZsLz4PeeaKF2tOXyKr8ykFyewDO7pIRlNzo/hOmE
-PDY0osZ8qe/RkwYV+gaLRw/BjYcOlqkj8p4G+no+mv6ZSzBJzRA=
-=DKl9
+iQIzBAEBCgAdFiEEy8Ueh7J9nt6XOspxvk0V/wXZHX8FAmr+5LQACgkQvk0V/wXZ
+HX/jqA//crRqJw+BXe9/moGfl2k4w2jUwv7iomkUBVC/ojJuO2HY+AaT5IQhvWC4
+zmi7cQAX88N6R1C5tLHaJDwRZx0u5U4tyH12Qj4/Nj1JVbJ6GOmPSmz69ktfX6a6
+SCbFvYP26+9N/jWJ+lMqbXp0dNSuI4sY7UqwYxZr5A0qsGWk814K935XFkdk2cy9
+ZqdujsaXJHHXITXRPeSGJXMa4bnrZp66cS6PevUodRDH2PrnA/GZ/Pm9ZdSuXMhq
+PuL8urDzQ2F5Pts1/HjmGLFZlsgUw8hYPYpPg7v4GYnRvByWdZS0Biy0z5E5+6tY
+8QvbEh2S3izQTAnFSUsofX/zD2nxbakcxclODVJhdddiYHZDtPUVJmFogwKF0weZ
+lbPZ23NlEKFUUb4lB2NST/XNogmqUKcv8UWZ2p5o9Z6UjutMdu5GP3YTaOFTWYv+
+qyURRSaeJL8tsC10qqugwrQA4GlLE+0base2J0xLfu8E4jC2VENPK+vPyfhUIOY2
+Ojpgg2wjGNxA1b7yBfwvPuB1DsOtkgm/u6fV237jUaQwQDswOsaap+TUtSZx/gmW
+HaBkfpipr+iefwaeNtVwkg2Fi+qbuaQ8rcnhEAVCCJE7AK3onBHK1c4jWh2wXB04
+ZAkmdbXprP+aw1AjQxp5mgWyaBxXaZPcZAuvZ/XSyZ6zGD7jnrM=
+=29lM
 -----END PGP SIGNATURE-----

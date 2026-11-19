@@ -1,7 +1,7 @@
 Architectures: amd64 arm64
 Codename: stable
 Components: dev main
-Date: Thu, 19 Nov 2026 09:02:07 +0000
+Date: Thu, 19 Nov 2026 11:59:48 +0000
 Description: Official Debian packages for Logstag Agent
 Label: Logstag Agent Packages
 Origin: TechMindPartners
