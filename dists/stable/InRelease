@@ -4,7 +4,7 @@ Hash: SHA512
 Architectures: amd64 arm64
 Codename: stable
 Components: dev main
-Date: Sat, 21 Nov 2026 16:36:07 +0000
+Date: Sun, 22 Nov 2026 11:48:43 +0000
 Description: Official Debian packages for Logstag Agent
 Label: Logstag Agent Packages
 Origin: TechMindPartners
@@ -47,17 +47,17 @@ SHA512:
  a9058059e2b2eb76a42735199b243ffa5cbfaad9a58048cc883248cd98594aa2e62344155cfa3b6725dc93284153237982139715a94fbf1b893e46f8513c09e0              388 main/binary-arm64/Packages.gz
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCgAdFiEEy8Ueh7J9nt6XOspxvk0V/wXZHX8FAmsByHcACgkQvk0V/wXZ
-HX/oTw/9G6fTUocJuoNvJCtNnPlaQFoF3q9qmasXZsRAjtraE2CwVz69plI4jyMs
-AqGQQV9H61yTU7ao1aWadLbVFp+T3WJeQhFR49ypJwh2Gxy+3BjNCC1oM2HrAo2X
-ohxDx7H7p4L58+OwxFJSLDvg6c/dzFouDjvXZeoXuclAahTbrE8pjjEcCeQsusB1
-t2y7m5B5+VNy0GeF6FiO215O5n9Mp589nmdfp0zTAZFIHs3z5rDjtHMxVwhMLB2K
-HU3HlIZVuH9C/kmj7vXJ3QynmNi+tsQLvBrK+/IVqh4h6z5Yg35hZ9JOjteLl0OE
-Rr0OzeoapjqdWnQ016m+15G3dIvVewpjsSNVrrf0+SmqGzoqc6iXOR2H8WgWXL39
-pUQ+0oYveXMJAwMLwBGmfl7pg5pzihC7i/lHd+wm4U3PINpk47pzhuH9p/XmYmcm
-Oh6v9gC5XxqoUZW38/o9kyq1LDhTd4mk2vk08U7Zg3Cg1Tso7ec93DigJRsQ5ZJv
-NpIYO1Yh10tAYxyS8FJFLsm08IMJAdEjBUYCPPoagG6riaKeIsxYBKQ9W5pSl7Z7
-sfu7SqqO4Bv3KIrq+24d71+3JyPEt80SmHopYy9WHhBtGmuThlbfb12v7DEnE46I
-iAjL7MojfTHkgjk8t7UoVgNWt3s9aMDVt0GGp/TYvdDIbUC43qI=
-=Te1j
+iQIzBAEBCgAdFiEEy8Ueh7J9nt6XOspxvk0V/wXZHX8FAmsC1psACgkQvk0V/wXZ
+HX+GUBAAixGJKeIrgm1/24Q2k1QV0RqWPwRd+9v3/IUodHXnBnMDNstsfkmUu5Ur
+HFPp78KWyig6wGIres2ecGwxogSJJDhQnFp1WJqWgb2RiCscLz2RZj1BJlzXl/t/
+d2lVuVzLJB9e9TAVWjTUSRMSBkucPjEihzxCFRchglmRcGxK53L6OvtaKS4SPMR9
+gCMlmCAZwWAU5/OVgAWZLTYOQoTRrrqMhBH8m6H/QGADBXYZ2AuJFfvlxg4TvpU5
+a1V9A4VBSrW3cwng8bvPQQw1ur9gU5+ECsiy0I5l24WZvPcvMUWsHuFyjhXM/7iG
+dgjoFnskaJvDext+Y3pQ2XsE3Qz79k3prWuU9tdWNfQxbhrsH5Fa0lAikLTmtSJY
+IJXciUofpWjm/qkqXPXdHuN4y4v3SaAmLqSl3f0kYP4SAnRYuPnhsNv8qXX5WlnW
+yAxoOJB+Vr3ckeHv5rrdMQI0BgxRVLo+PPzybpSptIBlMQCg+Tcg2qBhqo9B0qnO
+9dqFpdWqtzsqJJt5vXuvgQPe6tEgqq4jEAXXR4qQ7Gc+goqrcQWdJ93a/hk0xyLb
+Lum/j2sbJSF0yBsa+eyV8BvnHshZjcN9d36TgYMop+YWPzuiPz6ois8n/ENz3QOl
+W7xtxiAXaAClOD0WaDsaYFL5KWrBMKCSpjlZy4noc9vB4BNWN20=
+=APqA
 -----END PGP SIGNATURE-----
