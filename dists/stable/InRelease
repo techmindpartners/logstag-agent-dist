@@ -4,7 +4,7 @@ Hash: SHA512
 Architectures: amd64 arm64
 Codename: stable
 Components: dev main
-Date: Mon, 23 Nov 2026 10:59:23 +0000
+Date: Mon, 23 Nov 2026 13:29:22 +0000
 Description: Official Debian packages for Logstag Agent
 Label: Logstag Agent Packages
 Origin: TechMindPartners
@@ -47,17 +47,17 @@ SHA512:
  a9058059e2b2eb76a42735199b243ffa5cbfaad9a58048cc883248cd98594aa2e62344155cfa3b6725dc93284153237982139715a94fbf1b893e46f8513c09e0              388 main/binary-arm64/Packages.gz
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCgAdFiEEy8Ueh7J9nt6XOspxvk0V/wXZHX8FAmsEHIsACgkQvk0V/wXZ
-HX+iMhAAo0IvTjdVrl7P3SYjVa7iIZvWdRhG+UdOX+4qZREmgCE2aFpmEAt6FMup
-5YJ7M8e3kVPEmYawJiNt5K1nSDvwSVFyK+msAbe668H3hsOVRO5mI0sL14FWfxfR
-eWAh18pxUYCwRyAehyFiQxrSYrKLpktVjj9QVkIFSxWpVH1oPLMydU6ag5tND7UT
-lPtHd8urJYO/WEWYSdLv7DWMfEPlmAqTEl6a3jhzaL6j2tpk4YY/3ysL2fUFpCjm
-lpEBulz/7ZVcU3m+dpSH6NkeTqifRuJkQb5y9W5kPqnTcBDfntEbkuza9Tv7hsMx
-rYZ7ChMQaPRZw6z18tLtQDkImle1NlDFkNC/pBnLDZdem0CS/bseRWK/aYlZ13d6
-kiHFbtS5cGA19glToTTygJcWTvE6Fho/p3I2e6flVxz5fE7e/c1Yt0WEParW3o1t
-P2oHbi72Rl2/x65fRpu4ykuhxJ7NXY16ow63/dBL0s/IPU74fa+uhWAHdVeL+Foa
-32slUe0a1UV4s05ygiqgrJBxSJbGl3QiZuwAFl256qGtwS7b1qNU40fWgkexdd/Y
-CFvptAK7NzJoY80A3+Jw+7TQxVVLwN4hbpVkkI6Uzhvc+/Ta1q5s7ZkGz9QW8C1p
-cWeWceVKy9SwugyzkSp6awiPlYFJyQ/CmFnmiJG/UGUkyFBKVo8=
-=93II
+iQIzBAEBCgAdFiEEy8Ueh7J9nt6XOspxvk0V/wXZHX8FAmsEP7IACgkQvk0V/wXZ
+HX/EFQ/9HirAr0ya+PNRSP7t27370SZwINVlHAHbkj6CEccisBVdEP7uRdhD+cYg
+JJKTKT9/nDBqt0paQVN5HHXuvaMkcmwq0iVp3Ov7vgz/I5jhKCWEacO1g97cGP+G
+hOdlrL0mYX4Key9jgIdLnJ8W5a20zm32CQZ+ZLLUXHWtCB4UWUzltUUhzj5fKnq5
+u5EtwY01R+teDXl8lkwBhr4D/7epCgd7iVlreDwolVVi3opNukjpQPFsgbyUqZNV
+uVhlVh7717eLi2wmXMl1ncOv/Riy/GaURi0FbdjYA8ZlKKTtkw0QKukLtLvEpkBf
+LfiWbosizzfXmv+PBUJrgHj8zbLzTvqU9ssy8OTx0Vtpw+XSlPSbrbJdEGwuRq1b
+4UcCnPR+ZCMUcRI6+A/3vFnNC+tSj6uGqC4LpXW2Vkb27xfMfvsyxFN+BD4NZkvt
+NLysNteNePJyxqat2wYcTnjcJI+5FT0T1lgt2VHyYfoLmKMcDmcbqURcrSPSh7DK
+UDFyRIhfepqudMShF9ijNUe53iPo4UHqYkboCJTztdcgGAPEg8LUtPFvp5i2u4HM
+LRmTr3E8Z/RA4uas4O4PxByDFLl/lLB3FKgX6cS1Nj8/6gSBKOIIBoXz1GQDjzUq
+CeaIUN5R4x3stul7JcDDoFDVxwiApKCovNLYT12fFhPWl+vVeN0=
+=xvYe
 -----END PGP SIGNATURE-----
