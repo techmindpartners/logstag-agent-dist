@@ -4,7 +4,7 @@ Hash: SHA512
 Architectures: amd64 arm64
 Codename: stable
 Components: dev main
-Date: Tue, 24 Nov 2026 22:49:29 +0000
+Date: Wed, 25 Nov 2026 08:15:46 +0000
 Description: Official Debian packages for Logstag Agent
 Label: Logstag Agent Packages
 Origin: TechMindPartners
@@ -47,17 +47,17 @@ SHA512:
  e7bcb5f6966e7bb3109c64b5565c373859754d1417c0a82ec136e0caed016ce64ad5215bff5c44aa9903ed44a826f24ee6eaaf762b1a43b718c613a31b6fc14c              387 main/binary-arm64/Packages.gz
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCgAdFiEEy8Ueh7J9nt6XOspxvk0V/wXZHX8FAmsGFHkACgkQvk0V/wXZ
-HX/nbA//Tw0j4srveGyj99DY1Frz6ePhPBggPhASMd+R3p1LfBZlc7fngCMmn9ZM
-qrRbzJxIwv9w7Pow3JWpq94FH8Rvg8cU+IuJsjAAdOb/Fu7zsuR5d2ywp01Zq6MC
-IUd27DBSEskKI/EZ7ofqWInnHalDT85EqexqrU7aceHIII11hwISfHipUHP39Nat
-szOS/0VYmx2VcSuT4S5p89P7kjHOVEQek9desGo6C88cKs65h/tU97INgI/jru66
-kKdLWFzQq/dbXRG6NysCVIC0FJkrVA1UchEAEhWpMUEje4EAEQbNHdatw+nyhfNI
-pML/Sk7y0szmUoOa4So3YRqUa5n7hAm+rznthwt+hn6NLOMO113fmiXuN24sF1FQ
-ZpPcC3a/IcRiAI++NGwOyfgPeDlfQc18fhuRG/V3igq1HNdjx70HvMFtCh75dCIo
-VxsE3WJB/g/ntbC3h4cJb1LUuhAXbrdvNTKfrGutv1/8l8ttRSjIe6XkWSVNGvT1
-RUuJ3zLJdsA2nnwLLA015VBqubKod83EK7ZxbnGNZ6iphJyK8+KVFBdn7qxJDP0V
-u53b/6xUbZZPO3VZr8AawOrheApGKE6op7DsdinehAdcHz882ADMtBPaOOLtWmDV
-OzBcyB+aQHvVBGW9j/F5Ux7lHRd904jWsscX+WZFBA1D+4F9AF0=
-=KTnb
+iQIzBAEBCgAdFiEEy8Ueh7J9nt6XOspxvk0V/wXZHX8FAmsGmTIACgkQvk0V/wXZ
+HX963hAAjGXR2CU4Qeii/VWbryW0JaFV9DtwlNzP5lXJntM7bDKOH6th2RcOO/Kr
+NOlntaqp9GJeEeAphQc5RP7t9HKHfYb49f5yoKZ+fwwxBkNgUcbz0/z7y+XQdby6
+llPksdewQZ/uy5D+beUDrXW2uD4MrHYOXSi6PnscNRhB5SvZ4lwXgtDbu6c9+Kei
+lVBm12pAOceFCSZcRI9camK75iRxD4yYL85BOqsace1CXaVnnjckoJ7UtzOjkZLZ
+UC89IVoxDowGxKWZG70lxusO7CO0opIQoX0CZrUEpvAw/9KPrd7Q/rG//YHthyNT
+gLTUbJ/TscmvWH6UPijRK8S8P8EUhviPRaUmb7ZWGM2jPaoy2Zf5QXK1C+Z/P8c+
+WOWV2JuQcr6meZmFlnFMPQq79OTBEPAZwv+rTN/0BXT8QKAbCcMW+h6tRUf2i9ve
+Y4fuhxFf6Q819ufOaVo9M1/t29bppgY4g/j/+25/4pyz+mKdyaNPAVzbTj/yWmPo
+nQwl2onRd/yBuomk9z+SM7DQUxdvsFGUrs90K3+W5U0nH7QAWyR1X05jebgHcn3E
+YKuZchxVMNsu5eSNFUhwobHSZ8HyFuo9weB6ApCoAFj8OGEdZ2WggyGyN3untmuy
+gVpGzK6Bab8Up056Sg7S/wYBbs2D+ezO0l0YrSFLBy4yfB7YHss=
+=kfQZ
 -----END PGP SIGNATURE-----
