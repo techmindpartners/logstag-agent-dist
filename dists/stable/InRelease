@@ -4,7 +4,7 @@ Hash: SHA512
 Architectures: amd64 arm64
 Codename: stable
 Components: dev main
-Date: Wed, 25 Nov 2026 11:29:54 +0000
+Date: Wed, 25 Nov 2026 13:20:32 +0000
 Description: Official Debian packages for Logstag Agent
 Label: Logstag Agent Packages
 Origin: TechMindPartners
@@ -47,17 +47,17 @@ SHA512:
  ac19e304be87d6637d51040ed5173950ed1fc93269c87b2c65e8dc305a411c3c9999193dae18608912a6fe0da883f5b24137c999e33554dab6d462f60e4c9584              387 main/binary-arm64/Packages.gz
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCgAdFiEEy8Ueh7J9nt6XOspxvk0V/wXZHX8FAmsGxrIACgkQvk0V/wXZ
-HX/ujhAAm5rjnGgpVzrNkGHIdqT9GtVa1gHnQIGnlU11q6yPsB9UVJMSYGNVz86H
-LY15mMThsk6lggdZ3MmxkeB1XweXmuLWYVDtU9oeTiCkvJZCG/6xhH0R+uslr3K2
-iUNoNUpJIZ7AmwiNGvpHVsUiT/rJ95J0F5lHzd0ylQVSSs4PK3nK5qQlKPx90b6F
-mSIFvAwkku4OYWqDEneVWlEYbuLaNblkuCQ6Jdn1gsPiFGyN+sCm7qSjrffl/ktc
-RBm0n8FlaELjvKWWHwDGfEB5Bk8b+z7XjUlj+Cib+Ed4LHPXYP6lPurn8R6GHu/Y
-X8YHg84G9RYNcCvSR8C8zjuC56Wcwde1hu7Qp3ocN6J4Xkh48gPcgSat8R4tmlfu
-nMUcSc03sb74AT38HAoS4c9yeIgt0TGpTL7DlhFaQNK7BigAzq0fqYzwTr69t3yW
-SwOKwxmk5xTF/fhnmeKfCeWwenvXu4B2yi9FEa5pFFIkelJ7mheDtSaJB77b1kgc
-elbCIYB4d9KyG6mhlX3nI7oECUmfCuXFfIGxA/LgmlKllstgoqfRe3LLZH1AmNnn
-fKuo3eGd2kn3of0b25BuI+hSVU6Ixk1jxmfR2FDgmnoExnjzbOCsSZtoiz4vFCrR
-xDM9KnlzMaAAtjYBygiRMFfHRauKkyC7VGzkNL9xLcgfBx2pOMM=
-=Wr5A
+iQIzBAEBCgAdFiEEy8Ueh7J9nt6XOspxvk0V/wXZHX8FAmsG4KAACgkQvk0V/wXZ
+HX9niRAA3q5L20QYLQsWj7SGXrShgIOo9+7Y7P2aRzW1rXacahNro+6t9vLZQmyw
+4rLAdNMqsriC83qnxCN4c6/COKlJwpADH3Ont1RwL5cCSLtwyCkIU/Nwz/q86oyA
+00Su2/o/t3DLV2rZpOY3BkykcJB9cuAR6oTYVLJybicZJs6XFvux41zHC7J2QP1R
+bxsC8jKmLf59VcY4b0hgNdSh0P8l0pbi1RWfPjvS5IZqB1zdq8lug38cnIQzpG2u
+n0ZC/3OVuQeJS0wU/AzRk2G04CDT5djP5V6M04xO+Yo2yLuClspo4TYoWuQpwrup
+UymbeKznHiK1r4Idg/PNjxL5Wf4NbgX31jzWYtu2I4STsYvYj+sk0gS/hyZNrwal
+RV9eBlj3KTWNR14H3aQ/Vchq+TEX0Fdv7ChafoI0rLivGTANl8d5kK/uHsh3ncXu
+N/LSbsX6dLKDxVd2BtAe0YBTrSp+Bltt789CTcxCpD3Ep0+CS9bJmNgKBnia+fcx
+dRFlBlIdFSsFfvoF8VZzp8Jltv2cTuVV8pUukEdaxm0e1Rg76n9VcQ5qZXzmF3T3
+o0dlvTDmq2KMsR+pFNvHcWb9ybacu2lzrmd233PtOVCcf04MnMNlawUehLoKaF2Y
+NatuQYgA6RBuxAcry7iQD9Rql0gWnR3VKP0w/b0jhQgkj4qdp6A=
+=vjMR
 -----END PGP SIGNATURE-----
