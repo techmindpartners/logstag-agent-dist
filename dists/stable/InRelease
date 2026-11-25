@@ -4,7 +4,7 @@ Hash: SHA512
 Architectures: amd64 arm64
 Codename: stable
 Components: dev main
-Date: Wed, 25 Nov 2026 14:51:55 +0000
+Date: Wed, 25 Nov 2026 18:14:41 +0000
 Description: Official Debian packages for Logstag Agent
 Label: Logstag Agent Packages
 Origin: TechMindPartners
@@ -47,17 +47,17 @@ SHA512:
  ac19e304be87d6637d51040ed5173950ed1fc93269c87b2c65e8dc305a411c3c9999193dae18608912a6fe0da883f5b24137c999e33554dab6d462f60e4c9584              387 main/binary-arm64/Packages.gz
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCgAdFiEEy8Ueh7J9nt6XOspxvk0V/wXZHX8FAmsG9gsACgkQvk0V/wXZ
-HX8b6w//RK/g9/yi1x+WJQguK1hlt2aXlJBLzlmh99s4mkDGtmv/UHN571lhDsBD
-Zh9pM7D/mG6HHWSi5LhAhNNl6E4QZmaX9BQamn5otTA4EjzM34pr17aLL6cya9ti
-nJgrNHVu/aGkuDkqYiwD1s0tSras8/V0UuRf17J0XlirwObYEu7n8hyDMX3nTY3d
-I4A1db4RuNFs7ifH2GyepDw36r3HSmXiFdH69NLvUDd4FlNIDuZ+6FTRQKJmiydM
-815jiuApYQrj7A4BVuXjNzRYfMTnSpTCpUW+tA6ff5RLtGH3mI5L2D4GHy+RU0zh
-T/EQKMxpCmZZl+kP8xxxKrFmnMxmb2T/RD0/bF1fk8Lw6OXagQZ3fpTovilMvDhm
-MMuNvw5jd+OFOMjPtAAGkd0GXhkGcZNk8/0Bmcz+BYjAsO7kvMXwLbI4XbKhm/W0
-FJzVZd0F5rxXHEJjiBb5AjRYLyw4QofO9ytBUjJz72vYDjo2TRV4XsoAUT7Gu0zw
-juZcoYsmgMIskZzdqypDI2k0hB9jEyLO25We1R/wkrTZjnitQDQ9W1UIdgqYNu7f
-tQoPnRn8U/+K6diQ6/QPrnFPvrPYMwavMWB64d+DpSHsECfXpp8DinmKBwpKkRFu
-3S7fKmk8kNz0xv5f/8wndfOA6you+KIvGHwwtWG4iwMnXvkgBdc=
-=clOS
+iQIzBAEBCgAdFiEEy8Ueh7J9nt6XOspxvk0V/wXZHX8FAmsHJZEACgkQvk0V/wXZ
+HX9xCg/+MQMNeSET5/EGy1BfFhmj0kT1LduS1hJ5Plbnq54GK7MHXGXkJYN1BmlR
+wGs4Ygnr1RsqLrD/f7mvurcMFlEdPLz9c3V2yzM8wrjV/voeMGJ66A4/OD8BVQqQ
+SU0/8jqik8sBRhm7JduojPjpA7AnWkqDIpd01R8HImzje2BbG+I/qdb02TUoaWkg
+RTA0rDV4mQgzqG1/+wWi5O602uSim5oQZ/I9bf7bLDPFt+LBD3Dn5nBacfk3TRRj
+4DeJHE+U+oGMmf4y+OHkSBbCg1LBbivelBsb2godaUQNTYKPkwmawrc0s+kcXbaa
+UkwUAJfV0FE1EUprnADosCQ6Rbk/ELEyzTL84b7iuWWFI9qlSY+nLojd74oqGvgc
+Fyr8Noy0MpR3jOgr9AjKinmbQ6hfpJ4BcXHRh1cGnqrxcOhuB7z21P/MJS0hkMbL
+sA/Q8LCxhaJFvwdiZik4kZfqXyWdWwR892wbxRHRmjnVBcu0FW+eC0pvAFRmYqEs
+mkIDGiE5/aX539Jf3GWzGr10ukA/DQtbW2a8zSgZ5misVDWc31zu3MDQjvXtZ72n
+vMaeK6J+FqRxe6ucQgQs7Il7qhJ2HA605PIBuXHhO4N0QGn+KAoqRityFQBlq0IY
+gKmvQbV1Ts5ahEI5yMih+FQDjtKfdOUGmsWO/CBL2pJJCpaCr4k=
+=8lSP
 -----END PGP SIGNATURE-----
