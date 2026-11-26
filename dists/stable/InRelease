@@ -4,7 +4,7 @@ Hash: SHA512
 Architectures: amd64 arm64
 Codename: stable
 Components: dev main
-Date: Wed, 25 Nov 2026 21:47:24 +0000
+Date: Thu, 26 Nov 2026 09:24:35 +0000
 Description: Official Debian packages for Logstag Agent
 Label: Logstag Agent Packages
 Origin: TechMindPartners
@@ -47,17 +47,17 @@ SHA512:
  ac19e304be87d6637d51040ed5173950ed1fc93269c87b2c65e8dc305a411c3c9999193dae18608912a6fe0da883f5b24137c999e33554dab6d462f60e4c9584              387 main/binary-arm64/Packages.gz
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCgAdFiEEy8Ueh7J9nt6XOspxvk0V/wXZHX8FAmsHV2wACgkQvk0V/wXZ
-HX9Uhg/9E0PJg3yeTwDnc9Nb+Fimp8ebrjK5T8T1RafXe3rw7P+ifyIUaaEbxOHP
-5A8GvdEtGWcs0EyjnErWY2HB7VyJpAnj1hlAIaegbddoQ935H9GWBam0dSX3kVKd
-/+64KStFgZPmbrdXEFeC5zVa234iqwq6ShzhEavwJZPn6VbECXkJcj4RphrcP5WX
-wHOl9iF4U2OcTW7+1DZYSNW5aAOsUEya0bTaddyrf+MBowFIgyw8x0HNB9PvsNLZ
-3Ji/TZSLMKFGZXmdv1XRRthO/SpILjxSRyXq2cVtE0Py6DDxtOmlV4OgVpnxxbga
-Vd0Lj9fu0VJQKO/YeHa1Tm6bq1cbTCDiqRBTy4mLKLgWgzIMxk/QoCwfcCS0cc53
-8N2yrRDfSUcykodhGSljSWc2sk85Q8aNK/aRNtbxLZRt1SLHYXCMutZCBpBVvv+1
-h6Op+yLppUvVoi7vp4tqAHmKJfRR+++3mxq7ZXbYIRdEoW2eEE0KDLRuVZ3UHRXh
-v4xLmIrYpbEJsqoUt0JbiQuqXbJnysOj0BMdGZowYyJE0Pr+0xMkjxnntJWAALF0
-Q1vMXcER8No78nR0lhYXP5tZOAlVhEKpUa4EHewuIpKfmV2aMMDtE4y5rO5/Cj3q
-C0B3IWwv79sjp0LHT12PVOUnTAswshTWpL58DlrJT1PK4vlQMtY=
-=nnCz
+iQIzBAEBCgAdFiEEy8Ueh7J9nt6XOspxvk0V/wXZHX8FAmsH+tMACgkQvk0V/wXZ
+HX+TEg/+L6FmND9g86McL/XvQ2ykBL2RlSXkcnW8ZCd0bfnYNflAo+c3ZxUvM7GM
+bx38P/ZNkaf04IIFbh4xwM0AWip4tSX0lzQam0y8pIdiHZ3u5ikEIz3c7lyjbMD5
+1DPu2iWMMNorqNXpjcRgofWTXq4lShB+lU99EJQxTJXex4kd/4DAecB/VwR/csOK
+ziZbA5aE/cOIY6enSe5nsHUtQVXIylnYTiJ1jLDuMenVuVP4zUXzytdFCjLMTQvn
+yEpEHjwcZfCj9ZzORiRtSywpEOJvu2YRT4BSmunYiSkBYOKQMSvzfXw9rmfP3+/E
+iC6U69dggWncL9egd8/cVfVDZ10fLiK6bWqhEY51tUC7QJvba+qCV9iSz4hQ5XPZ
+lXDQpBfI/64lxfcQQSJ0s2BcN3kIwZgrHg+Fa/KBtk16HJJa/X4osda/FLo5cck1
+MkqRaRWkTMv0WITTJTXw1ChSGuyThEXqHfF5TQzbzsWjT1M3LGYkN8Zm9slspQ3k
+fK+KoG1R7vIf3w5CfQvcD4ayI76YF/htGPb8f1IapSgBLstjz/pmkVQ5MTO/bC81
+T1Qk8MS0Ea+9rPrB6z1WHMWtjkScdVTISWr8eHBHcdrJX/YKL9GrcrB4+i1wRj4T
+ddFbsd2yDKnhkzs7i2O5zdqFjrajw3hpHoBEZwapHxRKFYbplyk=
+=jtux
 -----END PGP SIGNATURE-----
