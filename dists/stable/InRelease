@@ -4,7 +4,7 @@ Hash: SHA512
 Architectures: amd64 arm64
 Codename: stable
 Components: dev main
-Date: Thu, 26 Nov 2026 16:21:17 +0000
+Date: Thu, 26 Nov 2026 17:24:30 +0000
 Description: Official Debian packages for Logstag Agent
 Label: Logstag Agent Packages
 Origin: TechMindPartners
@@ -47,17 +47,17 @@ SHA512:
  52568783064d59a864ba6fe3074297f1f2172d0d07c7b18371181fbdac2a8287d82b931e2dd83206cdcd28434d3dbc58f15e40126cfaa00e16c2a295c7d816b5              385 main/binary-arm64/Packages.gz
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCgAdFiEEy8Ueh7J9nt6XOspxvk0V/wXZHX8FAmsIXH0ACgkQvk0V/wXZ
-HX/xNhAAzeMUnGb+Iq+0k8YawWbf/goRAO7hHukfEMOEC5zxNOwonZFEfZ/UZBVI
-O+rRPk/YpznatzJ0+Ry8V9MeuXGXNevcgFLKFvqO2dXNCjIwLYz882d3qMcUeA8P
-tRBgs4Kj/Ul5L3hEBf0CnxkIdwvPqVZHlvA9i+8ASFwADgkIudxNt+DxnlLXXzO6
-Pew57JlNr4zrP7CecVxc58euadTWYBaErZA2IIEBg1tvqSjS6IbXefhyTT6edC42
-bX5xKHoopydHWGAScGXEe0KOr7H6nDpO3D0U2lXHCy0xLa0vzfdg1Z7oBNBEOnoS
-ZuC5kHRNq8wtJ0Bc7oSm+9Pz5AOhzfK/orUuc67Pfo7pI0qrWIzOe8PjRkjodHbZ
-Z34Y/6BUrQoOIcz1qONNVWagPOxifRBVKwsN8B9knmkqKqCxJx96neeL3cre/mYL
-gcxmSt+pj8ca9MqjGkvwuqiohSDO2I2hBcWv1nt0oWhM4zO19lg6VWeoxzCmo2QB
-yAXF5B8eSe26bbowwGH7gmSlt5xwiZkxJeLsPyq0lwxxYXQ6Eoyu9VEeMm8lGahv
-vrjZk1jDsPutv43JMiSh+0se73MVHCwQqScu0d6qD/rta7Vy9fc1zAysDSJ0677K
-2iPVgrpAtCmLH7pYyLslffnJn/59sP7ywIPNXJ4srTPZYHTgimg=
-=lqtR
+iQIzBAEBCgAdFiEEy8Ueh7J9nt6XOspxvk0V/wXZHX8FAmsIa04ACgkQvk0V/wXZ
+HX+wChAAieQaNDolqZ+pVJbE/VfdPBWTgSjIkmyUlXRbXA18Ex2yyBOEVKNG6JOV
+PrEq2Pw5KIohHZdhoN9S6T/rTq7npN++foe03dvjn4DiIAFOrU8L+PyeZkSec0KF
+MhJAbuDItdekzholyvIRYM0nTa4C+dXHlLGq8Kmp/2KFP5DrtgPLJGfboNWt/CXt
+KNoC9LqKN1oi33/OWIhgaI+TITj6idlc6G86xCTgp/nfJpMQiNDZqCOcCCchwE4a
+2h8jPjLIU/hjaaOz6bXtyJfcEk3Pu7b9USsvfacKANumMvVqyfgU3pYZ0sTK8ubG
+MiA0wY94WCbmnINaj2tKCI9EqFUwtNXGI3naCEApZKn/K94qscgxqC4La975YXxi
+DrLNFuRjuXZDWpMoY91YlC5DNc09yTesJaypspPo0+0icL6M+OKyYVbuQ072EiuO
+LEgFyc1daDqPPN/L0kp1tuAOC7a+xexfDEaYe6i7empLLLO+RRkntYvrG1xFNyT1
+LvubpwtMoqphOsmqavuxFoCKA8di2NTgqtBwC5HXCnTQjxgD9/U4Kd1+2DqISUuq
+JGQGdmlaS688rEzFhkJx4ELKesWcqLuTl3Eeg+AfuMh7IY9IWklcl7WduNltATgl
+gNQm7dBRwKpq3UgqqO492Lt8Envi8i7E8JtK/uKNJup+ybkSCOs=
+=5UV4
 -----END PGP SIGNATURE-----
