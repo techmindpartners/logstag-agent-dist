@@ -1,13 +1,13 @@
 Package: logstag-agent
-Version: 1.0.129-1
+Version: 1.0.133-1
 Architecture: amd64
 Maintainer: Logstag <platform@logstag.com>
-Installed-Size: 51981
-Filename: pool/main/l/logstag-agent/logstag-agent_1.0.129-1_amd64.deb
-Size: 13398996
-MD5sum: 0c4970eb16937366c17bda2b52f904c5
-SHA1: daedcfc0044030a819ffc6cee845176f1d00b5dc
-SHA256: ebd165f440d72a248116067cbb31f4ad038863a6ff4369ddd8dfafff02b8b1c5
+Installed-Size: 52108
+Filename: pool/main/l/logstag-agent/logstag-agent_1.0.133-1_amd64.deb
+Size: 13368260
+MD5sum: f52c40348c608ae4fc937264e47c2b15
+SHA1: c5d4c59d326dd82fdd59ada3ed1e5f597ec62b1c
+SHA256: b2c82182729ef57c4cb103bcb7be8b565e9960abd8f486b919ee8f8fb59cf86f
 Priority: optional
 Homepage: https://github.com/techmindpartners/logstag-agent
 Description: Logstag Agent
